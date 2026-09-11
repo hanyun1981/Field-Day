@@ -1,0 +1,4098 @@
+<title>Field Day Program</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;700;900&family=Noto+Sans+TC:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@500;600&display=swap">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+
+<style>
+  :root {
+    --ground: #F5F2EA;
+    --panel: #FBF9F3;
+    --panel-2: #EFEBDF;
+    --ink: #1A1D24;
+    --ink-soft: #2E323B;
+    --slate: #5A5F6B;
+    --slate-2: #8A8F98;
+    --rule: #D9D2C0;
+    --rule-strong: #B8B09A;
+    --accent: #B23A2C;
+    --accent-soft: #E4C7BF;
+    --gold: #B08133;
+    --gold-soft: #E9D9AE;
+    --track: #3D6B4C;
+    --track-soft: #C7D8CB;
+    --alarm: #9C4223;
+    --shadow: 0 1px 0 rgba(26,29,36,.04), 0 2px 8px rgba(26,29,36,.04);
+    --serif: "Noto Serif TC", "Songti TC", "PingFang TC", serif;
+    --sans: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
+    --mono: "IBM Plex Mono", "Menlo", monospace;
+    --label: "IBM Plex Sans", "Noto Sans TC", sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #13151A;
+      --panel: #1B1E25;
+      --panel-2: #22262F;
+      --ink: #ECE7DA;
+      --ink-soft: #D2CCBD;
+      --slate: #9A9FA9;
+      --slate-2: #6B7079;
+      --rule: #2D323C;
+      --rule-strong: #3C424E;
+      --accent: #D25547;
+      --accent-soft: #4A2521;
+      --gold: #D8A757;
+      --gold-soft: #4A3B1E;
+      --track: #6BA37F;
+      --track-soft: #22382A;
+      --alarm: #D45A3A;
+      --shadow: 0 1px 0 rgba(0,0,0,.3), 0 2px 8px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #13151A;
+    --panel: #1B1E25;
+    --panel-2: #22262F;
+    --ink: #ECE7DA;
+    --ink-soft: #D2CCBD;
+    --slate: #9A9FA9;
+    --slate-2: #6B7079;
+    --rule: #2D323C;
+    --rule-strong: #3C424E;
+    --accent: #D25547;
+    --accent-soft: #4A2521;
+    --gold: #D8A757;
+    --gold-soft: #4A3B1E;
+    --track: #6BA37F;
+    --track-soft: #22382A;
+    --alarm: #D45A3A;
+    --shadow: 0 1px 0 rgba(0,0,0,.3), 0 2px 8px rgba(0,0,0,.35);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 14px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .app { display: grid; grid-template-columns: 240px 1fr; min-height: 100vh; }
+
+  /* ---------- Sidebar ---------- */
+  aside {
+    background: var(--panel);
+    border-right: 1px solid var(--rule);
+    padding: 22px 0 32px;
+    position: sticky; top: 0; height: 100vh;
+    overflow-y: auto;
+    display: flex; flex-direction: column;
+  }
+  .brand { padding: 0 22px 20px; border-bottom: 1px solid var(--rule); margin-bottom: 14px; }
+  .brand-mark { display: flex; align-items: baseline; gap: 10px; margin-bottom: 4px; }
+  .brand-mark .dot { width: 10px; height: 10px; border-radius: 999px; background: var(--accent); align-self: center; }
+  .brand h1 { font-family: var(--serif); font-weight: 900; font-size: 22px; margin: 0; letter-spacing: .02em; }
+  .brand .sub { font-family: var(--label); font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--slate); padding-left: 20px; }
+
+  .session-badge {
+    margin: 0 18px 10px;
+    padding: 10px 12px;
+    background: var(--panel-2);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    font-size: 12px;
+  }
+  .session-badge .role {
+    font-family: var(--label);
+    font-size: 10px;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--slate);
+    margin-bottom: 2px;
+  }
+  .session-badge .who { font-family: var(--serif); font-weight: 500; }
+  .session-badge.admin .who { color: var(--accent); }
+  .session-badge.class .who { color: var(--track); }
+  .session-badge .actions { margin-top: 6px; display: flex; gap: 6px; }
+  .session-badge a.link {
+    font-size: 11px; color: var(--slate); cursor: pointer; text-decoration: none;
+    font-family: var(--label); letter-spacing: .1em; text-transform: uppercase;
+  }
+  .session-badge a.link:hover { color: var(--ink); }
+
+  nav { flex: 1; overflow-y: auto; }
+  nav .group-label { font-family: var(--label); font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--slate-2); padding: 12px 22px 6px; }
+  nav button.nav-item {
+    all: unset;
+    display: flex; align-items: center; gap: 12px;
+    width: 100%; padding: 7px 22px; cursor: pointer;
+    color: var(--ink-soft); font-size: 14px; position: relative;
+    transition: background 120ms;
+  }
+  nav button.nav-item:hover { background: var(--panel-2); }
+  nav button.nav-item.active { color: var(--ink); background: var(--panel-2); font-weight: 500; }
+  nav button.nav-item.active::before {
+    content: ""; position: absolute; left: 0; top: 4px; bottom: 4px; width: 3px; background: var(--accent);
+  }
+  nav button.nav-item .glyph { font-family: var(--serif); color: var(--slate); font-size: 15px; width: 18px; text-align: center; }
+  nav button.nav-item.active .glyph { color: var(--accent); }
+  nav button.nav-item[disabled] { opacity: .35; cursor: not-allowed; }
+
+  .sidebar-footer {
+    margin: 12px 22px 0;
+    font-family: var(--label);
+    font-size: 10px;
+    letter-spacing: .1em;
+    color: var(--slate-2);
+    border-top: 1px solid var(--rule);
+    padding-top: 12px;
+  }
+  .sync-dot { display: inline-block; width: 6px; height: 6px; border-radius: 999px; background: var(--track); margin-right: 6px; vertical-align: middle; }
+  .sync-dot.off { background: var(--slate-2); }
+
+  /* ---------- Main ---------- */
+  main { min-width: 0; }
+  .topbar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 32px;
+    border-bottom: 1px solid var(--rule);
+    background: var(--ground);
+    position: sticky; top: 0; z-index: 5;
+  }
+  .topbar .crumbs { font-family: var(--label); font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--slate); }
+  .topbar h2 { font-family: var(--serif); font-weight: 700; font-size: 22px; margin: 2px 0 0; letter-spacing: .01em; }
+  .year-picker { display: flex; align-items: center; gap: 10px; }
+  .year-picker label { font-family: var(--label); font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--slate); }
+
+  select, input, button, textarea { font-family: var(--sans); font-size: 14px; color: var(--ink); }
+  select, input[type="text"], input[type="number"], input[type="password"], input[type="date"], textarea {
+    background: var(--panel); border: 1px solid var(--rule);
+    padding: 7px 10px; border-radius: 3px; outline: none;
+    transition: border-color 120ms;
+  }
+  select:focus, input:focus, textarea:focus { border-color: var(--accent); }
+  input[type="number"], input[type="password"] { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+  textarea { font-family: var(--mono); font-size: 12px; }
+
+  button.btn {
+    all: unset;
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 7px 14px; border-radius: 3px; cursor: pointer;
+    font-size: 13px; font-weight: 500;
+    border: 1px solid var(--rule); background: var(--panel); color: var(--ink);
+    transition: all 120ms;
+  }
+  button.btn:hover { border-color: var(--rule-strong); }
+  button.btn[disabled] { opacity: .4; cursor: not-allowed; }
+  button.btn.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+  button.btn.primary:hover { background: #9E2E22; }
+  button.btn.ghost { background: transparent; border-color: transparent; color: var(--slate); }
+  button.btn.ghost:hover { color: var(--ink); background: var(--panel-2); }
+  button.btn.danger { color: var(--alarm); }
+  button.btn.danger:hover { background: var(--accent-soft); }
+  button.btn.track { background: var(--track); color: #fff; border-color: var(--track); }
+  button.btn.track:hover { background: #325A3E; }
+
+  /* Content */
+  .view { padding: 24px 32px 60px; }
+
+  /* KPI */
+  .kpi-row {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1px; background: var(--rule); border: 1px solid var(--rule);
+    border-radius: 4px; overflow: hidden; margin-bottom: 28px;
+  }
+  .kpi { background: var(--panel); padding: 18px 20px; }
+  .kpi .label { font-family: var(--label); font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--slate); margin-bottom: 8px; }
+  .kpi .value { font-family: var(--mono); font-weight: 500; font-size: 28px; font-variant-numeric: tabular-nums; letter-spacing: -.01em; }
+  .kpi .foot { font-size: 12px; color: var(--slate); margin-top: 4px; }
+
+  .split { display: grid; grid-template-columns: 1.4fr 1fr; gap: 24px; }
+  @media (max-width: 1100px) { .split { grid-template-columns: 1fr; } }
+
+  .card { background: var(--panel); border: 1px solid var(--rule); border-radius: 4px; overflow: hidden; }
+  .card + .card { margin-top: 24px; }
+  .card header { padding: 14px 18px; border-bottom: 1px solid var(--rule); display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .card header h3 { margin: 0; font-family: var(--serif); font-weight: 700; font-size: 15px; letter-spacing: .02em; }
+  .card header .hint { font-family: var(--label); font-size: 10px; letter-spacing: .15em; text-transform: uppercase; color: var(--slate); }
+  .card .body { padding: 4px 0; }
+  .card .body.pad { padding: 16px 18px; }
+
+  table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+  th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--rule); font-size: 13px; vertical-align: middle; }
+  th {
+    font-family: var(--label); font-weight: 500; font-size: 10px;
+    letter-spacing: .16em; text-transform: uppercase; color: var(--slate);
+    background: var(--panel); position: sticky; top: 0;
+  }
+  tbody tr:hover { background: var(--panel-2); }
+  td.num, th.num { font-family: var(--mono); text-align: right; }
+  td.rank { font-family: var(--mono); font-weight: 600; width: 44px; text-align: center; color: var(--slate); }
+  td.rank.top1 { color: var(--gold); }
+  td.rank.top2 { color: var(--slate); }
+  td.rank.top3 { color: var(--accent); }
+
+  .pill {
+    display: inline-block;
+    font-family: var(--label); font-size: 10px; letter-spacing: .12em; text-transform: uppercase;
+    padding: 2px 8px; border-radius: 2px;
+    border: 1px solid var(--rule-strong); color: var(--slate);
+  }
+  .pill.track { border-color: var(--track); color: var(--track); background: var(--track-soft); }
+  .pill.field { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+  .pill.relay { border-color: var(--gold); color: var(--gold); background: var(--gold-soft); }
+  .pill.male { border-color: var(--slate); color: var(--slate); }
+  .pill.female { border-color: var(--accent); color: var(--accent); }
+  .pill.mixed { border-color: var(--gold); color: var(--gold); }
+  .pill.round { border-color: var(--gold); color: var(--gold); background: var(--gold-soft); }
+
+  .record-flag {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-family: var(--label); font-size: 10px; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--gold); font-weight: 600;
+  }
+  .record-flag::before { content: "★"; font-size: 12px; }
+
+  .form-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px 14px; padding: 18px;
+    background: var(--panel-2);
+    border-bottom: 1px solid var(--rule);
+  }
+  .field label { display: block; font-family: var(--label); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--slate); margin-bottom: 4px; }
+  .field input, .field select, .field textarea { width: 100%; }
+  .field.wide { grid-column: span 2; }
+
+  .toolbar { display: flex; align-items: center; gap: 10px; padding: 12px 18px; border-bottom: 1px solid var(--rule); flex-wrap: wrap; }
+  .toolbar .grow { flex: 1; }
+  .toolbar input[type="text"] { min-width: 220px; }
+
+  .champ-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; }
+  @media (max-width: 1200px) { .champ-grid { grid-template-columns: 1fr; } }
+  .standings tr td:first-child { padding-left: 18px; }
+  .standings .points { font-family: var(--mono); font-weight: 600; font-size: 15px; text-align: right; padding-right: 18px; }
+  .standings .rank-medal {
+    width: 22px; height: 22px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: var(--mono); font-weight: 600; font-size: 11px;
+    border-radius: 999px; background: var(--panel-2); color: var(--slate);
+    margin-right: 8px;
+  }
+  .standings tr:nth-child(1) .rank-medal { background: var(--gold); color: #fff; }
+  .standings tr:nth-child(2) .rank-medal { background: var(--slate); color: #fff; }
+  .standings tr:nth-child(3) .rank-medal { background: var(--accent); color: #fff; }
+
+  .records-list .event-row {
+    display: grid; grid-template-columns: 1fr 220px 160px 120px 80px;
+    align-items: center; padding: 12px 18px;
+    border-bottom: 1px solid var(--rule); gap: 12px;
+  }
+  .records-list .event-row:hover { background: var(--panel-2); }
+  .records-list .event-name { font-family: var(--serif); font-weight: 500; font-size: 14px; }
+  .records-list .mark { font-family: var(--mono); font-weight: 600; font-size: 16px; color: var(--ink); }
+  .records-list .holder { font-size: 13px; }
+  .records-list .year-col { font-family: var(--mono); color: var(--slate); font-size: 12px; }
+
+  .empty { padding: 40px 18px; text-align: center; color: var(--slate); }
+  .empty h4 { font-family: var(--serif); font-size: 16px; margin: 0 0 6px; color: var(--ink-soft); }
+
+  .result-entry-grid {
+    display: grid;
+    grid-template-columns: 60px 60px 60px 1fr 120px 60px 60px 60px;
+    gap: 8px; padding: 8px 18px;
+    border-bottom: 1px solid var(--rule);
+    align-items: center;
+  }
+  .result-entry-grid.head { background: var(--panel); font-family: var(--label); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--slate); padding: 10px 18px; }
+  .result-entry-grid input, .result-entry-grid select { width: 100%; }
+  .result-entry-grid .num-input { font-family: var(--mono); font-variant-numeric: tabular-nums; text-align: right; }
+  .rank-cell { font-family: var(--mono); font-weight: 600; text-align: center; color: var(--slate); }
+  .points-cell { font-family: var(--mono); font-weight: 600; text-align: center; }
+
+  .round-tabs { display: flex; gap: 0; border-bottom: 1px solid var(--rule); background: var(--panel); }
+  .round-tabs button {
+    all: unset;
+    padding: 10px 18px; cursor: pointer;
+    font-family: var(--label); font-size: 11px;
+    letter-spacing: .16em; text-transform: uppercase;
+    color: var(--slate);
+    border-bottom: 2px solid transparent;
+  }
+  .round-tabs button.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+  .modal-backdrop {
+    position: fixed; inset: 0;
+    background: rgba(26,29,36,.45);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 100; padding: 20px;
+  }
+  .modal {
+    background: var(--panel); border: 1px solid var(--rule);
+    border-radius: 4px; box-shadow: var(--shadow);
+    max-width: 480px; width: 100%;
+    max-height: 90vh; display: flex; flex-direction: column;
+  }
+  .modal.wide { max-width: 720px; }
+  .modal header { padding: 16px 18px; border-bottom: 1px solid var(--rule); font-family: var(--serif); font-weight: 700; font-size: 16px; }
+  .modal .body { padding: 18px; overflow: auto; }
+  .modal footer { padding: 12px 18px; border-top: 1px solid var(--rule); display: flex; justify-content: flex-end; gap: 8px; background: var(--panel-2); }
+
+  .toast-holder { position: fixed; bottom: 20px; right: 20px; z-index: 200; display: flex; flex-direction: column; gap: 8px; }
+  .toast {
+    background: var(--ink); color: var(--ground);
+    padding: 10px 16px; border-radius: 3px; font-size: 13px;
+    box-shadow: 0 4px 12px rgba(0,0,0,.15);
+    animation: toast-in .2s ease-out;
+  }
+  @keyframes toast-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+  a { color: var(--accent); }
+  .loading { padding: 60px; text-align: center; color: var(--slate); font-family: var(--label); letter-spacing: .1em; text-transform: uppercase; font-size: 11px; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+
+  /* Team roster grid */
+  .roster {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 10px;
+    padding: 12px 18px;
+  }
+  .roster .slot {
+    padding: 10px 12px; border: 1px dashed var(--rule-strong);
+    border-radius: 3px; background: var(--panel);
+    font-size: 12px; color: var(--slate);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .roster .slot.filled { border-style: solid; color: var(--ink); background: var(--panel-2); }
+  .roster .slot .n { font-family: var(--mono); color: var(--slate); font-size: 11px; }
+  .roster .slot .name { font-family: var(--serif); font-weight: 500; }
+  .roster .slot button { all: unset; cursor: pointer; color: var(--alarm); font-size: 11px; }
+
+  /* Login */
+  .login-shell {
+    max-width: 420px; margin: 40px auto 0;
+    background: var(--panel);
+    border: 1px solid var(--rule); border-radius: 4px;
+    padding: 32px;
+  }
+  .login-shell h3 {
+    font-family: var(--serif); font-weight: 700; font-size: 20px;
+    margin: 0 0 6px;
+  }
+  .login-shell p.hint { color: var(--slate); font-size: 13px; margin: 0 0 20px; }
+  .login-shell .field { margin-bottom: 14px; }
+  .login-shell .row { display: flex; gap: 8px; }
+  .login-tabs { display: flex; gap: 0; margin-bottom: 20px; border-bottom: 1px solid var(--rule); }
+  .login-tabs button {
+    all: unset; padding: 10px 16px; cursor: pointer;
+    font-family: var(--label); font-size: 11px; letter-spacing: .16em; text-transform: uppercase;
+    color: var(--slate); border-bottom: 2px solid transparent;
+  }
+  .login-tabs button.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+  /* ---------- Print ---------- */
+  .print-picker { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+  .print-picker .doc-card {
+    padding: 20px; border: 1px solid var(--rule); border-radius: 4px;
+    background: var(--panel); cursor: pointer;
+    transition: border-color 120ms, background 120ms;
+  }
+  .print-picker .doc-card:hover { border-color: var(--accent); background: var(--panel-2); }
+  .print-picker .doc-card h4 { font-family: var(--serif); font-weight: 700; margin: 0 0 6px; font-size: 16px; }
+  .print-picker .doc-card p { margin: 0; color: var(--slate); font-size: 12px; }
+
+  .print-area { display: none; }
+  body.printing .print-area { display: block; }
+  body.printing .app { display: none; }
+
+  .print-back {
+    position: fixed; top: 16px; right: 20px; z-index: 100;
+  }
+
+  @page { size: A4; margin: 1.6cm; }
+  @media print {
+    body { background: #fff; color: #000; }
+    .no-print, .app, aside, .topbar, .toast-holder, .print-back { display: none !important; }
+    .print-area { display: block !important; }
+    body.printing .print-area { padding: 0; }
+    body { font-family: var(--serif); }
+  }
+
+  /* Program / results printable */
+  .print-doc {
+    max-width: 720px; margin: 0 auto 40px;
+    background: #fff; color: #111;
+    padding: 40px 48px;
+    border: 1px solid var(--rule);
+    font-family: var(--serif);
+  }
+  @media print { .print-doc { border: 0; padding: 0; max-width: none; margin: 0; } }
+  .print-doc .cover { text-align: center; padding: 80px 0; page-break-after: always; }
+  .print-doc .cover .schoolyear { font-family: var(--label); font-size: 12px; letter-spacing: .3em; text-transform: uppercase; color: #555; }
+  .print-doc .cover h1 { font-family: var(--serif); font-weight: 900; font-size: 40px; margin: 20px 0 12px; letter-spacing: .1em; }
+  .print-doc .cover .sub { font-family: var(--serif); font-size: 16px; color: #444; }
+  .print-doc .cover .rule { width: 60px; height: 2px; background: #B23A2C; margin: 24px auto; }
+
+  .print-doc h2.section {
+    font-family: var(--serif); font-weight: 700; font-size: 20px;
+    margin: 24px 0 8px; padding-bottom: 4px;
+    border-bottom: 1.5px solid #333; letter-spacing: .05em;
+  }
+  .print-doc h3.event-head {
+    font-family: var(--serif); font-weight: 700; font-size: 15px;
+    margin: 18px 0 4px; color: #B23A2C;
+  }
+  .print-doc h3.event-head .cat { font-family: var(--label); font-size: 10px; letter-spacing: .14em; color: #666; margin-left: 8px; font-weight: 500; }
+  .print-doc .participants { font-size: 12px; color: #333; line-height: 1.7; padding-left: 12px; }
+  .print-doc .participants span { display: inline-block; margin-right: 14px; }
+  .print-doc table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .print-doc table th, .print-doc table td { padding: 6px 8px; border-bottom: 0.5px solid #999; text-align: left; font-family: var(--serif); }
+  .print-doc table th { font-family: var(--label); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: #444; border-bottom-color: #333; }
+  .print-doc table td.num { font-family: var(--mono); text-align: right; }
+
+  /* Certificates */
+  .cert-page {
+    width: 100%; min-height: 260mm;
+    padding: 22mm;
+    background: #fff; color: #111;
+    page-break-after: always;
+    display: flex; flex-direction: column;
+  }
+  .cert-inner {
+    flex: 1;
+    border: 2.5px double #B23A2C;
+    padding: 24mm 22mm;
+    display: flex; flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background:
+      radial-gradient(circle at 6mm 6mm, #B23A2C 3.5mm, transparent 4mm) no-repeat,
+      radial-gradient(circle at calc(100% - 6mm) 6mm, #B23A2C 3.5mm, transparent 4mm) no-repeat,
+      radial-gradient(circle at 6mm calc(100% - 6mm), #B23A2C 3.5mm, transparent 4mm) no-repeat,
+      radial-gradient(circle at calc(100% - 6mm) calc(100% - 6mm), #B23A2C 3.5mm, transparent 4mm) no-repeat,
+      #fff;
+  }
+  .cert-inner .school { font-family: var(--label); letter-spacing: .3em; font-size: 12px; color: #555; margin-top: 8mm; }
+  .cert-inner .title {
+    font-family: var(--serif); font-weight: 900;
+    font-size: 64px; letter-spacing: .5em; margin: 6mm 0 3mm 12mm;
+    color: #B23A2C;
+  }
+  .cert-inner .rank-bar { font-family: var(--serif); font-size: 20px; font-weight: 700; color: #B08133; letter-spacing: .3em; margin-bottom: 12mm; }
+  .cert-inner .body {
+    font-family: var(--serif); font-size: 18px; line-height: 2.2; color: #222;
+    max-width: 60ex; text-align: justify; text-align-last: center;
+  }
+  .cert-inner .body .who { color: #B23A2C; font-weight: 700; font-size: 22px; }
+  .cert-inner .body .ev { color: #333; font-weight: 700; font-size: 20px; }
+  .cert-inner .foot { margin-top: auto; display: flex; justify-content: space-between; width: 100%; align-items: flex-end; padding-top: 12mm; }
+  .cert-inner .foot .sig { font-family: var(--serif); font-size: 14px; color: #333; }
+  .cert-inner .foot .sig .line { border-top: 1px solid #333; padding-top: 4px; margin-top: 30px; min-width: 30mm; text-align: center; }
+  .cert-inner .foot .date { font-family: var(--mono); font-size: 12px; color: #555; }
+
+  /* Small stats badge */
+  .badge-row { display: flex; gap: 8px; margin-top: 6px; flex-wrap: wrap; }
+
+  /* Grid two column form */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 900px) { .grid-2 { grid-template-columns: 1fr; } }
+
+  /* Check-in */
+  .checkin-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    gap: 8px;
+    padding: 14px 18px;
+  }
+  .checkin-card {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 14px;
+    border: 1.5px solid var(--rule);
+    border-radius: 3px;
+    background: var(--panel);
+    cursor: pointer;
+    transition: all 120ms;
+    user-select: none;
+  }
+  .checkin-card:hover { border-color: var(--rule-strong); }
+  .checkin-card.present {
+    border-color: var(--track);
+    background: var(--track-soft);
+    color: var(--track);
+  }
+  .checkin-card.absent {
+    border-color: var(--alarm);
+    background: var(--accent-soft);
+    color: var(--alarm);
+    text-decoration: line-through;
+    opacity: .8;
+  }
+  .checkin-card .name { font-family: var(--serif); font-weight: 500; font-size: 15px; }
+  .checkin-card .sub { font-family: var(--mono); font-size: 11px; color: var(--slate); margin-top: 2px; }
+  .checkin-card .mark {
+    width: 22px; height: 22px;
+    border-radius: 999px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: var(--mono); font-size: 13px; font-weight: 600;
+    border: 1.5px solid currentColor;
+  }
+  .checkin-card.present .mark::before { content: "✓"; }
+  .checkin-card.absent .mark::before { content: "✕"; }
+  .checkin-card:not(.present):not(.absent) .mark::before { content: ""; }
+
+  .checkin-summary {
+    display: flex; gap: 20px; align-items: center;
+    padding: 14px 18px;
+    background: var(--panel-2);
+    border-bottom: 1px solid var(--rule);
+    font-family: var(--mono);
+    font-variant-numeric: tabular-nums;
+  }
+  .checkin-summary .num { font-size: 28px; font-weight: 600; }
+  .checkin-summary .lb { font-family: var(--label); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--slate); margin-top: 2px; }
+  .checkin-summary .g-present .num { color: var(--track); }
+  .checkin-summary .g-absent .num { color: var(--alarm); }
+  .checkin-summary .g-pending .num { color: var(--slate); }
+
+  .scan-input {
+    display: flex; align-items: center; gap: 10px;
+    padding: 12px 18px;
+    background: var(--panel);
+    border-bottom: 1px solid var(--rule);
+  }
+  .scan-input input {
+    flex: 1;
+    font-family: var(--mono); font-size: 18px;
+    padding: 10px 14px;
+    letter-spacing: .05em;
+  }
+
+  /* QR share */
+  .qr-wrap {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 24px;
+    padding: 24px;
+    align-items: center;
+  }
+  @media (max-width: 720px) { .qr-wrap { grid-template-columns: 1fr; } }
+  .qr-box {
+    background: #fff;
+    padding: 14px;
+    border-radius: 4px;
+    border: 1px solid var(--rule);
+    width: 100%;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .qr-box svg { width: 100%; height: auto; display: block; }
+  .qr-info h4 { font-family: var(--serif); font-weight: 700; margin: 0 0 6px; font-size: 18px; }
+  .qr-info .url {
+    font-family: var(--mono); font-size: 11px;
+    color: var(--slate);
+    background: var(--panel-2);
+    padding: 8px 10px;
+    border-radius: 3px;
+    word-break: break-all;
+    margin: 8px 0;
+  }
+  .qr-notice {
+    font-size: 12px; color: var(--alarm);
+    padding: 10px 12px;
+    border: 1px solid var(--accent-soft);
+    border-radius: 3px;
+    background: var(--accent-soft);
+    margin-top: 12px;
+  }
+
+  /* Kiosk / Live view */
+  body.kiosk-live {
+    background: var(--ground);
+  }
+  body.kiosk-live .app { display: none; }
+  body.kiosk-live .kiosk-shell { display: block; }
+  .kiosk-shell { display: none; padding: 24px 32px 40px; max-width: 1200px; margin: 0 auto; }
+  .kiosk-header {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 14px;
+    padding-bottom: 12px;
+    border-bottom: 3px solid var(--accent);
+  }
+  .kiosk-header .eyebrow { font-family: var(--label); font-size: 12px; letter-spacing: .3em; text-transform: uppercase; color: var(--slate); margin-bottom: 4px; }
+  .kiosk-header h1 { font-family: var(--serif); font-weight: 900; font-size: 40px; margin: 0; letter-spacing: .04em; }
+  .kiosk-header .meta { text-align: right; color: var(--slate); font-family: var(--mono); font-size: 13px; }
+  .kiosk-header .live-dot { display: inline-block; width: 10px; height: 10px; border-radius: 999px; background: var(--accent); margin-right: 8px; animation: pulse 1.5s ease-in-out infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .3; } }
+
+  .kiosk-live-table {
+    width: 100%; border-collapse: collapse;
+    font-variant-numeric: tabular-nums;
+    background: var(--panel);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .kiosk-live-table th {
+    font-family: var(--label); font-size: 12px;
+    letter-spacing: .18em; text-transform: uppercase;
+    color: var(--slate);
+    padding: 12px 20px;
+    background: var(--panel-2);
+    text-align: left;
+    border-bottom: 1px solid var(--rule);
+  }
+  .kiosk-live-table td {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--rule);
+    font-size: 20px;
+    vertical-align: middle;
+  }
+  .kiosk-live-table td.rank {
+    font-family: var(--mono); font-weight: 600;
+    font-size: 32px; width: 80px;
+    text-align: center;
+    color: var(--slate);
+  }
+  .kiosk-live-table td.rank.top1 { color: var(--gold); }
+  .kiosk-live-table td.rank.top2 { color: var(--slate); }
+  .kiosk-live-table td.rank.top3 { color: var(--accent); }
+  .kiosk-live-table td.name { font-family: var(--serif); font-weight: 500; }
+  .kiosk-live-table td.class { color: var(--slate); font-size: 15px; }
+  .kiosk-live-table td.mark { font-family: var(--mono); font-weight: 600; font-size: 24px; text-align: right; }
+  .kiosk-live-table td.points { font-family: var(--mono); font-size: 20px; color: var(--slate); text-align: right; width: 80px; }
+  .kiosk-live-table td.rec { text-align: center; width: 100px; }
+  .kiosk-live-table tr.new-record { background: var(--gold-soft); }
+  .kiosk-live-table tr.new-record td.mark { color: var(--gold); }
+
+  /* Ceremony */
+  body.kiosk-ceremony {
+    background: #0B0D12;
+    color: #F1EAD8;
+  }
+  body.kiosk-ceremony .app { display: none; }
+  body.kiosk-ceremony .ceremony-shell { display: flex !important; }
+  .ceremony-shell {
+    display: none;
+    position: fixed; inset: 0;
+    flex-direction: column;
+    padding: 60px;
+    background: radial-gradient(ellipse at center, #16191F 0%, #0B0D12 70%);
+    color: #F1EAD8;
+    font-family: var(--serif);
+  }
+  .ceremony-eyebrow {
+    font-family: var(--label); font-size: 14px; letter-spacing: .4em;
+    text-transform: uppercase; color: #B08133; margin-bottom: 12px;
+  }
+  .ceremony-title {
+    font-family: var(--serif); font-weight: 900;
+    font-size: 68px; letter-spacing: .04em;
+    color: #F5EFD8; margin: 0 0 8px;
+  }
+  .ceremony-sub {
+    font-family: var(--sans); font-size: 22px; color: #B08133; letter-spacing: .1em; margin-bottom: 40px;
+  }
+  .ceremony-podium {
+    display: grid; grid-template-columns: 1fr 1.3fr 1fr;
+    gap: 30px;
+    align-items: end;
+    max-width: 1200px; margin: 0 auto; flex: 1; width: 100%;
+    padding-bottom: 60px;
+  }
+  .podium-slot {
+    text-align: center;
+    padding: 32px 24px;
+    border-radius: 6px;
+    background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,0));
+    border: 1px solid rgba(255,255,255,.08);
+    animation: rise 800ms ease-out both;
+  }
+  .podium-slot.p1 {
+    background: linear-gradient(180deg, rgba(176,129,51,.25), rgba(176,129,51,.05));
+    border-color: rgba(176,129,51,.5);
+    padding: 48px 24px 40px;
+    animation-delay: 300ms;
+  }
+  .podium-slot.p2 { padding-bottom: 32px; animation-delay: 100ms; }
+  .podium-slot.p3 { padding-bottom: 28px; animation-delay: 200ms; }
+  @keyframes rise { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+  .podium-rank {
+    font-family: var(--serif); font-weight: 900;
+    font-size: 40px;
+    color: #B08133;
+    letter-spacing: .1em;
+    margin-bottom: 12px;
+  }
+  .podium-slot.p1 .podium-rank { font-size: 56px; color: #E8B858; }
+  .podium-name {
+    font-family: var(--serif); font-weight: 700;
+    font-size: 36px;
+    color: #F5EFD8;
+    margin: 8px 0 4px;
+    line-height: 1.2;
+  }
+  .podium-slot.p1 .podium-name { font-size: 48px; }
+  .podium-class { font-family: var(--sans); font-size: 16px; color: #9CA2AE; margin-bottom: 16px; }
+  .podium-mark {
+    font-family: var(--mono); font-weight: 600;
+    font-size: 32px; color: #EDCA75;
+  }
+
+  .ceremony-record {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, #B23A2C 0%, #7A2620 100%);
+    color: #FFF3D6;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    font-family: var(--serif);
+    animation: reveal 600ms ease-out;
+  }
+  @keyframes reveal {
+    from { opacity: 0; transform: scale(0.94); }
+    to { opacity: 1; transform: none; }
+  }
+  .ceremony-record .flash-ribbon {
+    font-family: var(--label); font-size: 20px; letter-spacing: .5em;
+    color: #F8D97A; text-transform: uppercase;
+    margin-bottom: 24px;
+    animation: shimmer 1.2s ease-in-out infinite;
+  }
+  @keyframes shimmer {
+    0%, 100% { opacity: 1; text-shadow: 0 0 0 rgba(255,255,255,0); }
+    50% { opacity: .95; text-shadow: 0 0 20px rgba(248, 217, 122, 0.7); }
+  }
+  .ceremony-record .big-title {
+    font-family: var(--serif); font-weight: 900;
+    font-size: 100px; letter-spacing: .15em;
+    margin: 0; color: #FFEECC;
+  }
+  .ceremony-record .who {
+    font-size: 56px; margin: 20px 0 10px;
+    color: #FFF3D6;
+  }
+  .ceremony-record .who .cls { color: #F8D97A; font-size: 40px; margin-right: 16px; }
+  .ceremony-record .event-name {
+    font-size: 26px; color: #F0D9A0;
+    letter-spacing: .1em; margin-bottom: 30px;
+  }
+  .ceremony-record .mark-line {
+    display: flex; align-items: baseline; gap: 20px;
+    font-family: var(--mono); justify-content: center;
+    margin-top: 20px;
+  }
+  .ceremony-record .mark-line .old { font-size: 22px; color: rgba(255,243,214,.6); text-decoration: line-through; }
+  .ceremony-record .mark-line .arrow { color: #F8D97A; font-size: 26px; }
+  .ceremony-record .mark-line .new {
+    font-size: 84px; font-weight: 600; color: #FFEECC;
+    text-shadow: 0 4px 24px rgba(248, 217, 122, 0.6);
+  }
+  .ceremony-record .diff { font-size: 18px; color: #F8D97A; margin-top: 10px; letter-spacing: .1em; }
+
+  .ceremony-progress {
+    position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 6px;
+  }
+  .ceremony-progress .tick {
+    width: 26px; height: 3px; border-radius: 999px;
+    background: rgba(255,255,255,.15);
+  }
+  .ceremony-progress .tick.on { background: #B08133; }
+
+  .ceremony-controls {
+    position: fixed; top: 16px; right: 20px;
+    display: flex; gap: 8px;
+    font-family: var(--label); font-size: 11px; letter-spacing: .16em; text-transform: uppercase;
+  }
+  .ceremony-controls button {
+    all: unset; cursor: pointer;
+    padding: 6px 12px;
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.15);
+    border-radius: 3px;
+    color: #F1EAD8;
+    font-family: var(--label); font-size: 11px; letter-spacing: .16em;
+  }
+  .ceremony-controls button:hover { background: rgba(255,255,255,.14); }
+</style>
+
+<div class="app">
+  <aside>
+    <div class="brand">
+      <div class="brand-mark"><span class="dot"></span><h1>Field Day</h1></div>
+      <div class="sub">FIELD DAY · K-12</div>
+    </div>
+    <div id="sessionBadge"></div>
+    <nav id="nav"></nav>
+    <div class="sidebar-footer">
+      <div><span id="syncDot" class="sync-dot off"></span><span id="syncText">本機模式</span></div>
+      <div style="margin-top: 4px; font-family: var(--mono); font-size: 10px;">v2.0 · 2026</div>
+    </div>
+  </aside>
+
+  <main>
+    <div class="topbar">
+      <div>
+        <div class="crumbs" id="crumbs">賽事 / 總覽</div>
+        <h2 id="pageTitle">總覽</h2>
+      </div>
+      <div class="year-picker">
+        <label>本屆賽事</label>
+        <select id="yearSelect"></select>
+        <button class="btn ghost" id="newYearBtn" title="新增屆次">＋新屆</button>
+      </div>
+    </div>
+    <div id="view" class="view"><div class="loading">載入中…</div></div>
+  </main>
+</div>
+
+<div class="print-area" id="printArea"></div>
+<button class="btn primary print-back no-print" id="printBackBtn" style="display:none">← 返回系統</button>
+
+<div class="kiosk-shell" id="kioskShell"></div>
+<div class="ceremony-shell" id="ceremonyShell"></div>
+
+<div id="modalRoot"></div>
+<div class="toast-holder" id="toasts"></div>
+
+<script>
+(() => {
+  "use strict";
+
+  const state = {
+    year: null,
+    years: [],
+    events: [],
+    students: [],
+    registrations: [],
+    results: [],
+    teams: [],
+    classes: [],
+    settings: {},
+    view: "dashboard",
+    db: null,
+    ready: false,
+    session: null,
+    backend: "local",   // "claude" | "gsheets" | "local"
+    gsheetsUrl: "",
+  };
+
+  // 若要硬編 Google Sheets URL 讓所有開啟此檔案的人都用同一個後端，改這裡：
+  const GSHEETS_URL_HARDCODED = "";
+
+  const DEFAULT_SCORING = [9, 7, 6, 5, 4, 3, 2, 1];
+
+  const $ = s => document.querySelector(s);
+  const $$ = s => Array.from(document.querySelectorAll(s));
+  const LS_SESSION = "fieldday.session";
+  const LS_DATA = "fieldday.v2.data";
+
+  // ---------- Session ----------
+  function loadSession() {
+    try { state.session = JSON.parse(localStorage.getItem(LS_SESSION) || "null"); }
+    catch (e) { state.session = null; }
+  }
+  function saveSession() {
+    if (state.session) localStorage.setItem(LS_SESSION, JSON.stringify(state.session));
+    else localStorage.removeItem(LS_SESSION);
+  }
+
+  // ---------- Persistence ----------
+  function loadLocal() {
+    try { return JSON.parse(localStorage.getItem(LS_DATA) || "null"); }
+    catch (e) { return null; }
+  }
+  function saveLocal() {
+    try {
+      localStorage.setItem(LS_DATA, JSON.stringify({
+        events: state.events, students: state.students,
+        registrations: state.registrations, results: state.results,
+        teams: state.teams, classes: state.classes,
+        settings: state.settings, years: state.years,
+      }));
+    } catch (e) {}
+  }
+
+  async function initDb() {
+    // 優先順序 1：Claude Artifact 內建資料庫
+    try {
+      if (window.claude && typeof window.claude.use === "function") {
+        const db = await window.claude.use("db");
+        if (db) {
+          state.db = db;
+          state.backend = "claude";
+          $("#syncDot").classList.remove("off");
+          $("#syncText").textContent = "Claude 雲端";
+          subscribeAll();
+          return;
+        }
+      }
+    } catch (e) { console.warn("Claude db unavailable:", e); }
+
+    // 優先順序 2：Google Sheets
+    const gsUrl = GSHEETS_URL_HARDCODED || localStorage.getItem("fieldday.gsheetsUrl") || "";
+    if (gsUrl) {
+      state.gsheetsUrl = gsUrl;
+      state.backend = "gsheets";
+      $("#syncDot").classList.remove("off");
+      $("#syncText").textContent = "Google Sheets";
+      const ok = await gsheetsRefresh();
+      ensureSeed();
+      ensureYear();
+      state.ready = true;
+      render();
+      if (ok) startGsheetsPolling();
+      return;
+    }
+
+    // 優先順序 3：本機儲存（單機模式）
+    state.backend = "local";
+    $("#syncText").textContent = "本機模式";
+    const saved = loadLocal();
+    if (saved) Object.assign(state, saved);
+    ensureSeed();
+    ensureYear();
+    state.ready = true;
+    render();
+  }
+
+  // ---------- Google Sheets backend ----------
+  let gsheetsPollTimer = null;
+
+  async function gsheetsRefresh() {
+    if (!state.gsheetsUrl) return false;
+    try {
+      const res = await fetch(state.gsheetsUrl + "?action=listAll&t=" + Date.now(), {
+        method: "GET",
+        redirect: "follow",
+      });
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      const j = await res.json();
+      if (j.error) throw new Error(j.error);
+      const d = j.data || {};
+      if (d.events) state.events = d.events;
+      if (d.students) state.students = d.students;
+      if (d.registrations) state.registrations = d.registrations;
+      if (d.results) state.results = d.results;
+      if (d.teams) state.teams = d.teams;
+      if (d.classes) state.classes = d.classes;
+      if (d.years) state.years = d.years.map(y => y.year || parseInt(y.id, 10)).filter(y => y).sort((a, b) => b - a);
+      if (d.settings) {
+        const obj = {};
+        d.settings.forEach(s => obj[s.id] = s);
+        state.settings = obj;
+      }
+      $("#syncDot").classList.remove("off");
+      $("#syncText").textContent = "Google Sheets";
+      if (state.ready) render();
+      return true;
+    } catch (e) {
+      console.warn("gsheets refresh failed:", e);
+      $("#syncText").textContent = "同步失敗";
+      $("#syncDot").classList.add("off");
+      return false;
+    }
+  }
+
+  function startGsheetsPolling() {
+    if (gsheetsPollTimer) clearInterval(gsheetsPollTimer);
+    gsheetsPollTimer = setInterval(gsheetsRefresh, 5000);
+  }
+  function stopGsheetsPolling() {
+    if (gsheetsPollTimer) { clearInterval(gsheetsPollTimer); gsheetsPollTimer = null; }
+  }
+
+  async function gsheetsCall(action, params) {
+    const res = await fetch(state.gsheetsUrl, {
+      method: "POST",
+      redirect: "follow",
+      headers: { "Content-Type": "text/plain;charset=UTF-8" },
+      body: JSON.stringify({ action, ...params }),
+    });
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    const j = await res.json();
+    if (j.error) throw new Error(j.error);
+    return j;
+  }
+
+  function upsertLocal(collection, id, data) {
+    if (collection === "settings") {
+      state.settings[id] = { id, ...data };
+    } else {
+      const list = state[collection] || (state[collection] = []);
+      const idx = list.findIndex(x => x.id === id);
+      const item = { id, ...data };
+      if (idx >= 0) list[idx] = item; else list.push(item);
+    }
+  }
+  function removeLocal(collection, id) {
+    if (collection === "settings") delete state.settings[id];
+    else state[collection] = (state[collection] || []).filter(x => x.id !== id);
+  }
+
+  function subscribeAll() {
+    const collections = ["events", "students", "registrations", "results", "teams", "classes", "years", "settings"];
+    let loaded = 0;
+    collections.forEach(name => {
+      state.db.collection(name).onSnapshot(snap => {
+        const docs = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+        if (name === "years") state.years = docs.map(d => d.year).sort((a, b) => b - a);
+        else if (name === "settings") {
+          const obj = {};
+          docs.forEach(d => obj[d.id] = d);
+          state.settings = obj;
+        } else state[name] = docs;
+        loaded++;
+        if (loaded >= collections.length && !state.ready) {
+          ensureSeed();
+          ensureYear();
+          state.ready = true;
+        }
+        render();
+      }, err => console.warn(name, err));
+    });
+  }
+
+  async function dbSet(collection, id, data) {
+    if (state.backend === "claude") {
+      await state.db.collection(collection).doc(id).set(data);
+    } else if (state.backend === "gsheets") {
+      upsertLocal(collection, id, data);
+      render();
+      gsheetsCall("set", { collection, id, data }).catch(e => {
+        console.warn("gsheets set failed:", e);
+        toast("儲存失敗，將重試");
+      });
+    } else {
+      upsertLocal(collection, id, data);
+      saveLocal();
+      render();
+    }
+  }
+  async function dbAdd(collection, data) {
+    const id = "id_" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+    await dbSet(collection, id, data);
+    return id;
+  }
+  async function dbDelete(collection, id) {
+    if (state.backend === "claude") {
+      await state.db.collection(collection).doc(id).delete();
+    } else if (state.backend === "gsheets") {
+      removeLocal(collection, id);
+      render();
+      gsheetsCall("delete", { collection, id }).catch(e => {
+        console.warn("gsheets delete failed:", e);
+        toast("刪除失敗，將重試");
+      });
+    } else {
+      removeLocal(collection, id);
+      saveLocal();
+      render();
+    }
+  }
+  async function addYear(y) {
+    const doc = { year: y, createdAt: new Date().toISOString() };
+    if (state.backend === "claude") {
+      await state.db.collection("years").doc(String(y)).set(doc);
+    } else if (state.backend === "gsheets") {
+      if (!state.years.includes(y)) state.years.push(y);
+      state.years.sort((a, b) => b - a);
+      render();
+      gsheetsCall("set", { collection: "years", id: String(y), data: doc }).catch(e => console.warn(e));
+    } else {
+      if (!state.years.includes(y)) state.years.push(y);
+      state.years.sort((a, b) => b - a);
+      saveLocal();
+      render();
+    }
+  }
+
+  // ---------- Auth ----------
+  async function sha256(text) {
+    const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, "0")).join("");
+  }
+
+  async function setAdminPassword(password) {
+    const salt = Math.random().toString(36).slice(2, 12);
+    const hash = await sha256(password + ":" + salt);
+    await dbSet("settings", "admin", { passwordHash: hash, salt });
+  }
+  async function loginAdmin(password) {
+    const admin = state.settings.admin;
+    if (!admin) {
+      await setAdminPassword(password);
+      state.session = { role: "admin" };
+      saveSession();
+      return { ok: true, firstTime: true };
+    }
+    const hash = await sha256(password + ":" + admin.salt);
+    if (hash !== admin.passwordHash) return { ok: false, msg: "密碼錯誤" };
+    state.session = { role: "admin" };
+    saveSession();
+    return { ok: true };
+  }
+  async function setClassPassword(className, password) {
+    const salt = Math.random().toString(36).slice(2, 12);
+    const hash = await sha256(password + ":" + salt);
+    const existing = state.classes.find(c => c.className === className);
+    if (existing) await dbSet("classes", existing.id, { className, passwordHash: hash, salt });
+    else await dbAdd("classes", { className, passwordHash: hash, salt });
+  }
+  async function loginClass(className, password) {
+    const cls = state.classes.find(c => c.className === className);
+    if (!cls) return { ok: false, msg: "此班級尚未建立帳號，請請管理員先建立" };
+    const hash = await sha256(password + ":" + cls.salt);
+    if (hash !== cls.passwordHash) return { ok: false, msg: "密碼錯誤" };
+    state.session = { role: "class", className };
+    saveSession();
+    return { ok: true };
+  }
+  function logout() {
+    state.session = null;
+    saveSession();
+    state.view = "dashboard";
+    render();
+  }
+
+  function getSchoolSettings() {
+    const s = state.settings.school || {};
+    return {
+      schoolName: s.schoolName || "本校",
+      principalName: s.principalName || "校　　長",
+      meetTitle: s.meetTitle || "Field Day",
+      meetChair: s.meetChair || "",
+      trackDirector: s.trackDirector || "",
+      recorder: s.recorder || "",
+    };
+  }
+  async function setSchoolSettings(data) {
+    await dbSet("settings", "school", data);
+  }
+
+  function isSetupPhase() { return !state.settings.admin; }
+  function role() { return state.session ? state.session.role : (isSetupPhase() ? "admin" : "guest"); }
+
+  function can(action, target) {
+    const r = role();
+    if (r === "admin") return true;
+    if (r === "class") {
+      const cls = state.session.className;
+      switch (action) {
+        case "register":       return target === cls;
+        case "editTeam":       return target === cls;
+        case "enterResult":    return true;
+        case "editEvent":      return false;
+        case "editStudent":    return false;
+        case "manageClasses":  return false;
+        case "manageYear":     return false;
+      }
+      return false;
+    }
+    return false; // guest
+  }
+
+  // ---------- Seed ----------
+  function ensureSeed() {
+    // Google Sheets 模式不自動塞範例資料，使用者從空白開始
+    if (state.backend === "gsheets") {
+      if (state.years.length === 0) addYear(new Date().getFullYear());
+      return;
+    }
+    if (state.events.length === 0) seedEvents().forEach(e => dbAdd("events", e));
+    if (state.students.length === 0) seedStudents().forEach(s => dbAdd("students", s));
+    if (state.years.length === 0) addYear(new Date().getFullYear());
+    setTimeout(() => {
+      if (state.results.length === 0 && state.events.length > 0 && state.students.length > 0) seedResults();
+    }, 200);
+  }
+
+  // 115 學年度 Field Day 實際賽程（2026 年 11 月）
+  function build115Schedule() {
+    const events = [];
+    const D1 = "2026-11-04";    // 11/4 下午
+    const D2a = "2026-11-11";   // 11/11 上午
+    const D2p = "2026-11-11";   // 11/11 下午
+    const D3a = "2026-11-14";   // 11/14 上午
+    const D3p = "2026-11-14";   // 11/14 下午
+    const gg = g => g <= 9 ? "國中" : "高中";
+    const gn = g => `${g}年級`;
+    const push = (o) => events.push({
+      unit: "seconds", scoringType: "individual", rounds: "single",
+      advanceCount: 8, venue: "田徑場",
+      ...o,
+    });
+
+    // === 11/4 下午 徑賽 ===
+    // 200m 7-9
+    [7,8,9].forEach(g => ["女","男"].forEach(gd => {
+      push({ name: `${gn(g)}${gd}子200公尺`, category: "track",
+        gender: gd==="男"?"male":"female", gradeGroup: gg(g),
+        date: D1, time: "13:00", notes: "12:30 排球場檢錄" });
+    }));
+    // 200m 10-12
+    [10,11,12].forEach(g => ["女","男"].forEach(gd => {
+      push({ name: `${gn(g)}${gd}子200公尺`, category: "track",
+        gender: gd==="男"?"male":"female", gradeGroup: gg(g),
+        date: D1, time: "13:30", notes: "13:00 排球場檢錄" });
+    }));
+    // 400m 7-9
+    [7,8,9].forEach(g => ["女","男"].forEach(gd => {
+      push({ name: `${gn(g)}${gd}子400公尺`, category: "track",
+        gender: gd==="男"?"male":"female", gradeGroup: gg(g),
+        date: D1, time: "14:00", notes: "13:30 排球場檢錄" });
+    }));
+    // 400m 10-12
+    [10,11,12].forEach(g => ["女","男"].forEach(gd => {
+      push({ name: `${gn(g)}${gd}子400公尺`, category: "track",
+        gender: gd==="男"?"male":"female", gradeGroup: gg(g),
+        date: D1, time: "14:10", notes: "13:40 排球場檢錄" });
+    }));
+    // 1500m 7-12（同組合併起跑，仍分年級計名次）
+    [7,8,9,10,11,12].forEach(g => ["女","男"].forEach(gd => {
+      push({ name: `${gn(g)}${gd}子1500公尺`, category: "track",
+        gender: gd==="男"?"male":"female", gradeGroup: gg(g),
+        date: D1, time: "14:40", notes: "14:10 排球場檢錄；相鄰兩年級合併起跑" });
+    }));
+
+    // === 11/4 下午 田賽 ===
+    push({ name: "國中男子跳高", category: "field", gender: "male", gradeGroup: "國中",
+      unit: "meters", date: D1, time: "12:30", venue: "活動中心",
+      notes: "起跳高度 120cm；試跳規則詳大會秩序" });
+    push({ name: "國中女子跳高", category: "field", gender: "female", gradeGroup: "國中",
+      unit: "meters", date: D1, time: "12:30", venue: "活動中心",
+      notes: "起跳高度 100cm" });
+    push({ name: "高中男子跳遠", category: "field", gender: "male", gradeGroup: "高中",
+      unit: "meters", date: D1, time: "12:30", venue: "跳遠場" });
+    push({ name: "高中女子鉛球", category: "field", gender: "female", gradeGroup: "高中",
+      unit: "meters", date: D1, time: "12:30", venue: "鉛球場",
+      notes: "鉛球重量 4kg" });
+
+    // === 11/11 上午 田賽 ===
+    push({ name: "高中男子跳高", category: "field", gender: "male", gradeGroup: "高中",
+      unit: "meters", date: D2a, time: "08:50", venue: "活動中心",
+      notes: "起跳高度 10年級 130cm，11-12年級 135cm" });
+    push({ name: "高中女子跳高", category: "field", gender: "female", gradeGroup: "高中",
+      unit: "meters", date: D2a, time: "08:50", venue: "活動中心",
+      notes: "起跳高度 110cm" });
+    push({ name: "高中女子跳遠", category: "field", gender: "female", gradeGroup: "高中",
+      unit: "meters", date: D2a, time: "08:50", venue: "跳遠場" });
+    push({ name: "國中男子鉛球", category: "field", gender: "male", gradeGroup: "國中",
+      unit: "meters", date: D2a, time: "08:50", venue: "鉛球場",
+      notes: "鉛球重量 5kg" });
+    push({ name: "國中女子鉛球", category: "field", gender: "female", gradeGroup: "國中",
+      unit: "meters", date: D2a, time: "08:50", venue: "鉛球場",
+      notes: "鉛球重量 3kg" });
+
+    // === 11/11 上午 徑賽 ===
+    // 800m 7-12
+    [7,8,9,10,11,12].forEach(g => ["女","男"].forEach(gd => {
+      push({ name: `${gn(g)}${gd}子800公尺`, category: "track",
+        gender: gd==="男"?"male":"female", gradeGroup: gg(g),
+        date: D2a, time: "10:00", notes: "09:30 排球場檢錄；相鄰兩年級合併起跑" });
+    }));
+    // 100m 預賽+決賽 7-9 (預賽 10:30)
+    [7,8,9].forEach(g => ["女","男"].forEach(gd => {
+      push({ name: `${gn(g)}${gd}子100公尺`, category: "track",
+        gender: gd==="男"?"male":"female", gradeGroup: gg(g),
+        rounds: "prelim_final", advanceCount: 8,
+        date: D2a, time: "10:30", notes: "共 14 人分 2 組；決賽 11/14 上午 10:00" });
+    }));
+    // 100m 預賽+決賽 10-12 (預賽 10:40)
+    [10,11,12].forEach(g => ["女","男"].forEach(gd => {
+      push({ name: `${gn(g)}${gd}子100公尺`, category: "track",
+        gender: gd==="男"?"male":"female", gradeGroup: gg(g),
+        rounds: "prelim_final", advanceCount: 8,
+        date: D2a, time: "10:40", notes: "共 16 人分 3 組；決賽 11/14 上午 10:00" });
+    }));
+
+    // === 11/11 下午 田賽 ===
+    push({ name: "高中男子鉛球", category: "field", gender: "male", gradeGroup: "高中",
+      unit: "meters", date: D2p, time: "13:10", venue: "鉛球場",
+      notes: "鉛球重量 6kg" });
+    push({ name: "國中男子跳遠", category: "field", gender: "male", gradeGroup: "國中",
+      unit: "meters", date: D2p, time: "13:10", venue: "跳遠場" });
+    push({ name: "國中女子跳遠", category: "field", gender: "female", gradeGroup: "國中",
+      unit: "meters", date: D2p, time: "13:10", venue: "跳遠場" });
+
+    // === 11/11 下午 400公尺混合接力 ===
+    [7,8,9].forEach(g => push({
+      name: `${gn(g)}400公尺混合接力`, category: "relay", gender: "mixed",
+      gradeGroup: gg(g), scoringType: "team",
+      date: D2p, time: "13:30", notes: "13:00 開始檢錄；每隊 4 男 4 女中出 4 人",
+    }));
+    [10,11,12].forEach(g => push({
+      name: `${gn(g)}400公尺混合接力`, category: "relay", gender: "mixed",
+      gradeGroup: gg(g), scoringType: "team",
+      date: D2p, time: "13:40", notes: "13:10 開始檢錄",
+    }));
+    // 4×300 接力 7-9
+    [7,8,9].forEach(g => ["女","男"].forEach(gd => push({
+      name: `${gn(g)}${gd}子4×300公尺接力`, category: "relay",
+      gender: gd==="男"?"male":"female", gradeGroup: gg(g), scoringType: "team",
+      date: D2p, time: "14:20", notes: "13:50 開始檢錄",
+    })));
+    // 4×300 接力 10-12
+    [10,11,12].forEach(g => ["女","男"].forEach(gd => push({
+      name: `${gn(g)}${gd}子4×300公尺接力`, category: "relay",
+      gender: gd==="男"?"male":"female", gradeGroup: gg(g), scoringType: "team",
+      date: D2p, time: "15:05", notes: "14:35 開始檢錄",
+    })));
+
+    // === 11/14 上午 400接力決賽 ===
+    [7,8,9,10,11,12].forEach(g => ["女","男"].forEach(gd => push({
+      name: `${gn(g)}${gd}子400公尺接力`, category: "relay",
+      gender: gd==="男"?"male":"female", gradeGroup: gg(g), scoringType: "team",
+      date: D3a, time: "11:00", notes: "10:30 開始檢錄",
+    })));
+
+    // === 11/14 下午 大隊接力 ===
+    const relayTimes = { 7: "14:00", 8: "14:15", 9: "14:30" };
+    [7,8,9].forEach(g => push({
+      name: `${gn(g)}1600公尺大隊接力`, category: "relay", gender: "mixed",
+      gradeGroup: gg(g), scoringType: "team",
+      date: D3p, time: relayTimes[g], venue: "大操場",
+      notes: "13:20 大操場檢錄",
+    }));
+    push({
+      name: "高中男生組1600公尺大隊接力", category: "relay", gender: "male",
+      gradeGroup: "高中", scoringType: "team",
+      date: D3p, time: "14:45", venue: "大操場",
+      notes: "13:20 大操場檢錄",
+    });
+    [10,11,12].forEach(g => push({
+      name: `${gn(g)}2400公尺大隊接力`, category: "relay", gender: "mixed",
+      gradeGroup: gg(g), scoringType: "team",
+      date: D3p, time: "14:50", venue: "大操場",
+      notes: "14:20 大操場檢錄",
+    }));
+
+    return events;
+  }
+
+  // 115 學年度雙語部國小賽程（2026 年 11 月 14 日）
+  function buildElementarySchedule() {
+    const events = [];
+    const DATE = "2026-11-14";
+    const gg = g => g <= 2 ? "國小低" : g <= 4 ? "國小中" : "國小高";
+    const gn = g => `${g}年級`;
+    const push = (o) => events.push({
+      unit: "seconds", scoringType: "individual", rounds: "single",
+      advanceCount: 8, venue: "田徑場",
+      date: DATE, ...o,
+    });
+
+    // 7:50 一年級 60公尺、二年級 100公尺
+    ["女","男"].forEach(gd => push({
+      name: `${gn(1)}${gd}子60公尺`, category: "track",
+      gender: gd==="男"?"male":"female", gradeGroup: gg(1),
+      time: "07:50", venue: "60公尺起跑線",
+      notes: "1A、1B 同場",
+    }));
+    ["女","男"].forEach(gd => push({
+      name: `${gn(2)}${gd}子100公尺`, category: "track",
+      gender: gd==="男"?"male":"female", gradeGroup: gg(2),
+      time: "07:50", venue: "100公尺起跑線",
+      notes: "2A、2B 同場",
+    }));
+
+    // 8:20 田賽 — 3、4年級壘球擲遠；3年級跳遠；5、6年級跳高
+    [3,4].forEach(g => ["女","男"].forEach(gd => push({
+      name: `${gn(g)}${gd}子壘球擲遠`, category: "field", unit: "meters",
+      gender: gd==="男"?"male":"female", gradeGroup: gg(g),
+      time: "08:20", venue: "綜合球場",
+    })));
+    ["女","男"].forEach(gd => push({
+      name: `${gn(3)}${gd}子跳遠`, category: "field", unit: "meters",
+      gender: gd==="男"?"male":"female", gradeGroup: gg(3),
+      time: "08:20", venue: "排球場",
+    }));
+    [5,6].forEach(g => ["女","男"].forEach(gd => push({
+      name: `${gn(g)}${gd}子跳高`, category: "field", unit: "meters",
+      gender: gd==="男"?"male":"female", gradeGroup: gg(g),
+      time: "08:20", venue: "舊體育館",
+    })));
+
+    // 8:40 徑賽 — 5、6年級200m決賽；3、4年級100m決賽；5、6年級100m預賽；3-6年級60m決賽；3-6年級 4×100 接力
+    [5,6].forEach(g => ["女","男"].forEach(gd => push({
+      name: `${gn(g)}${gd}子200公尺`, category: "track",
+      gender: gd==="男"?"male":"female", gradeGroup: gg(g),
+      time: "08:40", venue: "排球場",
+    })));
+    [3,4].forEach(g => ["女","男"].forEach(gd => push({
+      name: `${gn(g)}${gd}子100公尺`, category: "track",
+      gender: gd==="男"?"male":"female", gradeGroup: gg(g),
+      time: "08:40", venue: "排球場",
+    })));
+    [5,6].forEach(g => ["女","男"].forEach(gd => push({
+      name: `${gn(g)}${gd}子100公尺`, category: "track",
+      gender: gd==="男"?"male":"female", gradeGroup: gg(g),
+      rounds: "prelim_final", advanceCount: 8,
+      time: "08:40", venue: "排球場",
+      notes: "預賽 8:40；決賽時間依大會安排",
+    })));
+    [3,4,5,6].forEach(g => ["女","男"].forEach(gd => push({
+      name: `${gn(g)}${gd}子60公尺`, category: "track",
+      gender: gd==="男"?"male":"female", gradeGroup: gg(g),
+      time: "08:40", venue: "排球場",
+    })));
+    [3,4,5,6].forEach(g => push({
+      name: `${gn(g)}4×100公尺接力`, category: "relay", gender: "mixed",
+      gradeGroup: gg(g), scoringType: "team",
+      time: "08:40", venue: "排球場",
+      notes: "A、B 班各一隊",
+    }));
+
+    // 8:50 田賽 — 4年級跳遠；5年級壘球擲遠
+    ["女","男"].forEach(gd => push({
+      name: `${gn(4)}${gd}子跳遠`, category: "field", unit: "meters",
+      gender: gd==="男"?"male":"female", gradeGroup: gg(4),
+      time: "08:50", venue: "排球場",
+    }));
+    ["女","男"].forEach(gd => push({
+      name: `${gn(5)}${gd}子壘球擲遠`, category: "field", unit: "meters",
+      gender: gd==="男"?"male":"female", gradeGroup: gg(5),
+      time: "08:50", venue: "綜合球場",
+    }));
+
+    // 9:20 田賽 — 5年級跳遠；6年級壘球擲遠
+    ["女","男"].forEach(gd => push({
+      name: `${gn(5)}${gd}子跳遠`, category: "field", unit: "meters",
+      gender: gd==="男"?"male":"female", gradeGroup: gg(5),
+      time: "09:20", venue: "排球場",
+    }));
+    ["女","男"].forEach(gd => push({
+      name: `${gn(6)}${gd}子壘球擲遠`, category: "field", unit: "meters",
+      gender: gd==="男"?"male":"female", gradeGroup: gg(6),
+      time: "09:20", venue: "綜合球場",
+    }));
+
+    // 9:50 田賽 — 6年級跳遠
+    ["女","男"].forEach(gd => push({
+      name: `${gn(6)}${gd}子跳遠`, category: "field", unit: "meters",
+      gender: gd==="男"?"male":"female", gradeGroup: gg(6),
+      time: "09:50", venue: "排球場",
+    }));
+
+    // 15:20 3年級 班級900公尺跑（全班每人跑 3 圈 900m，班級總時間短者勝）
+    push({
+      name: "三年級班級900公尺跑", category: "relay", gender: "mixed",
+      gradeGroup: gg(3), scoringType: "team",
+      time: "15:20", venue: "田徑場",
+      notes: "全班每人跑 900m（3 圈）；班級總時間短者勝；人數不均時扣除較慢者",
+    });
+    // 15:20 4-6年級 班級對抗接力（A vs B）
+    [4,5,6].forEach(g => push({
+      name: `${gn(g)}班級對抗接力`, category: "relay", gender: "mixed",
+      gradeGroup: gg(g), scoringType: "team",
+      time: "15:20", venue: "田徑場",
+      notes: "全班每人跑 100m；A 班 對 B 班；人數不均時可重複跑",
+    }));
+
+    return events;
+  }
+
+  async function loadElementarySchedule(clearFirst) {
+    if (clearFirst) {
+      const existing = state.events.slice();
+      for (const e of existing) await dbDelete("events", e.id);
+    }
+    const evs = buildElementarySchedule();
+    const existingNames = new Set(state.events.map(e => e.name));
+    let added = 0;
+    for (const e of evs) {
+      if (existingNames.has(e.name)) continue;
+      await dbAdd("events", e);
+      added++;
+    }
+    if (!state.years.includes(2026)) await addYear(2026);
+    state.year = 2026;
+    toast(`已載入 ${added} 個國小項目`);
+  }
+
+  async function load115Schedule(clearFirst) {
+    if (clearFirst) {
+      const existing = state.events.slice();
+      for (const e of existing) await dbDelete("events", e.id);
+    }
+    const evs = build115Schedule();
+    const existingNames = new Set(state.events.map(e => e.name));
+    let added = 0;
+    for (const e of evs) {
+      if (existingNames.has(e.name)) continue;
+      await dbAdd("events", e);
+      added++;
+    }
+    // Ensure the 2026 year exists
+    if (!state.years.includes(2026)) await addYear(2026);
+    state.year = 2026;
+    toast(`已載入 ${added} 個項目（115 學年度）`);
+  }
+  function seedEvents() {
+    const events = [];
+    [
+      { name: "60公尺", groups: ["國小低", "國小中"] },
+      { name: "100公尺", groups: ["國小高", "國中", "高中"] },
+      { name: "200公尺", groups: ["國中", "高中"] },
+      { name: "400公尺", groups: ["國中", "高中"] },
+      { name: "800公尺", groups: ["高中"] },
+    ].forEach(t => t.groups.forEach(g => ["男", "女"].forEach(gd => {
+      events.push({
+        name: `${g}${gd}子${t.name}`,
+        category: "track",
+        gender: gd === "男" ? "male" : "female",
+        gradeGroup: g, unit: "seconds",
+        scoringType: "individual",
+        rounds: (t.name === "60公尺" || t.name === "800公尺") ? "single" : "prelim_final",
+        advanceCount: 8,
+      });
+    })));
+    [
+      { name: "跳遠", groups: ["國小高", "國中", "高中"] },
+      { name: "鉛球", groups: ["國中", "高中"] },
+    ].forEach(f => f.groups.forEach(g => ["男", "女"].forEach(gd => {
+      events.push({
+        name: `${g}${gd}子${f.name}`, category: "field",
+        gender: gd === "男" ? "male" : "female",
+        gradeGroup: g, unit: "meters",
+        scoringType: "individual",
+        rounds: "single", advanceCount: 8,
+      });
+    })));
+    ["國小高", "國中", "高中"].forEach(g => ["男", "女"].forEach(gd => {
+      events.push({
+        name: `${g}${gd}子400公尺接力`,
+        category: "relay", gender: gd === "男" ? "male" : "female",
+        gradeGroup: g, unit: "seconds",
+        scoringType: "team",
+        rounds: "single", advanceCount: 8,
+      });
+    }));
+    return events;
+  }
+  function seedStudents() {
+    const students = [];
+    const classes = {
+      "國小低": ["一甲", "一乙", "二甲", "二乙"],
+      "國小中": ["三甲", "三乙", "四甲", "四乙"],
+      "國小高": ["五甲", "五乙", "六甲", "六乙"],
+      "國中": ["七甲", "七乙", "八甲", "八乙", "九甲", "九乙"],
+      "高中": ["高一甲", "高一乙", "高二甲", "高二乙", "高三甲", "高三乙"],
+    };
+    const surnames = "陳林黃張李王吳劉蔡楊許鄭謝郭洪邱曾廖賴徐周葉".split("");
+    const nm = ["志明", "俊傑", "家豪", "冠宇", "宗翰", "承翰", "柏翰", "承恩", "宇軒", "冠廷", "彥廷", "士豪"];
+    const nf = ["淑芬", "美玲", "怡君", "雅婷", "欣怡", "詩涵", "宜庭", "佳穎", "思妤", "子晴", "妍希", "品妍"];
+    let sid = 1;
+    Object.entries(classes).forEach(([grp, cls]) => cls.forEach(c => {
+      for (let i = 0; i < 8; i++) {
+        const m = i % 2 === 0;
+        const nm2 = surnames[Math.floor(Math.random() * surnames.length)] + (m ? nm : nf)[Math.floor(Math.random() * (m ? nm : nf).length)];
+        students.push({
+          studentId: String(112000 + sid++), name: nm2,
+          className: c, grade: classGrade(c), gradeGroup: grp,
+          gender: m ? "male" : "female",
+        });
+      }
+    }));
+    return students;
+  }
+  function classGrade(className) {
+    if (!className) return 1;
+    // 雙語部格式：1A, 2B, ..., 6B, 或 10A, 11B, 12A
+    const m = className.match(/^(\d+)/);
+    if (m) return Math.min(12, parseInt(m[1], 10));
+    const map = { "一": 1, "二": 2, "三": 3, "四": 4, "五": 5, "六": 6, "七": 7, "八": 8, "九": 9 };
+    if (className.startsWith("高")) return 9 + (map[className[1]] || 1);
+    return map[className[0]] || 1;
+  }
+  function gradeGroupOf(className) {
+    const g = classGrade(className);
+    if (g <= 2) return "國小低"; if (g <= 4) return "國小中";
+    if (g <= 6) return "國小高"; if (g <= 9) return "國中";
+    return "高中";
+  }
+  function seedResults() {
+    state.events.slice(0, 8).forEach(ev => {
+      const eligible = state.students.filter(s => s.gradeGroup === ev.gradeGroup && (ev.gender === "mixed" || s.gender === ev.gender));
+      const picks = shuffle(eligible).slice(0, Math.min(8, eligible.length));
+      picks.forEach((s, i) => {
+        const mark = ev.unit === "seconds" ? +(10 + Math.random() * 5 + i * 0.3).toFixed(2) : +(4 + Math.random() * 3 - i * 0.15).toFixed(2);
+        const round = ev.rounds === "prelim_final" ? "final" : "single";
+        dbAdd("results", {
+          year: state.year, eventId: ev.id, studentId: s.id,
+          className: s.className, mark, round,
+          heat: null, lane: i + 1,
+          competitorType: "student",
+        });
+      });
+    });
+  }
+  function shuffle(a) { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+
+  function ensureYear() { if (!state.year) state.year = state.years[0] || new Date().getFullYear(); }
+
+  // ---------- Ranking ----------
+  function rankResults(results, unit) {
+    const sorted = results.slice().sort((a, b) => {
+      if (a.mark == null && b.mark == null) return 0;
+      if (a.mark == null) return 1;
+      if (b.mark == null) return -1;
+      return unit === "seconds" ? a.mark - b.mark : b.mark - a.mark;
+    });
+    return sorted.map((r, i) => ({
+      ...r,
+      rank: r.mark != null ? i + 1 : null,
+      points: r.mark != null && i < DEFAULT_SCORING.length ? DEFAULT_SCORING[i] : 0,
+    }));
+  }
+
+  function scoringResultsForEvent(eventId, year) {
+    const ev = state.events.find(e => e.id === eventId);
+    if (!ev) return [];
+    const all = state.results.filter(r => r.eventId === eventId && r.year === year);
+    const relevantRound = ev.rounds === "prelim_final" ? "final" : "single";
+    const filtered = all.filter(r => (r.round || "single") === relevantRound);
+    return rankResults(filtered, ev.unit);
+  }
+
+  function championshipStandings(year) {
+    const byClass = new Map();
+    state.events.forEach(ev => {
+      const ranked = scoringResultsForEvent(ev.id, year);
+      ranked.forEach(r => {
+        if (!r.points) return;
+        const k = r.className;
+        byClass.set(k, (byClass.get(k) || 0) + r.points);
+      });
+    });
+    return Array.from(byClass.entries())
+      .map(([className, points]) => ({ className, points, grade: classGrade(className), gradeGroup: gradeGroupOf(className) }))
+      .sort((a, b) => b.points - a.points);
+  }
+
+  function eventRecord(eventId) {
+    const ev = state.events.find(e => e.id === eventId);
+    if (!ev) return null;
+    const all = state.results.filter(r => r.eventId === eventId && r.mark != null);
+    const relevant = ev.rounds === "prelim_final" ? "final" : "single";
+    const scoring = all.filter(r => (r.round || "single") === relevant);
+    if (scoring.length === 0) return null;
+    const best = scoring.reduce((a, b) => ev.unit === "seconds" ? (a.mark <= b.mark ? a : b) : (a.mark >= b.mark ? a : b));
+    const student = state.students.find(s => s.id === best.studentId);
+    const team = state.teams.find(t => t.id === best.teamId);
+    return {
+      mark: best.mark, year: best.year,
+      student: student ? student.name : (team ? `${team.className} 接力隊` : (best.className || "—")),
+      className: best.className || (student ? student.className : "—"),
+    };
+  }
+
+  function formatMark(m, unit) {
+    if (m == null || Number.isNaN(m)) return "—";
+    return unit === "seconds" ? m.toFixed(2) + "″" : m.toFixed(2) + " m";
+  }
+  const CAT_LABEL = { track: "徑賽", field: "田賽", relay: "接力" };
+  const GENDER_LABEL = { male: "男", female: "女", mixed: "混" };
+  const ROUND_LABEL = { single: "決", prelim: "預", final: "決" };
+
+  // ---------- CSV ----------
+  function parseCSV(text) {
+    const rows = [];
+    let cur = [], field = "", inQuote = false, i = 0;
+    while (i < text.length) {
+      const c = text[i];
+      if (inQuote) {
+        if (c === '"' && text[i + 1] === '"') { field += '"'; i += 2; continue; }
+        if (c === '"') { inQuote = false; i++; continue; }
+        field += c; i++;
+      } else {
+        if (c === '"') { inQuote = true; i++; continue; }
+        if (c === ",") { cur.push(field); field = ""; i++; continue; }
+        if (c === "\r") { i++; continue; }
+        if (c === "\n") { cur.push(field); rows.push(cur); cur = []; field = ""; i++; continue; }
+        field += c; i++;
+      }
+    }
+    if (field !== "" || cur.length) { cur.push(field); rows.push(cur); }
+    return rows.filter(r => r.some(f => f.trim() !== ""));
+  }
+
+  // ---------- Render ----------
+  function renderSidebar() {
+    // Session badge
+    const bd = $("#sessionBadge");
+    const r = role();
+    if (isSetupPhase()) {
+      bd.innerHTML = `
+        <div class="session-badge">
+          <div class="role">初次設定</div>
+          <div class="who" style="font-size:12px; color:var(--slate); font-family:var(--sans); font-weight:400;">尚未建立管理員密碼；請至「班級與權限」設定。</div>
+        </div>`;
+    } else if (state.session && state.session.role === "admin") {
+      bd.innerHTML = `
+        <div class="session-badge admin">
+          <div class="role">管理員</div>
+          <div class="who">體育組</div>
+          <div class="actions"><a class="link" data-logout>登出</a></div>
+        </div>`;
+    } else if (state.session && state.session.role === "class") {
+      bd.innerHTML = `
+        <div class="session-badge class">
+          <div class="role">班級帳號</div>
+          <div class="who">${state.session.className}</div>
+          <div class="actions"><a class="link" data-logout>登出</a></div>
+        </div>`;
+    } else {
+      bd.innerHTML = `
+        <div class="session-badge">
+          <div class="role">訪客 · 唯讀</div>
+          <div class="actions"><a class="link" data-login>登入</a></div>
+        </div>`;
+    }
+    bd.querySelectorAll("[data-logout]").forEach(a => a.onclick = () => logout());
+    bd.querySelectorAll("[data-login]").forEach(a => a.onclick = () => { state.view = "login"; render(); });
+
+    // Nav items
+    const items = [
+      ["賽事", null],
+      ["dashboard", "運", "總覽"],
+      ["events", "項", "項目"],
+      ["students", "名", "學生名冊"],
+      ["競賽", null],
+      ["registration", "報", "報名"],
+      ["teams", "隊", "接力隊伍"],
+      ["results", "績", "成績登錄"],
+      ["現場", null],
+      ["checkin", "檢", "電子檢錄"],
+      ["share", "掃", "QR 分享"],
+      ["ceremony", "典", "頒獎播放"],
+      ["榜單", null],
+      ["championship", "錦", "總錦標"],
+      ["records", "錄", "大會紀錄"],
+      ["history", "歷", "歷年紀錄"],
+      ["出版", null],
+      ["print", "印", "列印文件"],
+      ["accounts", "權", "班級與權限"],
+    ];
+    const nav = $("#nav");
+    nav.innerHTML = items.map(it => {
+      if (it[1] === null) return `<div class="group-label">${it[0]}</div>`;
+      return `<button class="nav-item" data-view="${it[0]}"><span class="glyph">${it[1]}</span>${it[2]}</button>`;
+    }).join("");
+    nav.querySelectorAll(".nav-item").forEach(b => {
+      b.classList.toggle("active", b.dataset.view === state.view);
+      b.onclick = () => { state.view = b.dataset.view; render(); };
+    });
+  }
+
+  function render() {
+    if (!state.ready) return;
+    // Auto-detect kiosk mode from hash on first render
+    if (!document.body.classList.contains("kiosk-live") && !document.body.classList.contains("kiosk-ceremony")) {
+      const hash = window.location.hash;
+      if (hash.startsWith("#/live/") || hash === "#/ceremony") {
+        routeFromHash();
+        return;
+      }
+    }
+    // If already in kiosk mode, refresh those views on data change
+    if (document.body.classList.contains("kiosk-live")) { renderLive(); return; }
+    if (document.body.classList.contains("kiosk-ceremony")) {
+      ceremonyPlaylist = buildCeremonyPlaylist();
+      if (ceremonyIdx >= ceremonyPlaylist.length) ceremonyIdx = 0;
+      paintCeremony();
+      return;
+    }
+    const ys = $("#yearSelect");
+    ys.innerHTML = state.years.map(y => `<option value="${y}" ${y === state.year ? "selected" : ""}>${y} 學年度</option>`).join("");
+    ys.onchange = () => { state.year = +ys.value; render(); };
+
+    renderSidebar();
+
+    const titles = {
+      dashboard: ["賽事 / 總覽", "總覽"],
+      events: ["賽事 / 項目", "項目管理"],
+      students: ["賽事 / 學生名冊", "學生名冊"],
+      registration: ["競賽 / 報名", "報名管理"],
+      teams: ["競賽 / 接力隊伍", "接力隊伍"],
+      results: ["競賽 / 成績登錄", "成績登錄"],
+      checkin: ["現場 / 電子檢錄", "電子檢錄"],
+      share: ["現場 / QR 分享", "QR 分享 · 即時排名"],
+      ceremony: ["現場 / 頒獎播放", "頒獎播放"],
+      championship: ["榜單 / 總錦標", "總錦標"],
+      records: ["榜單 / 大會紀錄", "大會紀錄"],
+      history: ["榜單 / 歷年紀錄", "歷年紀錄"],
+      print: ["出版 / 列印文件", "列印文件"],
+      accounts: ["出版 / 班級與權限", "班級與權限"],
+      login: ["登入", "登入"],
+    };
+    const t = titles[state.view] || titles.dashboard;
+    $("#crumbs").textContent = t[0];
+    $("#pageTitle").textContent = t[1];
+
+    const el = $("#view");
+    el.innerHTML = "";
+    const fn = views[state.view] || views.dashboard;
+    el.appendChild(fn());
+  }
+
+  const views = {};
+
+  // ---------- Views ----------
+  views.dashboard = () => {
+    const wrap = document.createElement("div");
+    const yearEvents = state.events.length;
+    const yearResults = state.results.filter(r => r.year === state.year);
+    const eventsWithResults = new Set(yearResults.map(r => r.eventId)).size;
+    const studentsCompeted = new Set(yearResults.map(r => r.studentId).filter(Boolean)).size;
+    const standings = championshipStandings(state.year);
+    const recordsSet = [];
+    state.events.forEach(ev => {
+      const rec = eventRecord(ev.id);
+      if (rec && rec.year === state.year) recordsSet.push({ ev, rec });
+    });
+    wrap.innerHTML = `
+      <div class="kpi-row">
+        <div class="kpi"><div class="label">總項目數</div><div class="value">${yearEvents}</div><div class="foot">今年開賽</div></div>
+        <div class="kpi"><div class="label">已登錄項目</div><div class="value">${eventsWithResults}<span style="font-size:16px;color:var(--slate)"> / ${yearEvents}</span></div><div class="foot">完成 ${yearEvents ? Math.round(100 * eventsWithResults / yearEvents) : 0}%</div></div>
+        <div class="kpi"><div class="label">參賽人次</div><div class="value">${studentsCompeted}</div><div class="foot">學生</div></div>
+        <div class="kpi"><div class="label">名冊人數</div><div class="value">${state.students.length}</div><div class="foot">全校</div></div>
+        <div class="kpi"><div class="label">本屆破紀錄</div><div class="value" style="color:var(--gold)">${recordsSet.length}</div><div class="foot">大會紀錄</div></div>
+      </div>
+      <div class="split">
+        <div class="card">
+          <header><h3>總錦標榜</h3><span class="hint">${state.year} 學年度 · TOP 10</span></header>
+          <div class="body">
+            <table class="standings">
+              <thead><tr><th>名次</th><th>班級</th><th>組別</th><th class="num">得分</th></tr></thead>
+              <tbody>
+                ${standings.slice(0, 10).map((s, i) => `
+                  <tr><td><span class="rank-medal">${i + 1}</span></td>
+                  <td>${s.className}</td>
+                  <td><span class="pill">${s.gradeGroup}</span></td>
+                  <td class="points">${s.points}</td></tr>`).join("") || `<tr><td colspan="4" class="empty">尚無成績</td></tr>`}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card">
+          <header><h3>本屆破紀錄</h3><span class="hint">RECORDS</span></header>
+          <div class="body">
+            ${recordsSet.length === 0 ? `<div class="empty"><h4>尚無破紀錄</h4><div>今年比賽尚未有項目突破歷屆最佳。</div></div>` :
+              recordsSet.map(({ ev, rec }) => `
+                <div style="padding:12px 18px; border-bottom:1px solid var(--rule); display:flex; justify-content:space-between; align-items:center;">
+                  <div><div style="font-family:var(--serif); font-weight:500;">${ev.name}</div>
+                  <div style="font-size:12px; color:var(--slate); margin-top:2px;">${rec.student} · ${rec.className}</div></div>
+                  <div style="text-align:right;">
+                    <div style="font-family:var(--mono); font-weight:600; font-size:16px;">${formatMark(rec.mark, ev.unit)}</div>
+                    <div class="record-flag">大會新猷</div>
+                  </div>
+                </div>`).join("")}
+          </div>
+        </div>
+      </div>`;
+    return wrap;
+  };
+
+  // ---------- Login ----------
+  views.login = () => {
+    const wrap = document.createElement("div");
+    const shell = h(`<div class="login-shell"></div>`);
+    let mode = "class";
+    function paint() {
+      shell.innerHTML = "";
+      shell.appendChild(h(`
+        <div class="login-tabs">
+          <button data-m="class" class="${mode === 'class' ? 'active' : ''}">班級登入</button>
+          <button data-m="admin" class="${mode === 'admin' ? 'active' : ''}">管理員登入</button>
+        </div>`));
+      shell.querySelectorAll("[data-m]").forEach(b => b.onclick = () => { mode = b.dataset.m; paint(); });
+      if (mode === "class") {
+        const classesFromData = Array.from(new Set([...state.students.map(s => s.className), ...state.classes.map(c => c.className)])).sort();
+        shell.appendChild(h(`
+          <h3>班級登入</h3>
+          <p class="hint">班級負責人可修改本班報名、編組接力隊、登錄成績。</p>
+          <div class="field">
+            <label>班級</label>
+            <select id="lg-class">
+              <option value="">— 選擇班級 —</option>
+              ${classesFromData.map(c => `<option>${c}</option>`).join("")}
+            </select>
+          </div>
+          <div class="field">
+            <label>密碼</label>
+            <input type="password" id="lg-pw" placeholder="輸入班級密碼">
+          </div>
+          <div class="row">
+            <button class="btn primary" id="lg-go">登入</button>
+            <button class="btn ghost" id="lg-cancel">取消</button>
+          </div>`));
+        shell.querySelector("#lg-cancel").onclick = () => { state.view = "dashboard"; render(); };
+        shell.querySelector("#lg-go").onclick = async () => {
+          const cn = shell.querySelector("#lg-class").value;
+          const pw = shell.querySelector("#lg-pw").value;
+          if (!cn || !pw) return toast("請選擇班級並輸入密碼");
+          const r = await loginClass(cn, pw);
+          if (!r.ok) return toast(r.msg);
+          toast(`歡迎 ${cn}`);
+          state.view = "dashboard"; render();
+        };
+      } else {
+        const first = isSetupPhase();
+        shell.appendChild(h(`
+          <h3>${first ? "建立管理員" : "管理員登入"}</h3>
+          <p class="hint">${first ? "首次使用：請設定一組管理員密碼，將擁有全系統修改權限。" : "體育組使用，可管理所有項目、學生、成績與班級帳號。"}</p>
+          <div class="field">
+            <label>密碼</label>
+            <input type="password" id="lg-pw" placeholder="${first ? "新增密碼" : "輸入管理員密碼"}">
+          </div>
+          <div class="row">
+            <button class="btn primary" id="lg-go">${first ? "建立並登入" : "登入"}</button>
+            <button class="btn ghost" id="lg-cancel">取消</button>
+          </div>`));
+        shell.querySelector("#lg-cancel").onclick = () => { state.view = "dashboard"; render(); };
+        shell.querySelector("#lg-go").onclick = async () => {
+          const pw = shell.querySelector("#lg-pw").value;
+          if (!pw || pw.length < 4) return toast("密碼至少 4 個字元");
+          const r = await loginAdmin(pw);
+          if (!r.ok) return toast(r.msg);
+          toast(r.firstTime ? "已建立管理員" : "已登入");
+          state.view = "dashboard"; render();
+        };
+      }
+    }
+    paint();
+    wrap.appendChild(shell);
+    return wrap;
+  };
+
+  // ---------- Events ----------
+  views.events = () => {
+    const wrap = document.createElement("div");
+    const card = h(`<div class="card"></div>`);
+    card.appendChild(h(`
+      <header>
+        <h3>項目管理</h3>
+        <div style="display:flex; gap:8px; align-items:center;">
+          <span class="hint">${state.events.length} 個項目</span>
+          ${can("editEvent") ? `<button class="btn" id="ev-load-preset">載入預設賽程 ▾</button>` : ""}
+        </div>
+      </header>`));
+    if (can("editEvent")) {
+      card.querySelector("#ev-load-preset").onclick = () => {
+        modal({
+          title: "載入預設賽程",
+          wide: true,
+          body: `
+            <div style="line-height:1.7; font-size:13px;">
+              <p style="margin-top:0;">選擇要載入哪些賽程（可複選）：</p>
+              <div style="display:flex; flex-direction:column; gap:10px; margin: 12px 0;">
+                <label style="padding: 12px 14px; border: 1px solid var(--rule); border-radius: 3px; display:flex; gap:10px; cursor:pointer;">
+                  <input type="checkbox" id="ld-115" checked style="margin-top:3px;">
+                  <div style="flex:1;">
+                    <div style="font-family:var(--serif); font-weight:700; font-size:14px;">115 學年度 Field Day（中學部 7-12 年級）</div>
+                    <div style="color:var(--slate); font-size:12px; margin-top:2px;">109 個項目 · 11/4、11/11、11/14 · 200/400/800/1500/100 公尺、跳高跳遠鉛球、各式接力</div>
+                  </div>
+                </label>
+                <label style="padding: 12px 14px; border: 1px solid var(--rule); border-radius: 3px; display:flex; gap:10px; cursor:pointer;">
+                  <input type="checkbox" id="ld-elem" checked style="margin-top:3px;">
+                  <div style="flex:1;">
+                    <div style="font-family:var(--serif); font-weight:700; font-size:14px;">115 學年度雙語部國小賽程（1-6 年級）</div>
+                    <div style="color:var(--slate); font-size:12px; margin-top:2px;">52 個項目 · 11/14 · 60/100/200 公尺、跳高跳遠、壘球擲遠、4×100 接力、班級對抗</div>
+                  </div>
+                </label>
+              </div>
+              <div style="margin-top:14px; padding:12px; background:var(--accent-soft); border-radius:3px; color:var(--alarm); font-size:12px;">
+                目前系統已有 <b>${state.events.length}</b> 個項目。請選擇處理方式：
+              </div>
+              <div style="margin-top:12px;">
+                <label style="display:block; padding:6px 0;"><input type="radio" name="mode" value="merge" checked> 合併：保留現有項目，僅新增不重複的</label>
+                <label style="display:block; padding:6px 0;"><input type="radio" name="mode" value="clear"> 清空後載入：先刪除全部現有項目再載入所選賽程</label>
+              </div>
+            </div>`,
+          okLabel: "確定載入",
+          onOk: async (m) => {
+            const mode = m.querySelector('input[name="mode"]:checked').value;
+            const doHS = m.querySelector("#ld-115").checked;
+            const doES = m.querySelector("#ld-elem").checked;
+            if (!doHS && !doES) { toast("請至少勾選一份賽程"); return false; }
+            if (mode === "clear") {
+              const existing = state.events.slice();
+              for (const e of existing) await dbDelete("events", e.id);
+            }
+            const existingNames = new Set(state.events.map(e => e.name));
+            let added = 0;
+            const bundle = [];
+            if (doHS) bundle.push(...build115Schedule());
+            if (doES) bundle.push(...buildElementarySchedule());
+            for (const e of bundle) {
+              if (existingNames.has(e.name)) continue;
+              existingNames.add(e.name);
+              await dbAdd("events", e);
+              added++;
+            }
+            if (!state.years.includes(2026)) await addYear(2026);
+            state.year = 2026;
+            toast(`已載入 ${added} 個項目`);
+            return true;
+          },
+        });
+      };
+    }
+
+    if (can("editEvent")) {
+      const form = h(`
+        <div class="form-grid">
+          <div class="field"><label>項目名稱</label><input id="ev-name" placeholder="例：高中男子100公尺"></div>
+          <div class="field"><label>組別</label>
+            <select id="ev-group">
+              <option value="國小低">國小低（1-2）</option>
+              <option value="國小中">國小中（3-4）</option>
+              <option value="國小高">國小高（5-6）</option>
+              <option value="國中">國中（7-9）</option>
+              <option value="高中" selected>高中（10-12）</option>
+            </select>
+          </div>
+          <div class="field"><label>類別</label>
+            <select id="ev-cat">
+              <option value="track">徑賽</option><option value="field">田賽</option><option value="relay">接力</option>
+            </select>
+          </div>
+          <div class="field"><label>性別</label>
+            <select id="ev-gender">
+              <option value="male">男</option><option value="female">女</option><option value="mixed">混合</option>
+            </select>
+          </div>
+          <div class="field"><label>單位</label>
+            <select id="ev-unit"><option value="seconds">秒</option><option value="meters">公尺</option></select>
+          </div>
+          <div class="field"><label>賽制</label>
+            <select id="ev-rounds"><option value="single">單場決賽</option><option value="prelim_final">預賽 + 決賽</option></select>
+          </div>
+          <div class="field"><label>晉級人數（決賽）</label><input type="number" id="ev-advance" value="8" min="1" max="16"></div>
+          <div class="field" style="display:flex; align-items:flex-end;"><button class="btn primary" id="ev-add">新增項目</button></div>
+        </div>`);
+      card.appendChild(form);
+      form.querySelector("#ev-add").onclick = async () => {
+        const name = form.querySelector("#ev-name").value.trim();
+        if (!name) return toast("請輸入項目名稱");
+        const cat = form.querySelector("#ev-cat").value;
+        await dbAdd("events", {
+          name,
+          gradeGroup: form.querySelector("#ev-group").value,
+          category: cat,
+          gender: form.querySelector("#ev-gender").value,
+          unit: form.querySelector("#ev-unit").value,
+          scoringType: cat === "relay" ? "team" : "individual",
+          rounds: form.querySelector("#ev-rounds").value,
+          advanceCount: parseInt(form.querySelector("#ev-advance").value, 10) || 8,
+        });
+        form.querySelector("#ev-name").value = "";
+        toast("已新增項目");
+      };
+    } else {
+      card.appendChild(h(`<div class="body pad" style="color:var(--slate); font-size:13px;">＊ 需管理員權限方可新增／刪除項目。</div>`));
+    }
+
+    const listWrap = h(`<div class="body"></div>`);
+    const groups = ["國小低", "國小中", "國小高", "國中", "高中"];
+    const table = h(`
+      <table>
+        <thead><tr><th>組別</th><th>項目</th><th>類別</th><th>賽制</th><th>賽程</th><th>裁判</th><th>大會紀錄</th><th></th></tr></thead>
+        <tbody></tbody></table>`);
+    const tbody = table.querySelector("tbody");
+    const sorted = state.events.slice().sort((a, b) => {
+      if (a.date && b.date && a.date !== b.date) return a.date.localeCompare(b.date);
+      if (a.date && !b.date) return -1;
+      if (!a.date && b.date) return 1;
+      if (a.time && b.time && a.time !== b.time) return a.time.localeCompare(b.time);
+      const gi = groups.indexOf(a.gradeGroup) - groups.indexOf(b.gradeGroup);
+      return gi !== 0 ? gi : a.name.localeCompare(b.name, "zh-Hant");
+    });
+    sorted.forEach(ev => {
+      const rec = eventRecord(ev.id);
+      const officialsList = (ev.officials || []);
+      const schedLine = ev.date || ev.time || ev.venue
+        ? `<div style="font-family:var(--mono); font-size:12px;">${ev.date || "—"} ${ev.time || ""}</div><div style="font-size:11px; color:var(--slate);">${ev.venue || ""}</div>`
+        : `<span style="color:var(--slate-2); font-size:12px;">未排</span>`;
+      const officialsCell = officialsList.length
+        ? officialsList.slice(0, 3).map(o => `<div style="font-size:12px;"><span style="color:var(--slate); font-size:10px; letter-spacing:.1em;">${o.role}</span> ${o.name}</div>`).join("") + (officialsList.length > 3 ? `<div style="font-size:11px; color:var(--slate)">…+${officialsList.length - 3}</div>` : "")
+        : `<span style="color:var(--slate-2); font-size:12px;">—</span>`;
+      const row = h(`
+        <tr>
+          <td>${ev.gradeGroup}</td>
+          <td style="font-family:var(--serif); font-weight:500;">${ev.name}<div style="margin-top:2px;"><span class="pill ${ev.gender}" style="margin-right:4px;">${GENDER_LABEL[ev.gender] || ev.gender}</span><span style="color:var(--slate); font-size:11px;">${ev.unit === "seconds" ? "秒" : "公尺"}</span></div></td>
+          <td><span class="pill ${ev.category}">${CAT_LABEL[ev.category] || ev.category}</span></td>
+          <td>${ev.rounds === "prelim_final" ? `<span class="pill round">預+決</span>` : "決賽"}</td>
+          <td>${schedLine}</td>
+          <td>${officialsCell}</td>
+          <td class="num">${rec ? formatMark(rec.mark, ev.unit) : "—"}<div style="font-size:11px; color:var(--slate)">${rec ? `${rec.student} · ${rec.year}` : ""}</div></td>
+          <td style="white-space: nowrap;">${can("editEvent") ? `<button class="btn ghost" data-edit>編輯</button><button class="btn ghost danger" data-del>刪除</button>` : ""}</td>
+        </tr>`);
+      if (can("editEvent")) {
+        row.querySelector("[data-edit]").onclick = () => openEventEditor(ev);
+        row.querySelector("[data-del]").onclick = () =>
+          confirmModal(`刪除項目「${ev.name}」？`, "此項目的所有成績仍會保留。", async () => { await dbDelete("events", ev.id); toast("已刪除"); });
+      }
+      tbody.appendChild(row);
+    });
+    listWrap.appendChild(table);
+    card.appendChild(listWrap);
+    wrap.appendChild(card);
+    return wrap;
+  };
+
+  function openEventEditor(ev) {
+    const officials = (ev.officials || []).slice();
+    let localOfficials = officials.slice();
+    modal({
+      title: `編輯項目 · ${ev.name}`,
+      wide: true,
+      body: `
+        <div class="grid-2" style="margin-bottom:16px;">
+          <div class="field"><label>日期</label><input type="date" id="ee-date" value="${ev.date || ""}"></div>
+          <div class="field"><label>時間</label><input type="text" id="ee-time" value="${ev.time || ""}" placeholder="09:00"></div>
+          <div class="field"><label>地點 / 場地</label><input type="text" id="ee-venue" value="${ev.venue || ""}" placeholder="田徑場、司令台前"></div>
+          <div class="field"><label>晉級決賽人數</label><input type="number" id="ee-adv" value="${ev.advanceCount || 8}" min="1" max="16"></div>
+        </div>
+        <div class="field" style="margin-bottom:14px;">
+          <label>備註</label>
+          <input type="text" id="ee-notes" value="${ev.notes || ""}" placeholder="規則、器材、備註…">
+        </div>
+        <div style="font-family:var(--label); font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--slate); margin-bottom:6px;">裁判 / 主任名單</div>
+        <div id="ee-officials" style="display:flex; flex-direction:column; gap:6px; margin-bottom:8px;"></div>
+        <button class="btn ghost" id="ee-add-off">＋ 加入一位</button>
+      `,
+      okLabel: "儲存",
+      onOk: async (m) => {
+        // Collect officials
+        const rows = m.querySelectorAll("#ee-officials .off-row");
+        const officialsData = Array.from(rows).map(r => ({
+          role: r.querySelector(".off-role").value.trim(),
+          name: r.querySelector(".off-name").value.trim(),
+        })).filter(o => o.role || o.name);
+        await dbSet("events", ev.id, {
+          ...ev,
+          date: m.querySelector("#ee-date").value || null,
+          time: m.querySelector("#ee-time").value.trim() || null,
+          venue: m.querySelector("#ee-venue").value.trim() || null,
+          advanceCount: parseInt(m.querySelector("#ee-adv").value, 10) || 8,
+          notes: m.querySelector("#ee-notes").value.trim() || null,
+          officials: officialsData,
+        });
+        toast("已更新");
+        return true;
+      },
+    });
+    const holder = document.querySelector("#ee-officials");
+    function paint() {
+      holder.innerHTML = "";
+      if (localOfficials.length === 0) {
+        holder.appendChild(h(`<div style="color:var(--slate-2); font-size:12px; padding:6px 0;">尚未指定裁判／主任</div>`));
+      }
+      localOfficials.forEach((o, i) => {
+        const row = h(`
+          <div class="off-row" style="display:grid; grid-template-columns:120px 1fr auto; gap:8px;">
+            <select class="off-role">
+              ${["田徑主任", "田賽主任", "徑賽主任", "裁判長", "裁判", "計時", "終點", "紀錄", "發令", "檢錄", "其他"]
+                .map(r => `<option ${r === o.role ? "selected" : ""}>${r}</option>`).join("")}
+            </select>
+            <input type="text" class="off-name" value="${o.name || ""}" placeholder="姓名">
+            <button class="btn ghost danger" data-i="${i}">移除</button>
+          </div>`);
+        row.querySelector(".off-role").onchange = e => { localOfficials[i].role = e.target.value; };
+        row.querySelector(".off-name").oninput = e => { localOfficials[i].name = e.target.value; };
+        row.querySelector("[data-i]").onclick = () => {
+          localOfficials = localOfficials.filter((_, idx) => idx !== i);
+          paint();
+        };
+        holder.appendChild(row);
+      });
+    }
+    paint();
+    document.querySelector("#ee-add-off").onclick = () => {
+      localOfficials = [...localOfficials, { role: "裁判", name: "" }];
+      paint();
+    };
+  }
+
+  // ---------- Students ----------
+  views.students = () => {
+    const wrap = document.createElement("div");
+    const card = h(`<div class="card"></div>`);
+    card.appendChild(h(`
+      <header><h3>學生名冊</h3>
+        <div style="display:flex; gap:8px; align-items:center;">
+          <span class="hint">${state.students.length} 人</span>
+          ${can("editStudent") ? `<button class="btn" id="s-import">CSV 匯入名冊</button><button class="btn" id="s-import-hist">匯入歷年成績</button><button class="btn ghost" id="s-export">匯出名冊</button>` : ""}
+        </div>
+      </header>`));
+
+    if (can("editStudent")) {
+      const form = h(`
+        <div class="form-grid">
+          <div class="field"><label>學號</label><input id="s-sid" placeholder="112001"></div>
+          <div class="field"><label>姓名</label><input id="s-name" placeholder="姓名"></div>
+          <div class="field"><label>班級</label><input id="s-class" placeholder="例：高一甲、五乙"></div>
+          <div class="field"><label>性別</label><select id="s-gender"><option value="male">男</option><option value="female">女</option></select></div>
+          <div class="field" style="display:flex; align-items:flex-end;"><button class="btn primary" id="s-add">新增學生</button></div>
+        </div>`);
+      card.appendChild(form);
+      form.querySelector("#s-add").onclick = async () => {
+        const sid = form.querySelector("#s-sid").value.trim();
+        const name = form.querySelector("#s-name").value.trim();
+        const cn = form.querySelector("#s-class").value.trim();
+        if (!name || !cn) return toast("請輸入姓名與班級");
+        await dbAdd("students", {
+          studentId: sid, name, className: cn,
+          grade: classGrade(cn), gradeGroup: gradeGroupOf(cn),
+          gender: form.querySelector("#s-gender").value,
+        });
+        form.querySelectorAll("input").forEach(i => i.value = "");
+        toast("已新增");
+      };
+      card.querySelector("#s-import").onclick = () => openCsvImport();
+      card.querySelector("#s-import-hist").onclick = () => openHistoricalImport();
+      card.querySelector("#s-export").onclick = () => exportStudentsCsv();
+    }
+
+    const bar = h(`
+      <div class="toolbar">
+        <input type="text" id="s-search" placeholder="搜尋姓名 / 學號 / 班級">
+        <select id="s-filter-group">
+          <option value="">全部組別</option>
+          <option>國小低</option><option>國小中</option><option>國小高</option><option>國中</option><option>高中</option>
+        </select>
+        <div class="grow"></div>
+      </div>`);
+    card.appendChild(bar);
+
+    const listBody = h(`<div class="body"></div>`);
+    const table = h(`
+      <table>
+        <thead><tr><th>學號</th><th>姓名</th><th>班級</th><th>年級</th><th>組別</th><th>性別</th><th></th></tr></thead>
+        <tbody></tbody></table>`);
+    listBody.appendChild(table);
+    card.appendChild(listBody);
+
+    function refresh() {
+      const q = bar.querySelector("#s-search").value.trim().toLowerCase();
+      const g = bar.querySelector("#s-filter-group").value;
+      const list = state.students.filter(s => {
+        if (g && s.gradeGroup !== g) return false;
+        if (!q) return true;
+        return (s.name || "").toLowerCase().includes(q) ||
+          (s.studentId || "").toLowerCase().includes(q) ||
+          (s.className || "").toLowerCase().includes(q);
+      }).sort((a, b) => (a.grade || 0) - (b.grade || 0) || (a.className || "").localeCompare(b.className || "") || (a.studentId || "").localeCompare(b.studentId || ""));
+      const tbody = table.querySelector("tbody");
+      tbody.innerHTML = "";
+      list.slice(0, 500).forEach(s => {
+        const row = h(`
+          <tr>
+            <td class="num" style="text-align:left; padding-left:14px;">${s.studentId || "—"}</td>
+            <td style="font-family:var(--serif); font-weight:500;">${s.name}</td>
+            <td>${s.className}</td>
+            <td class="num" style="text-align:left; padding-left:14px;">${s.grade || "—"}</td>
+            <td><span class="pill">${s.gradeGroup || "—"}</span></td>
+            <td><span class="pill ${s.gender}">${GENDER_LABEL[s.gender] || "—"}</span></td>
+            <td>${can("editStudent") ? `<button class="btn ghost danger">移除</button>` : ""}</td>
+          </tr>`);
+        if (can("editStudent")) row.querySelector("button").onclick = () =>
+          confirmModal(`從名冊移除「${s.name}」？`, "已登錄的成績仍會保留（顯示為原班級）。", async () => { await dbDelete("students", s.id); });
+        tbody.appendChild(row);
+      });
+      if (list.length > 500) tbody.appendChild(h(`<tr><td colspan="7" class="empty">另有 ${list.length - 500} 筆未列出，請縮小搜尋範圍。</td></tr>`));
+      if (list.length === 0) tbody.appendChild(h(`<tr><td colspan="7" class="empty">找不到符合條件的學生。</td></tr>`));
+    }
+    bar.querySelector("#s-search").oninput = refresh;
+    bar.querySelector("#s-filter-group").onchange = refresh;
+    refresh();
+    wrap.appendChild(card);
+    return wrap;
+  };
+
+  function openCsvImport() {
+    modal({
+      title: "CSV 匯入學生",
+      wide: true,
+      body: `
+        <div style="margin-bottom:14px; font-size:13px; color:var(--slate);">
+          格式：<code>學號,姓名,班級,性別</code>（可有標題列，性別填 M/F 或 男/女）。範例：
+        </div>
+        <pre style="background:var(--panel-2); padding:12px; border-radius:3px; font-size:12px; margin:0 0 14px;">學號,姓名,班級,性別
+112001,王小明,高一甲,M
+112002,林小美,高一甲,F
+112003,張大同,五乙,男</pre>
+        <textarea id="csv-text" rows="12" placeholder="貼上或輸入 CSV 內容…" style="width:100%;"></textarea>
+        <div style="margin-top:10px;">
+          <label style="font-size:12px; color:var(--slate);">
+            <input type="checkbox" id="csv-skip-header" checked> 略過第一列（標題列）
+          </label>
+        </div>
+      `,
+      okLabel: "匯入",
+      onOk: async (m) => {
+        const text = m.querySelector("#csv-text").value.trim();
+        if (!text) return toast("請貼上 CSV 內容");
+        const rows = parseCSV(text);
+        const skip = m.querySelector("#csv-skip-header").checked;
+        const dataRows = skip ? rows.slice(1) : rows;
+        let ok = 0, skip2 = 0;
+        for (const r of dataRows) {
+          const [sid, name, cn, genderRaw] = r.map(x => (x || "").trim());
+          if (!name || !cn) { skip2++; continue; }
+          const g = (genderRaw || "").toUpperCase();
+          const gender = (g === "M" || g === "男") ? "male" : (g === "F" || g === "女") ? "female" : "male";
+          // dedupe by studentId if present, else by name+class
+          const exists = state.students.find(s =>
+            (sid && s.studentId === sid) || (!sid && s.name === name && s.className === cn));
+          if (exists) { skip2++; continue; }
+          await dbAdd("students", {
+            studentId: sid, name, className: cn,
+            grade: classGrade(cn), gradeGroup: gradeGroupOf(cn),
+            gender,
+          });
+          ok++;
+        }
+        toast(`匯入 ${ok} 筆${skip2 ? ` · 略過 ${skip2}` : ""}`);
+        return true;
+      },
+    });
+  }
+
+  function openHistoricalImport() {
+    modal({
+      title: "匯入歷年成績",
+      wide: true,
+      body: `
+        <div style="margin-bottom:10px; font-size:13px; color:var(--slate);">
+          比對<b>學號</b>找學生（若名冊中無此人會自動建立）與比對<b>項目名稱</b>找項目（找不到會略過）。
+        </div>
+        <div style="margin-bottom:10px; font-size:13px; color:var(--slate);">
+          格式：<code>學號,姓名,班級,學年度,項目,成績[,名次]</code>
+        </div>
+        <pre style="background:var(--panel-2); padding:12px; border-radius:3px; font-size:12px; margin:0 0 14px;">學號,姓名,班級,學年度,項目,成績,名次
+110001,王大同,高三甲,2023,高中男子100公尺,11.35,1
+110001,王大同,高三甲,2023,高中男子200公尺,23.10,2
+109002,陳美芳,高三乙,2022,高中女子跳遠,4.85,1</pre>
+        <textarea id="csv-text" rows="12" placeholder="貼上或輸入 CSV 內容…" style="width:100%;"></textarea>
+        <div style="margin-top:10px; display:flex; gap:16px; flex-wrap:wrap; font-size:12px;">
+          <label style="color:var(--slate);"><input type="checkbox" id="csv-skip-header" checked> 略過第一列（標題列）</label>
+          <label style="color:var(--slate);">賽制：<select id="csv-round">
+            <option value="final">決賽（final）</option>
+            <option value="single">單場（single）</option>
+          </select></label>
+        </div>
+      `,
+      okLabel: "匯入",
+      onOk: async (m) => {
+        const text = m.querySelector("#csv-text").value.trim();
+        if (!text) { toast("請貼上 CSV 內容"); return false; }
+        const rows = parseCSV(text);
+        const skip = m.querySelector("#csv-skip-header").checked;
+        const round = m.querySelector("#csv-round").value;
+        const dataRows = skip ? rows.slice(1) : rows;
+        const yearsAdded = new Set();
+        let created = 0, imported = 0, skipEv = 0, newStu = 0;
+        for (const r of dataRows) {
+          const [sid, name, cn, yearRaw, evName, markRaw, rankRaw] = r.map(x => (x || "").trim());
+          const year = parseInt(yearRaw, 10);
+          const mark = parseFloat(markRaw);
+          if (!sid || !evName || isNaN(year) || isNaN(mark)) { continue; }
+          // Find or create student
+          let stu = state.students.find(s => s.studentId === sid);
+          if (!stu && name && cn) {
+            const id = await dbAdd("students", {
+              studentId: sid, name, className: cn,
+              grade: classGrade(cn), gradeGroup: gradeGroupOf(cn),
+              gender: "male",
+            });
+            stu = { id, studentId: sid, name, className: cn };
+            newStu++;
+          }
+          if (!stu) continue;
+          // Find event by name
+          const ev = state.events.find(e => e.name === evName);
+          if (!ev) { skipEv++; continue; }
+          // Ensure year exists
+          if (!state.years.includes(year) && !yearsAdded.has(year)) {
+            await addYear(year);
+            yearsAdded.add(year);
+          }
+          // Dedupe: if existing result for this student+event+year+round already, skip
+          const existing = state.results.find(x =>
+            x.studentId === stu.id && x.eventId === ev.id && x.year === year &&
+            (x.round || "single") === round);
+          if (existing) continue;
+          await dbAdd("results", {
+            year, eventId: ev.id, studentId: stu.id,
+            className: cn || stu.className, mark,
+            round,
+            competitorType: "student",
+            heat: null, lane: null,
+          });
+          imported++;
+        }
+        toast(`匯入 ${imported} 筆成績${newStu ? ` · 新增 ${newStu} 位學生` : ""}${skipEv ? ` · 略過 ${skipEv} 筆（找不到項目）` : ""}`);
+        return true;
+      },
+    });
+  }
+
+  function exportStudentsCsv() {
+    const rows = [["學號", "姓名", "班級", "性別"]];
+    state.students.forEach(s => rows.push([s.studentId || "", s.name, s.className, s.gender === "female" ? "F" : "M"]));
+    const csv = rows.map(r => r.map(c => /[,"\n]/.test(c) ? `"${String(c).replace(/"/g, '""')}"` : c).join(",")).join("\n");
+    downloadFile("students.csv", csv);
+  }
+
+  async function downloadFile(name, text) {
+    const data = "﻿" + text;
+    try {
+      if (window.claude && typeof window.claude.use === "function") {
+        const dl = await window.claude.use("downloads");
+        if (dl) {
+          await dl.save({ filename: name, data });
+          return;
+        }
+      }
+    } catch (e) { console.warn("downloads unavailable:", e); }
+    // Fallback for local file usage
+    const blob = new Blob([data], { type: "text/csv;charset=utf-8;" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = name;
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  }
+
+  // ---------- Registration ----------
+  views.registration = () => {
+    const wrap = document.createElement("div");
+    const card = h(`<div class="card"></div>`);
+    card.appendChild(h(`<header><h3>報名管理</h3><span class="hint">${state.year} 學年度 · 個人項目</span></header>`));
+
+    const individualEvents = state.events.filter(e => e.category !== "relay");
+    const eventOpts = individualEvents.map(e => `<option value="${e.id}">${e.gradeGroup} · ${e.name}</option>`).join("");
+    const bar = h(`
+      <div class="toolbar">
+        <label style="font-family:var(--label); font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--slate);">項目</label>
+        <select id="r-event" style="min-width:280px">${eventOpts}</select>
+        <div class="grow"></div>
+      </div>`);
+    card.appendChild(bar);
+    const body = h(`<div class="body pad" id="r-body"></div>`);
+    card.appendChild(body);
+
+    function refresh() {
+      const eid = bar.querySelector("#r-event").value;
+      const ev = state.events.find(e => e.id === eid);
+      if (!ev) { body.innerHTML = `<div class="empty">請先建立個人項目。</div>`; return; }
+      const regs = state.registrations.filter(r => r.eventId === eid && r.year === state.year);
+      const registeredIds = new Set(regs.map(r => r.studentId));
+      let eligible = state.students.filter(s =>
+        s.gradeGroup === ev.gradeGroup && (ev.gender === "mixed" || s.gender === ev.gender));
+      // Class-scoped view for class user
+      if (role() === "class") eligible = eligible.filter(s => s.className === state.session.className);
+
+      body.innerHTML = "";
+      body.appendChild(h(`
+        <div class="grid-2">
+          <div>
+            <div style="font-family:var(--label); font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--slate); margin-bottom:8px;">
+              ${role() === "class" ? `本班符合資格 · ` : `符合資格 · `}${eligible.length} 人
+            </div>
+            <div style="max-height:520px; overflow:auto; border:1px solid var(--rule); border-radius:3px;">
+              <table>
+                <thead><tr><th>班級</th><th>姓名</th><th></th></tr></thead>
+                <tbody>
+                  ${eligible.map(s => `
+                    <tr>
+                      <td>${s.className}</td>
+                      <td style="font-family:var(--serif);">${s.name}</td>
+                      <td style="text-align:right; padding-right:14px;">
+                        <button class="btn ghost" data-add="${s.id}" data-class="${s.className}" ${registeredIds.has(s.id) || !can("register", s.className) ? "disabled" : ""}>
+                          ${registeredIds.has(s.id) ? "已報名" : (!can("register", s.className) ? "無權限" : "＋報名")}
+                        </button>
+                      </td>
+                    </tr>`).join("") || `<tr><td colspan="3" class="empty">無符合資格學生</td></tr>`}
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div>
+            <div style="font-family:var(--label); font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--slate); margin-bottom:8px;">已報名 · ${regs.length} 人</div>
+            <div style="border:1px solid var(--rule); border-radius:3px;">
+              <table>
+                <thead><tr><th>班級</th><th>姓名</th><th></th></tr></thead>
+                <tbody>
+                  ${regs.map(r => {
+                    const s = state.students.find(x => x.id === r.studentId);
+                    const canRm = can("register", r.className);
+                    return `<tr>
+                      <td>${r.className}</td>
+                      <td style="font-family:var(--serif);">${s ? s.name : "—"}</td>
+                      <td style="text-align:right; padding-right:14px;">
+                        ${canRm ? `<button class="btn ghost danger" data-remove="${r.id}">移除</button>` : ""}
+                      </td>
+                    </tr>`;
+                  }).join("") || `<tr><td colspan="3" class="empty">尚無人報名</td></tr>`}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>`));
+
+      body.querySelectorAll("[data-add]").forEach(btn => btn.onclick = async () => {
+        const sid = btn.dataset.add;
+        const s = state.students.find(x => x.id === sid);
+        await dbAdd("registrations", {
+          year: state.year, eventId: eid, studentId: sid, className: s.className,
+        });
+        toast("已報名");
+      });
+      body.querySelectorAll("[data-remove]").forEach(btn => btn.onclick = async () => {
+        await dbDelete("registrations", btn.dataset.remove);
+      });
+    }
+    bar.querySelector("#r-event").onchange = refresh;
+    if (individualEvents.length > 0) refresh();
+    else body.innerHTML = `<div class="empty">請先於「項目」建立個人比賽項目。</div>`;
+
+    wrap.appendChild(card);
+    return wrap;
+  };
+
+  // ---------- Teams (Relay) ----------
+  views.teams = () => {
+    const wrap = document.createElement("div");
+    const card = h(`<div class="card"></div>`);
+    card.appendChild(h(`<header><h3>接力隊伍</h3><span class="hint">${state.year} 學年度 · 每隊 4 正 + 4 備，最多 8 人</span></header>`));
+
+    const relayEvents = state.events.filter(e => e.category === "relay");
+    if (relayEvents.length === 0) {
+      card.appendChild(h(`<div class="empty">尚未建立接力項目。</div>`));
+      wrap.appendChild(card); return wrap;
+    }
+
+    const eventOpts = relayEvents.map(e => `<option value="${e.id}">${e.gradeGroup} · ${e.name}</option>`).join("");
+    // Determine class scope
+    const allClasses = Array.from(new Set(state.students.map(s => s.className))).sort();
+
+    const bar = h(`
+      <div class="toolbar">
+        <label style="font-family:var(--label); font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--slate);">項目</label>
+        <select id="t-event" style="min-width:260px">${eventOpts}</select>
+        <label style="font-family:var(--label); font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--slate);">班級</label>
+        <select id="t-class"></select>
+        <div class="grow"></div>
+      </div>`);
+    card.appendChild(bar);
+    const body = h(`<div id="t-body"></div>`);
+    card.appendChild(body);
+
+    function refresh() {
+      const eid = bar.querySelector("#t-event").value;
+      const ev = state.events.find(e => e.id === eid);
+      if (!ev) return;
+      // Filter classes to those matching event group
+      let classes = allClasses.filter(c => gradeGroupOf(c) === ev.gradeGroup);
+      if (role() === "class") classes = classes.filter(c => c === state.session.className);
+      const clsSel = bar.querySelector("#t-class");
+      clsSel.innerHTML = classes.map(c => `<option>${c}</option>`).join("") || `<option value="">— 無合適班級 —</option>`;
+      const cn = clsSel.value || classes[0];
+      if (!cn) { body.innerHTML = `<div class="empty">此組別無班級可報名。</div>`; return; }
+
+      const team = state.teams.find(t => t.eventId === eid && t.year === state.year && t.className === cn);
+      const members = team ? (team.members || []) : [];
+      const eligible = state.students.filter(s =>
+        s.className === cn && (ev.gender === "mixed" || s.gender === ev.gender));
+
+      body.innerHTML = "";
+      body.appendChild(h(`
+        <div class="toolbar" style="border-top:1px solid var(--rule);">
+          <span style="font-family:var(--label); font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--slate);">名單 · ${members.length} / 8</span>
+          <div class="grow"></div>
+          ${can("editTeam", cn) ? `<button class="btn ghost danger" id="t-clear" ${!team ? "disabled" : ""}>清空隊伍</button>` : ""}
+        </div>`));
+      const roster = h(`<div class="roster"></div>`);
+      for (let i = 0; i < 8; i++) {
+        const sid = members[i];
+        const s = sid ? state.students.find(x => x.id === sid) : null;
+        const isSub = i >= 4;
+        const slot = h(`
+          <div class="slot ${s ? 'filled' : ''}">
+            <div>
+              <span class="n">${isSub ? `備 ${i - 3}` : `第 ${i + 1} 棒`}</span>
+              <div class="name">${s ? s.name : "—"}</div>
+              <div style="font-size:11px; color:var(--slate)">${s ? s.studentId || "" : "尚未指定"}</div>
+            </div>
+            ${s && can("editTeam", cn) ? `<button data-rm="${i}">移除</button>` : ""}
+          </div>`);
+        roster.appendChild(slot);
+      }
+      body.appendChild(roster);
+
+      if (can("editTeam", cn)) {
+        const notInTeam = eligible.filter(s => !members.includes(s.id));
+        body.appendChild(h(`
+          <div style="padding: 12px 18px; border-top:1px solid var(--rule); background:var(--panel-2); display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+            <span style="font-family:var(--label); font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--slate);">加入隊員</span>
+            <select id="t-add-sel" style="min-width:220px">
+              <option value="">— 選擇 ${cn} 的學生 —</option>
+              ${notInTeam.map(s => `<option value="${s.id}">${s.name} · ${s.studentId || ""}</option>`).join("")}
+            </select>
+            <button class="btn primary" id="t-add-btn" ${members.length >= 8 ? "disabled" : ""}>加入</button>
+          </div>`));
+        body.querySelector("#t-add-btn").onclick = async () => {
+          const sel = body.querySelector("#t-add-sel").value;
+          if (!sel) return;
+          const nm = [...members, sel];
+          if (team) await dbSet("teams", team.id, { ...team, members: nm });
+          else await dbAdd("teams", { year: state.year, eventId: eid, className: cn, members: nm });
+        };
+        body.querySelectorAll("[data-rm]").forEach(btn => btn.onclick = async () => {
+          const idx = parseInt(btn.dataset.rm, 10);
+          const nm = members.slice();
+          nm.splice(idx, 1);
+          if (team) await dbSet("teams", team.id, { ...team, members: nm });
+        });
+        const clear = body.querySelector("#t-clear");
+        if (clear) clear.onclick = () => {
+          if (!team) return;
+          confirmModal(`清空 ${cn} 的隊伍？`, "", async () => { await dbDelete("teams", team.id); });
+        };
+      } else {
+        body.appendChild(h(`<div class="body pad" style="color:var(--slate); font-size:12px;">＊ 只有 ${cn} 的班級帳號或管理員可修改此隊伍。</div>`));
+      }
+    }
+    bar.querySelector("#t-event").onchange = refresh;
+    bar.querySelector("#t-class").onchange = refresh;
+    refresh();
+    wrap.appendChild(card);
+    return wrap;
+  };
+
+  // ---------- Results ----------
+  views.results = () => {
+    const wrap = document.createElement("div");
+    const card = h(`<div class="card"></div>`);
+    card.appendChild(h(`<header><h3>成績登錄</h3><span class="hint">${state.year} 學年度</span></header>`));
+
+    const eventOpts = state.events.map(e => `<option value="${e.id}">${e.gradeGroup} · ${e.name}${e.rounds === "prelim_final" ? " · 預+決" : ""}${e.category === "relay" ? " · 接力" : ""}</option>`).join("");
+    const bar = h(`
+      <div class="toolbar">
+        <label style="font-family:var(--label); font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--slate);">項目</label>
+        <select id="res-event" style="min-width:320px">${eventOpts}</select>
+        <div class="grow"></div>
+        <span id="res-unit-hint" style="font-family:var(--label); font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--slate);"></span>
+      </div>`);
+    card.appendChild(bar);
+    const body = h(`<div id="res-body"></div>`);
+    card.appendChild(body);
+
+    let currentRound = "single";
+
+    async function refresh() {
+      const eid = bar.querySelector("#res-event").value;
+      const ev = state.events.find(e => e.id === eid);
+      if (!ev) { body.innerHTML = `<div class="empty">請先建立項目。</div>`; return; }
+      bar.querySelector("#res-unit-hint").textContent = ev.unit === "seconds" ? "計時 · 越小越好" : "距離 · 越大越好";
+
+      body.innerHTML = "";
+
+      // Round tabs
+      if (ev.rounds === "prelim_final") {
+        if (currentRound === "single") currentRound = "prelim";
+        const tabs = h(`
+          <div class="round-tabs">
+            <button data-r="prelim" class="${currentRound === 'prelim' ? 'active' : ''}">預賽</button>
+            <button data-r="final" class="${currentRound === 'final' ? 'active' : ''}">決賽</button>
+          </div>`);
+        tabs.querySelectorAll("button").forEach(b => b.onclick = () => { currentRound = b.dataset.r; refresh(); });
+        body.appendChild(tabs);
+      } else {
+        currentRound = "single";
+      }
+
+      // Build participants list
+      let rows = [];
+      if (ev.category === "relay") {
+        const teams = state.teams.filter(t => t.eventId === eid && t.year === state.year);
+        teams.forEach(t => {
+          const existing = state.results.find(r => r.eventId === eid && r.year === state.year && r.teamId === t.id && (r.round || "single") === currentRound);
+          rows.push({
+            key: t.id, competitorType: "team", teamId: t.id,
+            name: `${t.className} 接力隊`, className: t.className,
+            memberNames: (t.members || []).slice(0, 4).map(id => state.students.find(s => s.id === id)?.name || "").filter(Boolean).join("、"),
+            mark: existing ? existing.mark : null,
+            heat: existing ? existing.heat : null,
+            lane: existing ? existing.lane : null,
+            resultId: existing ? existing.id : null,
+          });
+        });
+      } else {
+        // Individual: source = registrations + any results
+        const regs = state.registrations.filter(r => r.eventId === eid && r.year === state.year);
+        const doneIds = new Set();
+        regs.forEach(r => {
+          const s = state.students.find(x => x.id === r.studentId);
+          if (!s) return;
+          doneIds.add(s.id);
+          const existing = state.results.find(x => x.eventId === eid && x.year === state.year && x.studentId === s.id && (x.round || "single") === currentRound);
+          // Also seed prelim-time-based finalists if final round and no result yet
+          rows.push({
+            key: s.id, competitorType: "student", studentId: s.id,
+            name: s.name, className: s.className, memberNames: "",
+            mark: existing ? existing.mark : null,
+            heat: existing ? existing.heat : null,
+            lane: existing ? existing.lane : null,
+            resultId: existing ? existing.id : null,
+          });
+        });
+        // Also include any result without registration
+        state.results.filter(r => r.eventId === eid && r.year === state.year && (r.round || "single") === currentRound && r.studentId).forEach(r => {
+          if (doneIds.has(r.studentId)) return;
+          const s = state.students.find(x => x.id === r.studentId);
+          rows.push({
+            key: r.studentId, competitorType: "student", studentId: r.studentId,
+            name: s ? s.name : "—", className: r.className, memberNames: "",
+            mark: r.mark, heat: r.heat, lane: r.lane, resultId: r.id,
+          });
+        });
+      }
+
+      // For final round of prelim_final event: filter to finalists (those with existing final result already have it)
+      // If no final results yet, still show all rows so admin can add
+      const ranked = rankResults(rows.map(r => ({ ...r, id: r.resultId || r.key })), ev.unit);
+      const rankMap = new Map(ranked.map(r => [r.id, { rank: r.rank, points: r.points }]));
+
+      // Prelim-final: show "Generate finals" button when in prelim tab
+      if (ev.rounds === "prelim_final" && currentRound === "prelim" && can("enterResult")) {
+        const has = state.results.some(r => r.eventId === eid && r.year === state.year && (r.round || "single") === "prelim" && r.mark != null);
+        const genBar = h(`
+          <div class="toolbar" style="background:var(--panel-2);">
+            <span style="font-family:var(--label); font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--slate);">預賽登錄完成後</span>
+            <div class="grow"></div>
+            <label style="font-family:var(--label); font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--slate);">晉級 <input type="number" id="gen-n" value="${ev.advanceCount || 8}" min="1" max="16" style="width:60px; margin-left:4px;"></label>
+            <button class="btn track" ${has ? "" : "disabled"} id="gen-btn">產生決賽名單（螺旋分道）</button>
+          </div>`);
+        body.appendChild(genBar);
+        genBar.querySelector("#gen-btn").onclick = () => {
+          const n = parseInt(genBar.querySelector("#gen-n").value, 10) || 8;
+          generateFinals(eid, n);
+        };
+      }
+
+      // Header row
+      const isRelay = ev.category === "relay";
+      body.appendChild(h(`
+        <div class="result-entry-grid head">
+          <div>名次</div><div>${ev.rounds === "prelim_final" ? "組" : "組"}</div><div>道次</div>
+          <div>${isRelay ? "隊伍" : "學生"} / 班級</div>
+          <div>成績（${ev.unit === "seconds" ? "秒" : "公尺"}）</div>
+          <div>得分</div><div style="text-align:center;">紀錄</div><div></div>
+        </div>`));
+
+      const rec = eventRecord(eid);
+
+      // sort rows: by heat/lane if set, else by rank
+      rows.sort((a, b) => {
+        if (a.heat != null && b.heat != null && a.heat !== b.heat) return a.heat - b.heat;
+        if (a.lane != null && b.lane != null && a.lane !== b.lane) return a.lane - b.lane;
+        const ra = rankMap.get(a.resultId || a.key)?.rank || 999;
+        const rb = rankMap.get(b.resultId || b.key)?.rank || 999;
+        return ra - rb;
+      });
+
+      const isScoringRound = (ev.rounds === "prelim_final" && currentRound === "final") || ev.rounds === "single";
+
+      rows.forEach(r => {
+        const rk = rankMap.get(r.resultId || r.key) || {};
+        let breaks = false;
+        if (isScoringRound && r.mark != null && (!rec || (ev.unit === "seconds" ? r.mark < rec.mark : r.mark > rec.mark))) breaks = true;
+
+        const rankCell = isScoringRound
+          ? `<div class="rank-cell ${rk.rank === 1 ? "top1" : rk.rank === 2 ? "top2" : rk.rank === 3 ? "top3" : ""}">${rk.rank || "—"}</div>`
+          : `<div class="rank-cell">${rk.rank || "—"}</div>`;
+
+        const canEdit = can("enterResult");
+
+        const row = h(`
+          <div class="result-entry-grid">
+            ${rankCell}
+            <div><input type="number" ${canEdit ? "" : "disabled"} value="${r.heat != null ? r.heat : ""}" placeholder="—" class="num-input" style="text-align:center;" min="1" data-field="heat"></div>
+            <div><input type="number" ${canEdit ? "" : "disabled"} value="${r.lane != null ? r.lane : ""}" placeholder="—" class="num-input" style="text-align:center;" min="1" max="8" data-field="lane"></div>
+            <div>
+              <div style="font-family:var(--serif); font-weight:500;">${r.name}</div>
+              <div style="font-size:11px; color:var(--slate);">${r.className}${r.memberNames ? ` · ${r.memberNames}` : ""}</div>
+            </div>
+            <div><input type="number" ${canEdit ? "" : "disabled"} step="0.01" class="num-input" value="${r.mark != null ? r.mark : ""}" placeholder="—" data-field="mark"></div>
+            <div class="points-cell">${isScoringRound && rk.points ? rk.points : "—"}</div>
+            <div style="text-align:center;">${breaks ? `<span class="record-flag">破紀錄</span>` : ""}</div>
+            <div style="text-align:right;">
+              ${r.resultId && canEdit ? `<button class="btn ghost danger" data-clear>清除</button>` : ""}
+            </div>
+          </div>`);
+
+        const inputs = row.querySelectorAll("input");
+        let debounce;
+        inputs.forEach(input => {
+          input.oninput = () => {
+            clearTimeout(debounce);
+            debounce = setTimeout(async () => {
+              const heat = parseNumOrNull(row.querySelector('[data-field="heat"]').value);
+              const lane = parseNumOrNull(row.querySelector('[data-field="lane"]').value);
+              const mark = parseNumOrNull(row.querySelector('[data-field="mark"]').value);
+              const hasAny = heat != null || lane != null || mark != null;
+              const payload = {
+                year: state.year, eventId: eid,
+                className: r.className,
+                mark, heat, lane,
+                round: currentRound,
+                competitorType: r.competitorType,
+                ...(r.competitorType === "team" ? { teamId: r.teamId } : { studentId: r.studentId }),
+              };
+              if (r.resultId) {
+                if (!hasAny) await dbDelete("results", r.resultId);
+                else await dbSet("results", r.resultId, payload);
+              } else if (hasAny) {
+                await dbAdd("results", payload);
+              }
+            }, 400);
+          };
+        });
+        const clear = row.querySelector("[data-clear]");
+        if (clear) clear.onclick = async () => { if (r.resultId) await dbDelete("results", r.resultId); };
+        body.appendChild(row);
+      });
+
+      if (rows.length === 0) {
+        body.appendChild(h(`<div class="empty"><h4>${isRelay ? "尚無隊伍" : "尚無報名"}</h4><div>${isRelay ? "請至「接力隊伍」由各班報名。" : "請至「報名」新增選手。"}</div></div>`));
+      }
+    }
+
+    bar.querySelector("#res-event").onchange = () => { currentRound = "single"; refresh(); };
+    if (state.events.length > 0) refresh();
+    else body.innerHTML = `<div class="empty">請先於「項目」建立比賽項目。</div>`;
+
+    wrap.appendChild(card);
+    return wrap;
+  };
+
+  function parseNumOrNull(v) { if (v === "" || v == null) return null; const n = parseFloat(v); return isNaN(n) ? null : n; }
+
+  async function generateFinals(eid, n) {
+    const ev = state.events.find(e => e.id === eid);
+    if (!ev) return;
+    const prelims = state.results.filter(r => r.eventId === eid && r.year === state.year && (r.round || "single") === "prelim" && r.mark != null);
+    if (prelims.length === 0) return toast("尚無預賽成績");
+    const ranked = rankResults(prelims, ev.unit).slice(0, n);
+    // Spiral lane assignment: 4,5,3,6,2,7,1,8
+    const spiral = [4, 5, 3, 6, 2, 7, 1, 8];
+    // Remove existing finals for this event/year
+    const existing = state.results.filter(r => r.eventId === eid && r.year === state.year && (r.round || "single") === "final");
+    for (const e of existing) await dbDelete("results", e.id);
+    // Create new finals
+    for (let i = 0; i < ranked.length; i++) {
+      const src = ranked[i];
+      const lane = spiral[i] || i + 1;
+      await dbAdd("results", {
+        year: state.year, eventId: eid,
+        className: src.className,
+        mark: null, heat: null, lane,
+        round: "final",
+        competitorType: src.competitorType || "student",
+        ...(src.competitorType === "team" ? { teamId: src.teamId } : { studentId: src.studentId }),
+      });
+    }
+    toast(`已建立 ${ranked.length} 位決賽名單`);
+  }
+
+  // ---------- Championship ----------
+  views.championship = () => {
+    const wrap = document.createElement("div");
+    const standings = championshipStandings(state.year);
+    const byGroup = { "國小低": [], "國小中": [], "國小高": [], "國中": [], "高中": [] };
+    standings.forEach(s => { if (byGroup[s.gradeGroup]) byGroup[s.gradeGroup].push(s); });
+    const overall = h(`
+      <div class="card" style="margin-bottom:24px;">
+        <header><h3>總錦標</h3><span class="hint">${state.year} 學年度 · 各班級加總</span></header>
+        <div class="body">
+          <table class="standings">
+            <thead><tr><th style="padding-left:18px;">名次</th><th>班級</th><th>組別</th><th>年級</th><th class="num" style="padding-right:18px;">總得分</th></tr></thead>
+            <tbody>
+              ${standings.map((s, i) => `
+                <tr><td><span class="rank-medal">${i + 1}</span></td>
+                <td style="font-family:var(--serif); font-weight:500;">${s.className}</td>
+                <td><span class="pill">${s.gradeGroup}</span></td>
+                <td class="num" style="text-align:left; padding-left:14px;">${s.grade}</td>
+                <td class="points">${s.points}</td></tr>`).join("") || `<tr><td colspan="5" class="empty">尚無成績</td></tr>`}
+            </tbody>
+          </table>
+        </div>
+      </div>`);
+    wrap.appendChild(overall);
+    const grid = h(`<div class="champ-grid"></div>`);
+    Object.entries(byGroup).forEach(([group, list]) => {
+      if (list.length === 0) return;
+      const card = h(`
+        <div class="card">
+          <header><h3>${group} 組錦標</h3><span class="hint">${list.length} 班</span></header>
+          <div class="body">
+            <table class="standings">
+              <thead><tr><th style="padding-left:18px;">名次</th><th>班級</th><th class="num" style="padding-right:18px;">得分</th></tr></thead>
+              <tbody>
+                ${list.map((s, i) => `<tr><td><span class="rank-medal">${i + 1}</span></td>
+                <td style="font-family:var(--serif);">${s.className}</td>
+                <td class="points">${s.points}</td></tr>`).join("")}
+              </tbody>
+            </table>
+          </div>
+        </div>`);
+      grid.appendChild(card);
+    });
+    if (grid.children.length > 0) wrap.appendChild(grid);
+    return wrap;
+  };
+
+  views.records = () => {
+    const wrap = document.createElement("div");
+    const card = h(`<div class="card"></div>`);
+    card.appendChild(h(`<header><h3>大會紀錄</h3><span class="hint">歷屆最佳 · ALL-TIME</span></header>`));
+    const bar = h(`
+      <div class="toolbar">
+        <select id="rec-group"><option value="">全部組別</option><option>國小低</option><option>國小中</option><option>國小高</option><option>國中</option><option>高中</option></select>
+        <select id="rec-cat"><option value="">全部類別</option><option value="track">徑賽</option><option value="field">田賽</option><option value="relay">接力</option></select>
+        <div class="grow"></div>
+      </div>`);
+    card.appendChild(bar);
+    const body = h(`<div class="body"></div>`);
+    card.appendChild(body);
+    function refresh() {
+      const g = bar.querySelector("#rec-group").value;
+      const c = bar.querySelector("#rec-cat").value;
+      body.innerHTML = "";
+      body.appendChild(h(`
+        <div class="records-list">
+          <div class="event-row" style="background:var(--panel); padding-top:10px; padding-bottom:10px; font-family:var(--label); font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--slate);">
+            <div>項目</div><div>紀錄</div><div>保持人</div><div>年度</div><div></div>
+          </div>
+        </div>`));
+      const container = body.querySelector(".records-list");
+      const evs = state.events.filter(e => !g || e.gradeGroup === g).filter(e => !c || e.category === c)
+        .sort((a, b) => a.name.localeCompare(b.name, "zh-Hant"));
+      evs.forEach(ev => {
+        const rec = eventRecord(ev.id);
+        container.appendChild(h(`
+          <div class="event-row">
+            <div>
+              <div class="event-name">${ev.name}</div>
+              <div style="font-size:11px; color:var(--slate); margin-top:2px;">${ev.gradeGroup} · ${CAT_LABEL[ev.category]} · ${GENDER_LABEL[ev.gender]}</div>
+            </div>
+            <div class="mark">${rec ? formatMark(rec.mark, ev.unit) : "—"}</div>
+            <div class="holder">${rec ? rec.student : "—"}<div style="font-size:11px; color:var(--slate);">${rec ? rec.className : ""}</div></div>
+            <div class="year-col">${rec ? rec.year : "—"}</div>
+            <div>${rec && rec.year === state.year ? `<span class="record-flag">本屆</span>` : ""}</div>
+          </div>`));
+      });
+      if (evs.length === 0) container.appendChild(h(`<div class="empty">沒有符合條件的項目。</div>`));
+    }
+    bar.querySelector("#rec-group").onchange = refresh;
+    bar.querySelector("#rec-cat").onchange = refresh;
+    refresh();
+    wrap.appendChild(card);
+    return wrap;
+  };
+
+  views.history = () => {
+    const wrap = document.createElement("div");
+    const card = h(`<div class="card"></div>`);
+    card.appendChild(h(`<header><h3>歷年紀錄</h3><span class="hint">跨屆比較</span></header>`));
+    const eventOpts = state.events.map(e => `<option value="${e.id}">${e.gradeGroup} · ${e.name}</option>`).join("");
+    const bar = h(`
+      <div class="toolbar">
+        <label style="font-family:var(--label); font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--slate);">項目</label>
+        <select id="h-event" style="min-width:280px">${eventOpts}</select>
+        <div class="grow"></div>
+      </div>`);
+    card.appendChild(bar);
+    const body = h(`<div class="body pad" id="h-body"></div>`);
+    card.appendChild(body);
+    function refresh() {
+      const eid = bar.querySelector("#h-event").value;
+      const ev = state.events.find(e => e.id === eid);
+      if (!ev) { body.innerHTML = `<div class="empty">請先建立項目。</div>`; return; }
+      const scoringRound = ev.rounds === "prelim_final" ? "final" : "single";
+      const rows = state.results.filter(r => r.eventId === eid && (r.round || "single") === scoringRound);
+      const byYear = new Map();
+      rows.forEach(r => {
+        const cohort = rows.filter(x => x.year === r.year);
+        const ranked = rankResults(cohort, ev.unit);
+        const first = ranked[0];
+        if (first && !byYear.has(r.year)) byYear.set(r.year, first);
+      });
+      const list = Array.from(byYear.entries()).map(([year, first]) => {
+        const s = state.students.find(x => x.id === first.studentId);
+        const team = state.teams.find(t => t.id === first.teamId);
+        return { year, mark: first.mark, student: s ? s.name : (team ? `${team.className} 接力隊` : "—"), className: first.className };
+      }).sort((a, b) => b.year - a.year);
+      const best = list.reduce((a, b) => a ? (ev.unit === "seconds" ? (a.mark <= b.mark ? a : b) : (a.mark >= b.mark ? a : b)) : b, null);
+      body.innerHTML = "";
+      body.appendChild(h(`
+        <div style="margin-bottom:18px;">
+          <div style="font-family:var(--label); font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--slate); margin-bottom:6px;">項目 · ${CAT_LABEL[ev.category]} · ${GENDER_LABEL[ev.gender]} · ${ev.gradeGroup}</div>
+          <div style="font-family:var(--serif); font-size:20px; font-weight:700;">${ev.name}</div>
+          <div style="margin-top:8px;"><span style="font-family:var(--label); font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--slate);">大會紀錄</span>
+          <span style="font-family:var(--mono); font-weight:600; color:var(--gold); margin-left:6px;">${best ? formatMark(best.mark, ev.unit) : "—"}</span>
+          ${best ? `<span style="color:var(--slate); font-size:12px;">${best.student} · ${best.year}</span>` : ""}</div>
+        </div>
+        <table>
+          <thead><tr><th>學年度</th><th>冠軍</th><th>班級</th><th class="num">成績</th><th></th></tr></thead>
+          <tbody>
+            ${list.map(row => `<tr>
+              <td class="num" style="text-align:left; padding-left:14px;">${row.year}</td>
+              <td style="font-family:var(--serif); font-weight:500;">${row.student}</td>
+              <td>${row.className}</td>
+              <td class="num">${formatMark(row.mark, ev.unit)}</td>
+              <td>${best && row.year === best.year ? `<span class="record-flag">大會紀錄</span>` : ""}</td>
+            </tr>`).join("") || `<tr><td colspan="5" class="empty">尚無歷年成績</td></tr>`}
+          </tbody>
+        </table>`));
+    }
+    bar.querySelector("#h-event").onchange = refresh;
+    if (state.events.length > 0) refresh();
+    else body.innerHTML = `<div class="empty">請先於「項目」建立比賽項目。</div>`;
+    wrap.appendChild(card);
+    return wrap;
+  };
+
+  // ---------- Check-in ----------
+  views.checkin = () => {
+    const wrap = document.createElement("div");
+    const card = h(`<div class="card"></div>`);
+    card.appendChild(h(`<header><h3>電子檢錄</h3><span class="hint">${state.year} 學年度 · 選手到場點名</span></header>`));
+
+    const eventOpts = state.events.map(e => `<option value="${e.id}">${e.gradeGroup} · ${e.name}${e.category === "relay" ? " · 接力" : ""}</option>`).join("");
+    const bar = h(`
+      <div class="toolbar">
+        <label style="font-family:var(--label); font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--slate);">項目</label>
+        <select id="ci-event" style="min-width:280px">${eventOpts}</select>
+        <div class="grow"></div>
+        <button class="btn ghost" id="ci-reset">全部重置</button>
+      </div>`);
+    card.appendChild(bar);
+
+    const scanBar = h(`
+      <div class="scan-input">
+        <span style="font-family:var(--label); font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--slate);">學號快掃</span>
+        <input type="text" id="ci-scan" placeholder="輸入或掃描學號後按 Enter" autofocus>
+      </div>`);
+    card.appendChild(scanBar);
+
+    const summary = h(`<div class="checkin-summary" id="ci-sum"></div>`);
+    card.appendChild(summary);
+
+    const body = h(`<div class="checkin-grid" id="ci-body"></div>`);
+    card.appendChild(body);
+
+    function currentEntries(eid) {
+      const ev = state.events.find(e => e.id === eid);
+      if (!ev) return { ev, entries: [] };
+      if (ev.category === "relay") {
+        const teams = state.teams.filter(t => t.eventId === eid && t.year === state.year);
+        return {
+          ev,
+          entries: teams.map(t => ({
+            key: t.id, kind: "team", teamId: t.id, className: t.className,
+            label: `${t.className} 接力隊`,
+            sub: `${(t.members || []).length} 人`,
+            state: t.checkinState || "pending",
+          })),
+        };
+      }
+      const regs = state.registrations.filter(r => r.eventId === eid && r.year === state.year);
+      return {
+        ev,
+        entries: regs.map(r => {
+          const s = state.students.find(x => x.id === r.studentId);
+          return {
+            key: r.id, kind: "reg", regId: r.id, studentId: r.studentId,
+            className: r.className,
+            label: s ? s.name : "—",
+            sub: `${r.className} · ${s ? s.studentId || "" : ""}`,
+            state: r.checkinState || "pending",
+          };
+        }),
+      };
+    }
+
+    async function setCheckin(entry, newState) {
+      if (entry.kind === "reg") {
+        const reg = state.registrations.find(r => r.id === entry.regId);
+        if (!reg) return;
+        await dbSet("registrations", reg.id, { ...reg, checkinState: newState, checkedInAt: new Date().toISOString() });
+      } else {
+        const t = state.teams.find(x => x.id === entry.teamId);
+        if (!t) return;
+        await dbSet("teams", t.id, { ...t, checkinState: newState, checkedInAt: new Date().toISOString() });
+      }
+    }
+
+    function refresh() {
+      const eid = bar.querySelector("#ci-event").value;
+      const { ev, entries } = currentEntries(eid);
+      if (!ev) { body.innerHTML = `<div class="empty">請先建立項目。</div>`; summary.innerHTML = ""; return; }
+
+      const present = entries.filter(e => e.state === "present").length;
+      const absent = entries.filter(e => e.state === "absent").length;
+      const pending = entries.length - present - absent;
+      summary.innerHTML = `
+        <div class="g-present"><div class="num">${present}</div><div class="lb">已到</div></div>
+        <div class="g-absent"><div class="num">${absent}</div><div class="lb">未到</div></div>
+        <div class="g-pending"><div class="num">${pending}</div><div class="lb">待檢錄</div></div>
+        <div style="flex:1;"></div>
+        <div style="font-family:var(--label); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--slate);">
+          點擊卡片切換：待檢錄 → 已到 → 未到 → 待檢錄
+        </div>
+      `;
+
+      body.innerHTML = "";
+      if (entries.length === 0) {
+        body.innerHTML = `<div class="empty">尚無 ${ev.category === "relay" ? "隊伍" : "報名"}。</div>`;
+        return;
+      }
+      entries.forEach(e => {
+        const card = h(`
+          <div class="checkin-card ${e.state}" data-key="${e.key}">
+            <div>
+              <div class="name">${e.label}</div>
+              <div class="sub">${e.sub}</div>
+            </div>
+            <div class="mark"></div>
+          </div>`);
+        card.onclick = async () => {
+          const next = e.state === "pending" ? "present" : e.state === "present" ? "absent" : "pending";
+          await setCheckin(e, next);
+        };
+        body.appendChild(card);
+      });
+    }
+
+    scanBar.querySelector("#ci-scan").addEventListener("keydown", async (ev) => {
+      if (ev.key !== "Enter") return;
+      const sid = ev.target.value.trim();
+      if (!sid) return;
+      const eid = bar.querySelector("#ci-event").value;
+      const { entries } = currentEntries(eid);
+      const stu = state.students.find(s => s.studentId === sid);
+      if (!stu) { toast(`找不到學號 ${sid}`); ev.target.value = ""; return; }
+      const entry = entries.find(e => e.studentId === stu.id);
+      if (!entry) { toast(`${stu.name} 未報名此項`); ev.target.value = ""; return; }
+      await setCheckin(entry, "present");
+      toast(`✓ ${stu.name} 已到`);
+      ev.target.value = "";
+    });
+
+    bar.querySelector("#ci-event").onchange = refresh;
+    bar.querySelector("#ci-reset").onclick = () => {
+      confirmModal("清除本項目所有檢錄狀態？", "已到 / 未到 的紀錄會全部改回「待檢錄」。", async () => {
+        const eid = bar.querySelector("#ci-event").value;
+        const { ev, entries } = currentEntries(eid);
+        for (const e of entries) {
+          if (e.state !== "pending") await setCheckin(e, "pending");
+        }
+        toast("已重置");
+      });
+    };
+    if (state.events.length > 0) refresh();
+    else body.innerHTML = `<div class="empty">請先於「項目」建立比賽項目。</div>`;
+
+    wrap.appendChild(card);
+    return wrap;
+  };
+
+  // ---------- Share (QR) ----------
+  views.share = () => {
+    const wrap = document.createElement("div");
+    const card = h(`<div class="card"></div>`);
+    card.appendChild(h(`<header><h3>QR 分享 · 即時排名</h3><span class="hint">觀眾掃碼即開對應項目看板</span></header>`));
+
+    const eventOpts = state.events.map(e => `<option value="${e.id}">${e.gradeGroup} · ${e.name}</option>`).join("");
+    const bar = h(`
+      <div class="toolbar">
+        <label style="font-family:var(--label); font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--slate);">項目</label>
+        <select id="qr-event" style="min-width:280px">${eventOpts}</select>
+        <div class="grow"></div>
+        <button class="btn" id="qr-copy">複製網址</button>
+        <button class="btn primary" id="qr-open">開啟看板</button>
+      </div>`);
+    card.appendChild(bar);
+    const body = h(`<div id="qr-body"></div>`);
+    card.appendChild(body);
+
+    function buildUrl(eid) {
+      const base = window.location.href.split("#")[0];
+      return `${base}#/live/${eid}`;
+    }
+
+    function refresh() {
+      const eid = bar.querySelector("#qr-event").value;
+      const ev = state.events.find(e => e.id === eid);
+      if (!ev) { body.innerHTML = `<div class="empty">請先建立項目。</div>`; return; }
+      const url = buildUrl(eid);
+      body.innerHTML = "";
+      const box = h(`
+        <div class="qr-wrap">
+          <div class="qr-box" id="qr-canvas"></div>
+          <div class="qr-info">
+            <div style="font-family:var(--label); font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--slate); margin-bottom:6px;">項目</div>
+            <h4>${ev.name}</h4>
+            <div style="color:var(--slate); font-size:13px;">${ev.gradeGroup} · ${CAT_LABEL[ev.category]} · ${GENDER_LABEL[ev.gender]}</div>
+            <div class="url">${url}</div>
+            <div style="font-size:12px; color:var(--slate);">掃描 QR 或直接開啟網址即可看到此項目的即時排名，資料會自動更新。</div>
+            <div class="qr-notice">⚠️ 注意：此網址需在本校組織登入者的裝置上才能開啟（Artifact 資料庫僅限組織內部）。若需給場外家長觀看，建議連上大螢幕、或另行將成績截圖公告。</div>
+          </div>
+        </div>`);
+      body.appendChild(box);
+      // Generate QR
+      try {
+        const qr = qrcode(0, "M");
+        qr.addData(url);
+        qr.make();
+        box.querySelector("#qr-canvas").innerHTML = qr.createSvgTag({ cellSize: 6, margin: 2 });
+      } catch (e) {
+        box.querySelector("#qr-canvas").textContent = "QR 產生失敗";
+      }
+    }
+
+    bar.querySelector("#qr-event").onchange = refresh;
+    bar.querySelector("#qr-copy").onclick = () => {
+      const eid = bar.querySelector("#qr-event").value;
+      if (!eid) return;
+      const url = buildUrl(eid);
+      navigator.clipboard?.writeText(url).then(() => toast("已複製網址"));
+    };
+    bar.querySelector("#qr-open").onclick = () => {
+      const eid = bar.querySelector("#qr-event").value;
+      if (!eid) return;
+      window.location.hash = `#/live/${eid}`;
+      routeFromHash();
+    };
+    if (state.events.length > 0) refresh();
+    else body.innerHTML = `<div class="empty">請先於「項目」建立比賽項目。</div>`;
+
+    wrap.appendChild(card);
+    return wrap;
+  };
+
+  // ---------- Ceremony (Award Display) ----------
+  views.ceremony = () => {
+    const wrap = document.createElement("div");
+    const card = h(`<div class="card"></div>`);
+    card.appendChild(h(`<header><h3>頒獎播放</h3><span class="hint">全螢幕輪播 · 適合大螢幕典禮使用</span></header>`));
+    card.appendChild(h(`
+      <div class="body pad" style="line-height:1.8;">
+        <p style="margin-top:0;">依序播放本屆各項目「前三名」畫面，遇到破紀錄項目會插播閃亮動畫。</p>
+        <ul style="color:var(--slate); font-size:13px;">
+          <li>方向鍵 ← → 手動切換；空白鍵暫停 / 繼續；Esc 離開</li>
+          <li>建議進入後按 F11 或 <b>全螢幕</b> 按鈕投影至大螢幕</li>
+          <li>資料會自動同步：登錄新成績、破紀錄後下一輪就會顯示</li>
+        </ul>
+        <div style="display:flex; gap:12px; margin-top:16px;">
+          <button class="btn primary" id="cer-start">開始播放</button>
+          <button class="btn" id="cer-fs">全螢幕開始</button>
+        </div>
+      </div>`));
+    card.querySelector("#cer-start").onclick = () => startCeremony(false);
+    card.querySelector("#cer-fs").onclick = () => startCeremony(true);
+    wrap.appendChild(card);
+    return wrap;
+  };
+
+  // ---------- Accounts ----------
+  views.accounts = () => {
+    const wrap = document.createElement("div");
+    if (role() !== "admin") {
+      wrap.appendChild(h(`<div class="card"><div class="empty"><h4>需管理員權限</h4><div>請以管理員身份登入以管理班級帳號。</div></div></div>`));
+      return wrap;
+    }
+
+    // 資料後端
+    const backendCard = h(`<div class="card"></div>`);
+    const backendName = state.backend === "claude" ? "Claude 雲端資料庫（組織內部）" :
+      state.backend === "gsheets" ? "Google Sheets" : "本機模式（僅此瀏覽器）";
+    const badgeColor = state.backend === "gsheets" ? "var(--track)" :
+      state.backend === "claude" ? "var(--accent)" : "var(--slate)";
+    backendCard.appendChild(h(`
+      <header><h3>資料後端</h3><span class="hint" style="color:${badgeColor}">● ${backendName}</span></header>
+      <div class="body pad">
+        <div style="line-height:1.8; margin-bottom:14px;">
+          ${state.backend === "gsheets"
+            ? `已連線到 Google Sheets，資料即時同步（每 5 秒更新一次）。`
+            : state.backend === "claude"
+            ? `Claude 雲端模式：組織內部登入者可讀寫。若要開放給無 Claude 帳號的老師/家長，請切換到 Google Sheets 後端。`
+            : `本機模式：資料僅存在此瀏覽器，其他人看不到。建議連結 Google Sheets 讓多人共用。`}
+        </div>
+        <div class="field">
+          <label>Google Sheets Apps Script Web App URL</label>
+          <input type="text" id="gs-url" value="${state.gsheetsUrl}" placeholder="https://script.google.com/macros/s/AKfyc.../exec" style="width:100%; font-family:var(--mono); font-size:12px;">
+        </div>
+        <div style="display:flex; gap:8px; margin-top:10px; flex-wrap:wrap;">
+          <button class="btn primary" id="gs-save">${state.backend === "gsheets" ? "更新並重新連線" : "儲存並連線"}</button>
+          <button class="btn" id="gs-test">測試連線</button>
+          ${state.backend === "gsheets" ? `<button class="btn ghost danger" id="gs-clear">中斷連線（改回本機）</button>` : ""}
+        </div>
+        <details style="margin-top:16px;">
+          <summary style="cursor:pointer; color:var(--slate); font-size:12px;">如何取得 Web App URL？（點開）</summary>
+          <ol style="font-size:12px; color:var(--slate); line-height:1.8; padding-left:20px; margin-top:8px;">
+            <li>Google Sheets 建立新試算表</li>
+            <li>Extensions（擴充功能）→ Apps Script</li>
+            <li>貼入我提供的 apps-script-code.gs 內容</li>
+            <li>執行 setup 函式並授權</li>
+            <li>右上角「部署 Deploy」→「新增部署作業」→「網頁應用程式」</li>
+            <li>執行身分「我」；誰可以存取「任何人」</li>
+            <li>複製 Web App URL 貼上方欄位</li>
+          </ol>
+        </details>
+      </div>
+    `));
+    backendCard.querySelector("#gs-save").onclick = async () => {
+      const url = backendCard.querySelector("#gs-url").value.trim();
+      if (!url) return toast("請貼入 URL");
+      if (!url.startsWith("https://script.google.com/")) {
+        if (!confirm("URL 看起來不像 Apps Script Web App URL（應以 https://script.google.com/ 開頭）。仍要儲存？")) return;
+      }
+      localStorage.setItem("fieldday.gsheetsUrl", url);
+      toast("儲存成功，正在重新載入…");
+      setTimeout(() => window.location.reload(), 500);
+    };
+    backendCard.querySelector("#gs-test").onclick = async () => {
+      const url = backendCard.querySelector("#gs-url").value.trim();
+      if (!url) return toast("請先貼入 URL");
+      try {
+        const res = await fetch(url + "?action=ping&t=" + Date.now());
+        const j = await res.json();
+        if (j.ok) toast(`連線成功 · ${j.version || ""}`);
+        else toast(`回應異常: ${JSON.stringify(j)}`);
+      } catch (e) {
+        toast(`連線失敗: ${e.message}`);
+      }
+    };
+    const gsClearBtn = backendCard.querySelector("#gs-clear");
+    if (gsClearBtn) gsClearBtn.onclick = () => {
+      confirmModal("中斷 Google Sheets 連線？", "系統會改為本機模式，資料只存在此瀏覽器。若要重新連線，回來這裡再貼一次 URL 即可。", () => {
+        localStorage.removeItem("fieldday.gsheetsUrl");
+        setTimeout(() => window.location.reload(), 300);
+      });
+    };
+    wrap.appendChild(backendCard);
+
+    // School settings
+    const sch = getSchoolSettings();
+    const schoolCard = h(`
+      <div class="card">
+        <header><h3>學校與大會資訊</h3><span class="hint">印在秩序冊與獎狀上</span></header>
+        <div class="body">
+          <div class="form-grid">
+            <div class="field"><label>校名</label><input type="text" id="ss-school" value="${sch.schoolName === '本校' ? '' : sch.schoolName}" placeholder="○○縣立○○完全中學"></div>
+            <div class="field"><label>大會名稱 Meet Name</label><input type="text" id="ss-title" value="${sch.meetTitle === 'Field Day' ? '' : sch.meetTitle}" placeholder="Field Day / Athletics Meet"></div>
+            <div class="field"><label>校長姓名</label><input type="text" id="ss-principal" value="${sch.principalName === '校　　長' ? '' : sch.principalName}" placeholder="王小明"></div>
+            <div class="field"><label>大會主席</label><input type="text" id="ss-chair" value="${sch.meetChair}" placeholder="主任委員（選填）"></div>
+            <div class="field"><label>田徑組長</label><input type="text" id="ss-track" value="${sch.trackDirector}" placeholder="選填"></div>
+            <div class="field"><label>紀錄組長</label><input type="text" id="ss-rec" value="${sch.recorder}" placeholder="選填"></div>
+          </div>
+          <div style="padding: 12px 18px; text-align:right; border-top:1px solid var(--rule);">
+            <button class="btn primary" id="ss-save">儲存</button>
+          </div>
+        </div>
+      </div>`);
+    schoolCard.querySelector("#ss-save").onclick = async () => {
+      await setSchoolSettings({
+        schoolName: schoolCard.querySelector("#ss-school").value.trim(),
+        meetTitle: schoolCard.querySelector("#ss-title").value.trim(),
+        principalName: schoolCard.querySelector("#ss-principal").value.trim(),
+        meetChair: schoolCard.querySelector("#ss-chair").value.trim(),
+        trackDirector: schoolCard.querySelector("#ss-track").value.trim(),
+        recorder: schoolCard.querySelector("#ss-rec").value.trim(),
+      });
+      toast("已儲存");
+    };
+    wrap.appendChild(schoolCard);
+
+    // Admin password
+    const adminCard = h(`<div class="card"></div>`);
+    adminCard.appendChild(h(`<header><h3>管理員密碼</h3><span class="hint">SETUP</span></header>`));
+    adminCard.appendChild(h(`
+      <div class="body pad">
+        <div style="display:flex; gap:8px; align-items:flex-end;">
+          <div class="field" style="flex:1;"><label>更改管理員密碼</label><input type="password" id="ad-pw" placeholder="新密碼"></div>
+          <button class="btn primary" id="ad-save">更新</button>
+        </div>
+      </div>`));
+    adminCard.querySelector("#ad-save").onclick = async () => {
+      const pw = adminCard.querySelector("#ad-pw").value;
+      if (!pw || pw.length < 4) return toast("密碼至少 4 個字元");
+      await setAdminPassword(pw);
+      adminCard.querySelector("#ad-pw").value = "";
+      toast("已更新管理員密碼");
+    };
+    wrap.appendChild(adminCard);
+
+    // Class accounts
+    const classesFromStudents = Array.from(new Set(state.students.map(s => s.className))).sort();
+    const card = h(`<div class="card"></div>`);
+    card.appendChild(h(`<header><h3>班級帳號</h3><span class="hint">${state.classes.length} 班已建立</span></header>`));
+    const bulkBar = h(`
+      <div class="toolbar">
+        <span style="font-family:var(--label); font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--slate);">批次為所有班級建立</span>
+        <input type="password" id="bulk-pw" placeholder="共用密碼（可各自再改）">
+        <button class="btn" id="bulk-btn">批次建立</button>
+      </div>`);
+    card.appendChild(bulkBar);
+    bulkBar.querySelector("#bulk-btn").onclick = async () => {
+      const pw = bulkBar.querySelector("#bulk-pw").value;
+      if (!pw || pw.length < 4) return toast("密碼至少 4 個字元");
+      let created = 0;
+      for (const cn of classesFromStudents) {
+        if (!state.classes.find(c => c.className === cn)) { await setClassPassword(cn, pw); created++; }
+      }
+      toast(`已為 ${created} 個班級建立帳號`);
+    };
+
+    const table = h(`
+      <table>
+        <thead><tr><th>班級</th><th>組別</th><th>狀態</th><th style="text-align:right; padding-right:18px;">操作</th></tr></thead>
+        <tbody></tbody>
+      </table>`);
+    const tbody = table.querySelector("tbody");
+    classesFromStudents.forEach(cn => {
+      const exists = state.classes.find(c => c.className === cn);
+      const row = h(`
+        <tr>
+          <td style="font-family:var(--serif); font-weight:500;">${cn}</td>
+          <td><span class="pill">${gradeGroupOf(cn)}</span></td>
+          <td>${exists ? `<span style="color:var(--track); font-size:12px;">● 已建立</span>` : `<span style="color:var(--slate); font-size:12px;">○ 尚未建立</span>`}</td>
+          <td style="text-align:right; padding-right:14px;">
+            <button class="btn ghost" data-set="${cn}">${exists ? "重設密碼" : "建立"}</button>
+            ${exists ? `<button class="btn ghost danger" data-del="${exists.id}">刪除</button>` : ""}
+          </td>
+        </tr>`);
+      row.querySelector("[data-set]").onclick = () => {
+        modal({
+          title: `${cn} · 設定密碼`,
+          body: `<div class="field"><label>密碼</label><input type="password" id="pw-inp" placeholder="至少 4 字元"></div>`,
+          okLabel: "儲存",
+          onOk: async (m) => {
+            const pw = m.querySelector("#pw-inp").value;
+            if (!pw || pw.length < 4) { toast("密碼至少 4 字元"); return false; }
+            await setClassPassword(cn, pw);
+            toast("已儲存");
+            return true;
+          },
+        });
+      };
+      const del = row.querySelector("[data-del]");
+      if (del) del.onclick = () => {
+        confirmModal(`刪除 ${cn} 的帳號？`, "該班負責人將無法登入。", async () => { await dbDelete("classes", del.dataset.del); });
+      };
+      tbody.appendChild(row);
+    });
+    if (classesFromStudents.length === 0) tbody.appendChild(h(`<tr><td colspan="4" class="empty">名冊尚無班級。</td></tr>`));
+    card.appendChild(table);
+    wrap.appendChild(card);
+    return wrap;
+  };
+
+  // ---------- Print ----------
+  views.print = () => {
+    const wrap = document.createElement("div");
+    wrap.appendChild(h(`
+      <div class="card" style="margin-bottom:20px;">
+        <header><h3>列印文件</h3><span class="hint">${state.year} 學年度</span></header>
+        <div class="body pad">
+          <div class="print-picker">
+            <div class="doc-card" data-doc="program">
+              <h4>秩序冊</h4>
+              <p>封面 + 各組別項目與報名名單，A4 直向。</p>
+            </div>
+            <div class="doc-card" data-doc="results">
+              <h4>成績單</h4>
+              <p>本屆各項目名次、成績與積分。</p>
+            </div>
+            <div class="doc-card" data-doc="certificates">
+              <h4>獎狀</h4>
+              <p>前三名獎狀，一項一張 A4，適合彩色印表。</p>
+            </div>
+          </div>
+        </div>
+      </div>`));
+    wrap.querySelectorAll(".doc-card").forEach(c => c.onclick = () => renderPrint(c.dataset.doc));
+    return wrap;
+  };
+
+  function renderPrint(doc) {
+    const area = $("#printArea");
+    area.innerHTML = "";
+    if (doc === "program") area.appendChild(printProgram());
+    if (doc === "results") area.appendChild(printResults());
+    if (doc === "certificates") area.appendChild(printCertificates());
+    document.body.classList.add("printing");
+    $("#printBackBtn").style.display = "";
+    $("#printBackBtn").onclick = () => {
+      document.body.classList.remove("printing");
+      $("#printBackBtn").style.display = "none";
+      area.innerHTML = "";
+    };
+    setTimeout(() => window.print(), 300);
+  }
+
+  function printProgram() {
+    const wrap = document.createElement("div");
+    const sch = getSchoolSettings();
+    const doc = h(`<div class="print-doc"></div>`);
+    doc.appendChild(h(`
+      <div class="cover">
+        <div class="schoolyear">${sch.schoolName} · ${state.year} 學年度</div>
+        <h1>${sch.meetTitle}秩序冊</h1>
+        <div class="rule"></div>
+        <div class="sub">FIELD DAY · PROGRAM</div>
+        <div style="margin-top:60px; font-size:12px; color:#666; letter-spacing:.2em;">School Field Day · Grades 1-12</div>
+        ${(sch.meetChair || sch.trackDirector || sch.recorder) ? `
+          <div style="margin-top: 40px; font-family: var(--serif); font-size: 13px; color: #333;">
+            ${sch.meetChair ? `<div>大會主席　${sch.meetChair}</div>` : ""}
+            ${sch.trackDirector ? `<div>田徑組長　${sch.trackDirector}</div>` : ""}
+            ${sch.recorder ? `<div>紀錄組長　${sch.recorder}</div>` : ""}
+          </div>` : ""}
+      </div>`));
+
+    // ===== Schedule =====
+    const scheduled = state.events.filter(e => e.date || e.time).slice().sort((a, b) => {
+      const da = (a.date || "9999") + " " + (a.time || "");
+      const db = (b.date || "9999") + " " + (b.time || "");
+      return da.localeCompare(db);
+    });
+    if (scheduled.length > 0) {
+      const schedSection = h(`<div style="page-break-after: always;"></div>`);
+      schedSection.appendChild(h(`<h2 class="section">賽程總覽</h2>`));
+      // Group by date
+      const byDate = new Map();
+      scheduled.forEach(e => {
+        const d = e.date || "未定日期";
+        if (!byDate.has(d)) byDate.set(d, []);
+        byDate.get(d).push(e);
+      });
+      Array.from(byDate.entries()).forEach(([d, evs]) => {
+        schedSection.appendChild(h(`<h3 class="event-head">${d}</h3>`));
+        schedSection.appendChild(h(`
+          <table>
+            <thead><tr><th style="width:60px;">時間</th><th style="width:70px;">場地</th><th>項目</th><th style="width:60px;">組別</th><th style="width:50px;">賽制</th></tr></thead>
+            <tbody>
+              ${evs.map(e => `
+                <tr>
+                  <td class="num" style="text-align:left;">${e.time || "—"}</td>
+                  <td>${e.venue || "—"}</td>
+                  <td>${e.name}</td>
+                  <td>${e.gradeGroup}</td>
+                  <td>${e.rounds === "prelim_final" ? "預+決" : "決"}</td>
+                </tr>
+              `).join("")}
+            </tbody>
+          </table>`));
+      });
+      // Un-scheduled events at bottom of schedule page
+      const unscheduled = state.events.filter(e => !e.date && !e.time);
+      if (unscheduled.length > 0) {
+        schedSection.appendChild(h(`<h3 class="event-head" style="color:#888; margin-top:20px;">未排時間的項目</h3>`));
+        schedSection.appendChild(h(`<div style="font-size:12px; color:#555; line-height:1.8; padding-left:12px;">
+          ${unscheduled.map(e => `<span style="margin-right:16px;">${e.name}（${e.gradeGroup}）</span>`).join("")}
+        </div>`));
+      }
+      doc.appendChild(schedSection);
+    }
+
+    const groups = ["國小低", "國小中", "國小高", "國中", "高中"];
+    groups.forEach(g => {
+      const evs = state.events.filter(e => e.gradeGroup === g).sort((a, b) => {
+        if (a.date && b.date && a.date !== b.date) return a.date.localeCompare(b.date);
+        if (a.time && b.time && a.time !== b.time) return a.time.localeCompare(b.time);
+        return a.name.localeCompare(b.name, "zh-Hant");
+      });
+      if (evs.length === 0) return;
+      const section = h(`<div><h2 class="section">${g}組</h2></div>`);
+      evs.forEach(ev => {
+        let participants = "";
+        if (ev.category === "relay") {
+          const teams = state.teams.filter(t => t.eventId === ev.id && t.year === state.year);
+          participants = teams.map(t => {
+            const names = (t.members || []).slice(0, 4).map(id => state.students.find(s => s.id === id)?.name || "—").filter(Boolean).join("、");
+            return `<span><b>${t.className}</b>：${names}</span>`;
+          }).join("");
+        } else {
+          const regs = state.registrations.filter(r => r.eventId === ev.id && r.year === state.year);
+          participants = regs.map(r => {
+            const s = state.students.find(x => x.id === r.studentId);
+            return `<span>${r.className} ${s ? s.name : "—"}</span>`;
+          }).join("");
+        }
+        const schedLine = (ev.date || ev.time || ev.venue)
+          ? `<span style="font-family:var(--mono); color:#666; font-size:11px; margin-left:8px;">${ev.date || ""} ${ev.time || ""}${ev.venue ? ` · ${ev.venue}` : ""}</span>`
+          : "";
+        const off = ev.officials && ev.officials.length
+          ? `<div style="font-size:11px; color:#555; padding-left:12px; margin: 2px 0 4px;">裁判：${ev.officials.map(o => `${o.role} ${o.name}`).join("　")}</div>`
+          : "";
+        section.appendChild(h(`
+          <h3 class="event-head">${ev.name}<span class="cat">${CAT_LABEL[ev.category]} · ${GENDER_LABEL[ev.gender]}${ev.rounds === "prelim_final" ? " · 預+決" : ""}</span>${schedLine}</h3>
+          ${off}
+          <div class="participants">${participants || "<span style='color:#999'>（尚無報名）</span>"}</div>
+        `));
+      });
+      doc.appendChild(section);
+    });
+    wrap.appendChild(doc);
+    return wrap;
+  }
+
+  function printResults() {
+    const wrap = document.createElement("div");
+    const doc = h(`<div class="print-doc"></div>`);
+    doc.appendChild(h(`
+      <div class="cover">
+        <div class="schoolyear">${state.year} 學年度</div>
+        <h1>Field Day Results</h1>
+        <div class="rule"></div>
+        <div class="sub">FIELD DAY · RESULTS</div>
+      </div>`));
+
+    // Championship first
+    const standings = championshipStandings(state.year);
+    doc.appendChild(h(`<h2 class="section">總錦標</h2>`));
+    doc.appendChild(h(`
+      <table>
+        <thead><tr><th>名次</th><th>班級</th><th>組別</th><th class="num">總得分</th></tr></thead>
+        <tbody>
+          ${standings.map((s, i) => `<tr><td>${i + 1}</td><td>${s.className}</td><td>${s.gradeGroup}</td><td class="num">${s.points}</td></tr>`).join("") || `<tr><td colspan="4">尚無成績</td></tr>`}
+        </tbody>
+      </table>`));
+
+    const groups = ["國小低", "國小中", "國小高", "國中", "高中"];
+    groups.forEach(g => {
+      const evs = state.events.filter(e => e.gradeGroup === g).sort((a, b) => a.name.localeCompare(b.name, "zh-Hant"));
+      if (evs.length === 0) return;
+      const section = h(`<div style="page-break-before: always;"><h2 class="section">${g}組成績</h2></div>`);
+      evs.forEach(ev => {
+        const ranked = scoringResultsForEvent(ev.id, state.year).filter(r => r.mark != null);
+        if (ranked.length === 0) return;
+        const rec = eventRecord(ev.id);
+        section.appendChild(h(`<h3 class="event-head">${ev.name}<span class="cat">${CAT_LABEL[ev.category]}</span></h3>`));
+        section.appendChild(h(`
+          <table>
+            <thead><tr><th>名次</th><th>${ev.category === "relay" ? "隊伍" : "姓名"}</th><th>班級</th><th class="num">成績</th><th class="num">積分</th><th></th></tr></thead>
+            <tbody>
+              ${ranked.slice(0, 8).map(r => {
+                const s = state.students.find(x => x.id === r.studentId);
+                const team = state.teams.find(t => t.id === r.teamId);
+                const nm = s ? s.name : (team ? `${team.className} 接力隊` : "—");
+                const isRec = rec && r.mark === rec.mark && r.year === rec.year;
+                return `<tr><td>${r.rank}</td><td>${nm}</td><td>${r.className}</td>
+                  <td class="num">${formatMark(r.mark, ev.unit)}</td>
+                  <td class="num">${r.points}</td>
+                  <td>${isRec ? "★ 大會紀錄" : ""}</td></tr>`;
+              }).join("")}
+            </tbody>
+          </table>`));
+      });
+      doc.appendChild(section);
+    });
+    wrap.appendChild(doc);
+    return wrap;
+  }
+
+  function printCertificates() {
+    const wrap = document.createElement("div");
+    const RANK_ZH = ["", "一", "二", "三"];
+    const sch = getSchoolSettings();
+    const today = new Date();
+    const dateStr = `中華民國 ${today.getFullYear() - 1911} 年 ${today.getMonth() + 1} 月 ${today.getDate()} 日`;
+    state.events.forEach(ev => {
+      const ranked = scoringResultsForEvent(ev.id, state.year).filter(r => r.mark != null).slice(0, 3);
+      ranked.forEach(r => {
+        const s = state.students.find(x => x.id === r.studentId);
+        const team = state.teams.find(t => t.id === r.teamId);
+        let bodyHtml;
+        if (team) {
+          const memberNames = (team.members || []).slice(0, 4)
+            .map(id => state.students.find(s => s.id === id)?.name).filter(Boolean).join("、");
+          bodyHtml = `茲有 <span class="who">${r.className}</span> 代表隊（${memberNames}）
+                參加 ${sch.schoolName} ${state.year} 學年度${sch.meetTitle}
+                <span class="ev">${ev.name}</span> 競賽，
+                榮獲第 ${RANK_ZH[r.rank] || r.rank} 名，
+                成績 <b>${formatMark(r.mark, ev.unit)}</b>，特頒此狀，以資鼓勵。`;
+        } else {
+          bodyHtml = `茲有 <span class="who">${r.className}　${s ? s.name : "—"}</span> 同學，
+                參加 ${sch.schoolName} ${state.year} 學年度${sch.meetTitle}
+                <span class="ev">${ev.name}</span> 競賽，
+                榮獲第 ${RANK_ZH[r.rank] || r.rank} 名，
+                成績 <b>${formatMark(r.mark, ev.unit)}</b>，特頒此狀，以資鼓勵。`;
+        }
+        wrap.appendChild(h(`
+          <div class="cert-page">
+            <div class="cert-inner">
+              <div class="school">${sch.schoolName} · ${sch.meetTitle} · ${state.year}</div>
+              <div class="title">獎狀</div>
+              <div class="rank-bar">第 ${RANK_ZH[r.rank] || r.rank} 名</div>
+              <div class="body">${bodyHtml}</div>
+              <div class="foot">
+                <div class="date">${dateStr}</div>
+                <div class="sig"><div class="line">${sch.principalName}</div></div>
+              </div>
+            </div>
+          </div>`));
+      });
+    });
+    if (wrap.children.length === 0) {
+      wrap.appendChild(h(`<div class="cert-page" style="align-items:center; justify-content:center; display:flex;"><div style="text-align:center; color:#666; font-family:var(--serif);">本屆尚無可發之獎狀（無前三名成績）。</div></div>`));
+    }
+    return wrap;
+  }
+
+  // ---------- Helpers ----------
+  function h(html) { const t = document.createElement("template"); t.innerHTML = html.trim(); return t.content.firstElementChild; }
+
+  function toast(msg) {
+    const t = h(`<div class="toast">${msg}</div>`);
+    $("#toasts").appendChild(t);
+    setTimeout(() => t.remove(), 2200);
+  }
+
+  function confirmModal(title, body, onConfirm) {
+    modal({ title, body, okLabel: "確定", onOk: async () => { await onConfirm(); return true; } });
+  }
+
+  function modal({ title, body, okLabel = "確定", wide = false, onOk }) {
+    const root = $("#modalRoot");
+    const m = h(`
+      <div class="modal-backdrop">
+        <div class="modal ${wide ? "wide" : ""}">
+          <header>${title}</header>
+          <div class="body">${body || ""}</div>
+          <footer>
+            <button class="btn ghost" data-cancel>取消</button>
+            <button class="btn primary" data-ok>${okLabel}</button>
+          </footer>
+        </div>
+      </div>`);
+    root.appendChild(m);
+    m.querySelector("[data-cancel]").onclick = () => m.remove();
+    m.querySelector("[data-ok]").onclick = async () => {
+      const ok = onOk ? await onOk(m) : true;
+      if (ok !== false) m.remove();
+    };
+    m.onclick = (e) => { if (e.target === m) m.remove(); };
+  }
+
+  // ---------- Kiosk (Live board) ----------
+  let liveState = { eventId: null, prevBest: null };
+
+  function routeFromHash() {
+    const h1 = window.location.hash;
+    const m = h1.match(/^#\/live\/(.+)$/);
+    if (m) {
+      liveState.eventId = m[1];
+      document.body.classList.add("kiosk-live");
+      document.body.classList.remove("kiosk-ceremony");
+      renderLive();
+      return true;
+    }
+    if (h1 === "#/ceremony") {
+      document.body.classList.add("kiosk-ceremony");
+      document.body.classList.remove("kiosk-live");
+      startCeremonyPlayback();
+      return true;
+    }
+    document.body.classList.remove("kiosk-live", "kiosk-ceremony");
+    return false;
+  }
+
+  function renderLive() {
+    const shell = document.getElementById("kioskShell");
+    const eid = liveState.eventId;
+    const ev = state.events.find(e => e.id === eid);
+    if (!ev) {
+      shell.innerHTML = `<div style="padding: 80px; text-align:center; color: var(--slate);">找不到此項目。<br><br><a href="#" onclick="window.location.hash=''; return false;">返回系統</a></div>`;
+      return;
+    }
+    const ranked = scoringResultsForEvent(eid, state.year).filter(r => r.mark != null);
+    const rec = eventRecord(eid);
+    shell.innerHTML = "";
+    shell.appendChild(h(`
+      <div class="kiosk-header">
+        <div>
+          <div class="eyebrow">${ev.gradeGroup} · ${CAT_LABEL[ev.category]} · ${GENDER_LABEL[ev.gender]}${ev.rounds === "prelim_final" ? " · 決賽" : ""}</div>
+          <h1>${ev.name}</h1>
+        </div>
+        <div class="meta">
+          <div><span class="live-dot"></span>即時 · ${state.year} 學年度</div>
+          <div style="margin-top:6px; font-size:11px; color:var(--slate);">大會紀錄　<b>${rec ? formatMark(rec.mark, ev.unit) : "—"}</b>${rec ? ` · ${rec.year}` : ""}</div>
+          <div style="margin-top:10px;"><a href="#" onclick="window.location.hash=''; return false;" style="font-family:var(--label); font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--slate); text-decoration:none;">← 返回</a></div>
+        </div>
+      </div>`));
+
+    if (ranked.length === 0) {
+      shell.appendChild(h(`
+        <div style="padding: 60px; text-align:center; color: var(--slate); background: var(--panel); border-radius: 4px; border: 1px solid var(--rule);">
+          <div style="font-family: var(--serif); font-size: 22px; margin-bottom: 8px;">尚未開始比賽</div>
+          <div>當有成績登錄後，此頁會自動更新。</div>
+        </div>`));
+      return;
+    }
+
+    const table = h(`
+      <table class="kiosk-live-table">
+        <thead><tr>
+          <th style="text-align:center;">名次</th>
+          <th>選手</th>
+          <th>班級</th>
+          <th style="text-align:right;">成績</th>
+          <th style="text-align:right;">積分</th>
+          <th style="text-align:center;">紀錄</th>
+        </tr></thead>
+        <tbody></tbody>
+      </table>`);
+    const tbody = table.querySelector("tbody");
+    ranked.slice(0, 12).forEach(r => {
+      const s = state.students.find(x => x.id === r.studentId);
+      const team = state.teams.find(t => t.id === r.teamId);
+      const nm = s ? s.name : (team ? `${team.className} 接力隊` : "—");
+      const isRec = rec && r.mark === rec.mark && r.year === rec.year;
+      const cls = r.rank === 1 ? "top1" : r.rank === 2 ? "top2" : r.rank === 3 ? "top3" : "";
+      tbody.appendChild(h(`
+        <tr class="${isRec ? 'new-record' : ''}">
+          <td class="rank ${cls}">${r.rank}</td>
+          <td class="name">${nm}</td>
+          <td class="class">${r.className}</td>
+          <td class="mark">${formatMark(r.mark, ev.unit)}</td>
+          <td class="points">${r.points || "—"}</td>
+          <td class="rec">${isRec ? `<span class="record-flag">大會新猷</span>` : ""}</td>
+        </tr>`));
+    });
+    shell.appendChild(table);
+  }
+
+  // ---------- Ceremony playback ----------
+  let ceremonyTimer = null;
+  let ceremonyIdx = 0;
+  let ceremonyPlaylist = [];
+  let ceremonyPaused = false;
+
+  function buildCeremonyPlaylist() {
+    // Slides: 1) Overall standings, 2) For each event: top 3, 3) For each record: dramatic reveal
+    const items = [];
+    // Overall
+    const stand = championshipStandings(state.year);
+    if (stand.length > 0) items.push({ kind: "standings", data: stand });
+    // Events with results: top 3
+    state.events.forEach(ev => {
+      const ranked = scoringResultsForEvent(ev.id, state.year).filter(r => r.mark != null);
+      if (ranked.length === 0) return;
+      const rec = eventRecord(ev.id);
+      const isRecordYear = rec && rec.year === state.year;
+      if (isRecordYear) {
+        items.push({ kind: "record", ev, rec, top: ranked.slice(0, 3) });
+      }
+      items.push({ kind: "podium", ev, top: ranked.slice(0, 3) });
+    });
+    return items;
+  }
+
+  function startCeremony(fullscreen) {
+    window.location.hash = "#/ceremony";
+    if (fullscreen) {
+      const el = document.documentElement;
+      if (el.requestFullscreen) el.requestFullscreen().catch(() => {});
+    }
+  }
+
+  function startCeremonyPlayback() {
+    ceremonyIdx = 0;
+    ceremonyPaused = false;
+    ceremonyPlaylist = buildCeremonyPlaylist();
+    if (ceremonyPlaylist.length === 0) {
+      document.getElementById("ceremonyShell").innerHTML = `
+        <div style="margin:auto; text-align:center; color:#B08133; font-family:var(--serif);">
+          <div style="font-size:28px; margin-bottom:12px;">尚無可播放的成績</div>
+          <div style="font-size:14px; color:#F1EAD8;">請先登錄本屆比賽成績。</div>
+          <div style="margin-top:24px;"><a href="#" onclick="window.location.hash=''; return false;" style="color:#B08133;">← 返回</a></div>
+        </div>`;
+      return;
+    }
+    paintCeremony();
+    startCeremonyTimer();
+  }
+  function startCeremonyTimer() {
+    stopCeremonyTimer();
+    if (ceremonyPaused) return;
+    const cur = ceremonyPlaylist[ceremonyIdx];
+    const dur = cur && cur.kind === "record" ? 6500 : 8000;
+    ceremonyTimer = setTimeout(() => {
+      ceremonyIdx = (ceremonyIdx + 1) % ceremonyPlaylist.length;
+      paintCeremony();
+      startCeremonyTimer();
+    }, dur);
+  }
+  function stopCeremonyTimer() {
+    if (ceremonyTimer) { clearTimeout(ceremonyTimer); ceremonyTimer = null; }
+  }
+
+  function paintCeremony() {
+    const shell = document.getElementById("ceremonyShell");
+    if (ceremonyPlaylist.length === 0) return;
+    const item = ceremonyPlaylist[ceremonyIdx];
+    shell.innerHTML = "";
+    const sch = getSchoolSettings();
+
+    if (item.kind === "record") {
+      const ev = item.ev, rec = item.rec;
+      // Find prior record (best from other years)
+      const prior = state.results.filter(r => r.eventId === ev.id && r.year !== state.year && r.mark != null);
+      const priorBest = prior.length ? prior.reduce((a, b) => ev.unit === "seconds" ? (a.mark <= b.mark ? a : b) : (a.mark >= b.mark ? a : b)).mark : null;
+      const diff = priorBest != null ? Math.abs(rec.mark - priorBest).toFixed(2) : null;
+      const diffTxt = diff ? (ev.unit === "seconds" ? `快 ${diff} 秒` : `多 ${diff} 公尺`) : "首屆紀錄";
+      shell.appendChild(h(`
+        <div class="ceremony-record">
+          <div class="flash-ribbon">★ 大會新猷 ★</div>
+          <div class="big-title">破紀錄</div>
+          <div class="event-name">${ev.gradeGroup} · ${ev.name}</div>
+          <div class="who"><span class="cls">${rec.className}</span>${rec.student}</div>
+          <div class="mark-line">
+            ${priorBest != null ? `<span class="old">${formatMark(priorBest, ev.unit)}</span><span class="arrow">→</span>` : ""}
+            <span class="new">${formatMark(rec.mark, ev.unit)}</span>
+          </div>
+          <div class="diff">${diffTxt}</div>
+        </div>
+      `));
+    } else if (item.kind === "standings") {
+      shell.appendChild(h(`<div class="ceremony-eyebrow">${sch.schoolName} · ${state.year} 學年度</div>`));
+      shell.appendChild(h(`<h1 class="ceremony-title">總錦標</h1>`));
+      shell.appendChild(h(`<div class="ceremony-sub">Overall Championship</div>`));
+      const list = h(`<div style="max-width:800px; margin:0 auto; width:100%;"></div>`);
+      item.data.slice(0, 8).forEach((s, i) => {
+        list.appendChild(h(`
+          <div style="display:grid; grid-template-columns: 60px 1fr 120px 100px; padding: 16px 20px; border-bottom: 1px solid rgba(255,255,255,.1); align-items:center; animation: rise 400ms ease-out ${i * 60}ms both;">
+            <div style="font-family:var(--mono); font-size:32px; font-weight:600; color:${i === 0 ? '#E8B858' : i === 1 ? '#C9C0AF' : i === 2 ? '#D8815C' : '#7A7F8A'};">${i + 1}</div>
+            <div style="font-family:var(--serif); font-size:28px; font-weight:500; color:#F5EFD8;">${s.className}</div>
+            <div style="font-family:var(--label); font-size:12px; letter-spacing:.14em; color:#9CA2AE;">${s.gradeGroup}</div>
+            <div style="font-family:var(--mono); font-size:32px; font-weight:600; color:#EDCA75; text-align:right;">${s.points}</div>
+          </div>`));
+      });
+      shell.appendChild(list);
+    } else {
+      // Podium
+      const ev = item.ev;
+      shell.appendChild(h(`<div class="ceremony-eyebrow">${ev.gradeGroup} · ${CAT_LABEL[ev.category]}</div>`));
+      shell.appendChild(h(`<h1 class="ceremony-title">${ev.name}</h1>`));
+      shell.appendChild(h(`<div class="ceremony-sub">${GENDER_LABEL[ev.gender]}子組 · Final</div>`));
+      const podium = h(`<div class="ceremony-podium"></div>`);
+      const order = [1, 0, 2]; // display: silver | gold | bronze
+      order.forEach(idx => {
+        const r = item.top[idx];
+        if (!r) {
+          podium.appendChild(h(`<div></div>`));
+          return;
+        }
+        const s = state.students.find(x => x.id === r.studentId);
+        const team = state.teams.find(t => t.id === r.teamId);
+        const nm = s ? s.name : (team ? `${team.className} 接力隊` : "—");
+        const rankNum = idx + 1;
+        podium.appendChild(h(`
+          <div class="podium-slot p${rankNum}">
+            <div class="podium-rank">第 ${["一", "二", "三"][idx]} 名</div>
+            <div class="podium-name">${nm}</div>
+            <div class="podium-class">${r.className}</div>
+            <div class="podium-mark">${formatMark(r.mark, ev.unit)}</div>
+          </div>`));
+      });
+      shell.appendChild(podium);
+    }
+
+    // Progress ticks + controls
+    const prog = h(`<div class="ceremony-progress"></div>`);
+    ceremonyPlaylist.forEach((_, i) => {
+      prog.appendChild(h(`<div class="tick ${i === ceremonyIdx ? "on" : ""}"></div>`));
+    });
+    shell.appendChild(prog);
+    const ctrls = h(`
+      <div class="ceremony-controls">
+        <button data-act="prev">← 上一頁</button>
+        <button data-act="toggle">${ceremonyPaused ? "▶ 繼續" : "⏸ 暫停"}</button>
+        <button data-act="next">下一頁 →</button>
+        <button data-act="exit">✕ 離開</button>
+      </div>`);
+    ctrls.querySelectorAll("[data-act]").forEach(b => {
+      b.onclick = (e) => {
+        e.stopPropagation();
+        const a = b.dataset.act;
+        if (a === "prev") { ceremonyIdx = (ceremonyIdx - 1 + ceremonyPlaylist.length) % ceremonyPlaylist.length; paintCeremony(); startCeremonyTimer(); }
+        if (a === "next") { ceremonyIdx = (ceremonyIdx + 1) % ceremonyPlaylist.length; paintCeremony(); startCeremonyTimer(); }
+        if (a === "toggle") { ceremonyPaused = !ceremonyPaused; if (ceremonyPaused) stopCeremonyTimer(); else startCeremonyTimer(); paintCeremony(); }
+        if (a === "exit") { exitCeremony(); }
+      };
+    });
+    shell.appendChild(ctrls);
+  }
+
+  function exitCeremony() {
+    stopCeremonyTimer();
+    if (document.fullscreenElement && document.exitFullscreen) document.exitFullscreen().catch(() => {});
+    window.location.hash = "";
+    routeFromHash();
+  }
+
+  // Keyboard controls for kiosk modes
+  document.addEventListener("keydown", (e) => {
+    if (document.body.classList.contains("kiosk-ceremony")) {
+      if (e.key === "Escape") exitCeremony();
+      if (e.key === "ArrowRight") { ceremonyIdx = (ceremonyIdx + 1) % ceremonyPlaylist.length; paintCeremony(); startCeremonyTimer(); }
+      if (e.key === "ArrowLeft") { ceremonyIdx = (ceremonyIdx - 1 + ceremonyPlaylist.length) % ceremonyPlaylist.length; paintCeremony(); startCeremonyTimer(); }
+      if (e.key === " ") { e.preventDefault(); ceremonyPaused = !ceremonyPaused; if (ceremonyPaused) stopCeremonyTimer(); else startCeremonyTimer(); paintCeremony(); }
+    }
+    if (document.body.classList.contains("kiosk-live") && e.key === "Escape") {
+      window.location.hash = "";
+      routeFromHash();
+    }
+  });
+
+  // Watch hash changes (from user or from internal navigation)
+  window.addEventListener("hashchange", () => {
+    const inKiosk = routeFromHash();
+    if (!inKiosk) render();
+  });
+
+  // ---------- Wire up ----------
+  $("#newYearBtn").onclick = () => {
+    if (!can("manageYear")) return toast("需管理員權限");
+    const y = prompt("新增學年度（例如 2027）", String((state.years[0] || new Date().getFullYear()) + 1));
+    if (!y) return;
+    const n = parseInt(y, 10);
+    if (isNaN(n)) return toast("請輸入年份");
+    addYear(n);
+    state.year = n;
+    render();
+    toast(`已新增 ${n} 學年度`);
+  };
+
+  loadSession();
+  initDb();
+  // Once we're ready, route from hash if applicable
+  const readyWatcher = setInterval(() => {
+    if (state.ready) {
+      clearInterval(readyWatcher);
+      routeFromHash();
+    }
+  }, 100);
+})();
+</script>

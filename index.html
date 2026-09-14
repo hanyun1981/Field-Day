@@ -3335,8 +3335,8 @@
       state.backend === "gsheets" ? "Google Sheets" : "本機模式（僅此瀏覽器）";
     const badgeColor = state.backend === "gsheets" ? "var(--track)" :
       state.backend === "claude" ? "var(--accent)" : "var(--slate)";
+    backendCard.appendChild(h(`<header><h3>資料後端</h3><span class="hint" style="color:${badgeColor}">● ${backendName}</span></header>`));
     backendCard.appendChild(h(`
-      <header><h3>資料後端</h3><span class="hint" style="color:${badgeColor}">● ${backendName}</span></header>
       <div class="body pad">
         <div style="line-height:1.8; margin-bottom:14px;">
           ${state.backend === "gsheets"

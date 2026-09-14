@@ -885,6 +885,16 @@
 
   const DEFAULT_SCORING = [9, 7, 6, 5, 4, 3, 2, 1];
 
+  // 民國學年度顯示：西元 2026 → 民國 115
+  function rocYear(ceYear) { return ceYear ? ceYear - 1911 : ceYear; }
+  // 使用者輸入可能是民國(3位數)或西元(4位數)，都轉成西元
+  function ceFromInput(y) {
+    const n = parseInt(y, 10);
+    if (isNaN(n)) return null;
+    if (n < 200) return n + 1911;   // 民國年
+    return n;                        // 西元年
+  }
+
   const $ = s => document.querySelector(s);
   const $$ = s => Array.from(document.querySelectorAll(s));
   const LS_SESSION = "fieldday.session";
@@ -1807,7 +1817,7 @@
       return;
     }
     const ys = $("#yearSelect");
-    ys.innerHTML = state.years.map(y => `<option value="${y}" ${y === state.year ? "selected" : ""}>${y} 學年度</option>`).join("");
+    ys.innerHTML = state.years.map(y => `<option value="${y}" ${y === state.year ? "selected" : ""}>${rocYear(y)} 學年度</option>`).join("");
     ys.onchange = () => { state.year = +ys.value; render(); };
 
     renderSidebar();
@@ -1864,7 +1874,7 @@
       </div>
       <div class="split">
         <div class="card">
-          <header><h3>總錦標榜</h3><span class="hint">${state.year} 學年度 · TOP 10</span></header>
+          <header><h3>總錦標榜</h3><span class="hint">${rocYear(state.year)} 學年度 · TOP 10</span></header>
           <div class="body">
             <table class="standings">
               <thead><tr><th>名次</th><th>班級</th><th>組別</th><th class="num">得分</th></tr></thead>
@@ -2376,9 +2386,10 @@
           格式：<code>學號,姓名,班級,學年度,項目,成績[,名次]</code>
         </div>
         <pre style="background:var(--panel-2); padding:12px; border-radius:3px; font-size:12px; margin:0 0 14px;">學號,姓名,班級,學年度,項目,成績,名次
-110001,王大同,高三甲,2023,高中男子100公尺,11.35,1
-110001,王大同,高三甲,2023,高中男子200公尺,23.10,2
-109002,陳美芳,高三乙,2022,高中女子跳遠,4.85,1</pre>
+110001,王大同,高三甲,114,7年級男子100公尺,11.35,1
+110001,王大同,高三甲,114,7年級男子200公尺,23.10,2
+109002,陳美芳,高三乙,113,7年級女子跳遠,4.85,1</pre>
+        <div style="font-size:12px; color:var(--slate); margin: 0 0 12px;">學年度可填民國年（114）或西元年（2025）均可</div>
         <textarea id="csv-text" rows="12" placeholder="貼上或輸入 CSV 內容…" style="width:100%;"></textarea>
         <div style="margin-top:10px; display:flex; gap:16px; flex-wrap:wrap; font-size:12px;">
           <label style="color:var(--slate);"><input type="checkbox" id="csv-skip-header" checked> 略過第一列（標題列）</label>
@@ -2400,7 +2411,7 @@
         let created = 0, imported = 0, skipEv = 0, newStu = 0;
         for (const r of dataRows) {
           const [sid, name, cn, yearRaw, evName, markRaw, rankRaw] = r.map(x => (x || "").trim());
-          const year = parseInt(yearRaw, 10);
+          const year = ceFromInput(yearRaw);
           const mark = parseFloat(markRaw);
           if (!sid || !evName || isNaN(year) || isNaN(mark)) { continue; }
           // Find or create student
@@ -2474,7 +2485,7 @@
   views.registration = () => {
     const wrap = document.createElement("div");
     const card = h(`<div class="card"></div>`);
-    card.appendChild(h(`<header><h3>報名管理</h3><span class="hint">${state.year} 學年度 · 個人項目</span></header>`));
+    card.appendChild(h(`<header><h3>報名管理</h3><span class="hint">${rocYear(state.year)} 學年度 · 個人項目</span></header>`));
 
     const individualEvents = state.events.filter(e => e.category !== "relay");
     const eventOpts = individualEvents.map(e => `<option value="${e.id}">${e.gradeGroup} · ${e.name}</option>`).join("");
@@ -2571,7 +2582,7 @@
   views.teams = () => {
     const wrap = document.createElement("div");
     const card = h(`<div class="card"></div>`);
-    card.appendChild(h(`<header><h3>接力隊伍</h3><span class="hint">${state.year} 學年度 · 每隊 4 正 + 4 備，最多 8 人</span></header>`));
+    card.appendChild(h(`<header><h3>接力隊伍</h3><span class="hint">${rocYear(state.year)} 學年度 · 每隊 4 正 + 4 備，最多 8 人</span></header>`));
 
     const relayEvents = state.events.filter(e => e.category === "relay");
     if (relayEvents.length === 0) {
@@ -2681,7 +2692,7 @@
   views.results = () => {
     const wrap = document.createElement("div");
     const card = h(`<div class="card"></div>`);
-    card.appendChild(h(`<header><h3>成績登錄</h3><span class="hint">${state.year} 學年度</span></header>`));
+    card.appendChild(h(`<header><h3>成績登錄</h3><span class="hint">${rocYear(state.year)} 學年度</span></header>`));
 
     const eventOpts = state.events.map(e => `<option value="${e.id}">${e.gradeGroup} · ${e.name}${e.rounds === "prelim_final" ? " · 預+決" : ""}${e.category === "relay" ? " · 接力" : ""}</option>`).join("");
     const bar = h(`
@@ -2921,7 +2932,7 @@
     standings.forEach(s => { if (byGroup[s.gradeGroup]) byGroup[s.gradeGroup].push(s); });
     const overall = h(`
       <div class="card" style="margin-bottom:24px;">
-        <header><h3>總錦標</h3><span class="hint">${state.year} 學年度 · 各班級加總</span></header>
+        <header><h3>總錦標</h3><span class="hint">${rocYear(state.year)} 學年度 · 各班級加總</span></header>
         <div class="body">
           <table class="standings">
             <thead><tr><th style="padding-left:18px;">名次</th><th>班級</th><th>組別</th><th>年級</th><th class="num" style="padding-right:18px;">總得分</th></tr></thead>
@@ -3075,7 +3086,7 @@
   views.checkin = () => {
     const wrap = document.createElement("div");
     const card = h(`<div class="card"></div>`);
-    card.appendChild(h(`<header><h3>電子檢錄</h3><span class="hint">${state.year} 學年度 · 選手到場點名</span></header>`));
+    card.appendChild(h(`<header><h3>電子檢錄</h3><span class="hint">${rocYear(state.year)} 學年度 · 選手到場點名</span></header>`));
 
     const eventOpts = state.events.map(e => `<option value="${e.id}">${e.gradeGroup} · ${e.name}${e.category === "relay" ? " · 接力" : ""}</option>`).join("");
     const bar = h(`
@@ -3317,12 +3328,8 @@
   // ---------- Accounts ----------
   views.accounts = () => {
     const wrap = document.createElement("div");
-    if (role() !== "admin") {
-      wrap.appendChild(h(`<div class="card"><div class="empty"><h4>需管理員權限</h4><div>請以管理員身份登入以管理班級帳號。</div></div></div>`));
-      return wrap;
-    }
 
-    // 資料後端
+    // 資料後端（所有人都能看到，不受管理員權限限制 — 沒設後端就無法登入管理員）
     const backendCard = h(`<div class="card"></div>`);
     const backendName = state.backend === "claude" ? "Claude 雲端資料庫（組織內部）" :
       state.backend === "gsheets" ? "Google Sheets" : "本機模式（僅此瀏覽器）";
@@ -3391,6 +3398,12 @@
       });
     };
     wrap.appendChild(backendCard);
+
+    // 以下卡片需要管理員權限
+    if (role() !== "admin") {
+      wrap.appendChild(h(`<div class="card"><div class="empty"><h4>其他設定需管理員權限</h4><div>學校資訊、管理員密碼、班級帳號管理，請以管理員身份登入後再操作。</div></div></div>`));
+      return wrap;
+    }
 
     // School settings
     const sch = getSchoolSettings();
@@ -3513,7 +3526,7 @@
     const wrap = document.createElement("div");
     wrap.appendChild(h(`
       <div class="card" style="margin-bottom:20px;">
-        <header><h3>列印文件</h3><span class="hint">${state.year} 學年度</span></header>
+        <header><h3>列印文件</h3><span class="hint">${rocYear(state.year)} 學年度</span></header>
         <div class="body pad">
           <div class="print-picker">
             <div class="doc-card" data-doc="program">
@@ -3557,7 +3570,7 @@
     const doc = h(`<div class="print-doc"></div>`);
     doc.appendChild(h(`
       <div class="cover">
-        <div class="schoolyear">${sch.schoolName} · ${state.year} 學年度</div>
+        <div class="schoolyear">${sch.schoolName} · ${rocYear(state.year)} 學年度</div>
         <h1>${sch.meetTitle}秩序冊</h1>
         <div class="rule"></div>
         <div class="sub">FIELD DAY · PROGRAM</div>
@@ -3662,7 +3675,7 @@
     const doc = h(`<div class="print-doc"></div>`);
     doc.appendChild(h(`
       <div class="cover">
-        <div class="schoolyear">${state.year} 學年度</div>
+        <div class="schoolyear">${rocYear(state.year)} 學年度</div>
         <h1>Field Day Results</h1>
         <div class="rule"></div>
         <div class="sub">FIELD DAY · RESULTS</div>
@@ -3728,13 +3741,13 @@
           const memberNames = (team.members || []).slice(0, 4)
             .map(id => state.students.find(s => s.id === id)?.name).filter(Boolean).join("、");
           bodyHtml = `茲有 <span class="who">${r.className}</span> 代表隊（${memberNames}）
-                參加 ${sch.schoolName} ${state.year} 學年度${sch.meetTitle}
+                參加 ${sch.schoolName} ${rocYear(state.year)} 學年度${sch.meetTitle}
                 <span class="ev">${ev.name}</span> 競賽，
                 榮獲第 ${RANK_ZH[r.rank] || r.rank} 名，
                 成績 <b>${formatMark(r.mark, ev.unit)}</b>，特頒此狀，以資鼓勵。`;
         } else {
           bodyHtml = `茲有 <span class="who">${r.className}　${s ? s.name : "—"}</span> 同學，
-                參加 ${sch.schoolName} ${state.year} 學年度${sch.meetTitle}
+                參加 ${sch.schoolName} ${rocYear(state.year)} 學年度${sch.meetTitle}
                 <span class="ev">${ev.name}</span> 競賽，
                 榮獲第 ${RANK_ZH[r.rank] || r.rank} 名，
                 成績 <b>${formatMark(r.mark, ev.unit)}</b>，特頒此狀，以資鼓勵。`;
@@ -3836,7 +3849,7 @@
           <h1>${ev.name}</h1>
         </div>
         <div class="meta">
-          <div><span class="live-dot"></span>即時 · ${state.year} 學年度</div>
+          <div><span class="live-dot"></span>即時 · ${rocYear(state.year)} 學年度</div>
           <div style="margin-top:6px; font-size:11px; color:var(--slate);">大會紀錄　<b>${rec ? formatMark(rec.mark, ev.unit) : "—"}</b>${rec ? ` · ${rec.year}` : ""}</div>
           <div style="margin-top:10px;"><a href="#" onclick="window.location.hash=''; return false;" style="font-family:var(--label); font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--slate); text-decoration:none;">← 返回</a></div>
         </div>
@@ -3976,7 +3989,7 @@
         </div>
       `));
     } else if (item.kind === "standings") {
-      shell.appendChild(h(`<div class="ceremony-eyebrow">${sch.schoolName} · ${state.year} 學年度</div>`));
+      shell.appendChild(h(`<div class="ceremony-eyebrow">${sch.schoolName} · ${rocYear(state.year)} 學年度</div>`));
       shell.appendChild(h(`<h1 class="ceremony-title">總錦標</h1>`));
       shell.appendChild(h(`<div class="ceremony-sub">Overall Championship</div>`));
       const list = h(`<div style="max-width:800px; margin:0 auto; width:100%;"></div>`);
@@ -4075,14 +4088,15 @@
   // ---------- Wire up ----------
   $("#newYearBtn").onclick = () => {
     if (!can("manageYear")) return toast("需管理員權限");
-    const y = prompt("新增學年度（例如 2027）", String((state.years[0] || new Date().getFullYear()) + 1));
+    const nextRoc = rocYear(state.years[0] || new Date().getFullYear()) + 1;
+    const y = prompt("新增學年度（民國年，例如 116）", String(nextRoc));
     if (!y) return;
-    const n = parseInt(y, 10);
-    if (isNaN(n)) return toast("請輸入年份");
-    addYear(n);
-    state.year = n;
+    const ce = ceFromInput(y);
+    if (!ce) return toast("請輸入年份");
+    addYear(ce);
+    state.year = ce;
     render();
-    toast(`已新增 ${n} 學年度`);
+    toast(`已新增 ${rocYear(ce)} 學年度`);
   };
 
   loadSession();

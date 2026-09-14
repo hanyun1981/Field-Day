@@ -1174,9 +1174,6 @@
       schoolName: s.schoolName || "本校",
       principalName: s.principalName || "校　　長",
       meetTitle: s.meetTitle || "Field Day",
-      meetChair: s.meetChair || "",
-      trackDirector: s.trackDirector || "",
-      recorder: s.recorder || "",
     };
   }
   async function setSchoolSettings(data) {
@@ -3415,9 +3412,6 @@
             <div class="field"><label>校名</label><input type="text" id="ss-school" value="${sch.schoolName === '本校' ? '' : sch.schoolName}" placeholder="○○縣立○○完全中學"></div>
             <div class="field"><label>大會名稱 Meet Name</label><input type="text" id="ss-title" value="${sch.meetTitle === 'Field Day' ? '' : sch.meetTitle}" placeholder="Field Day / Athletics Meet"></div>
             <div class="field"><label>校長姓名</label><input type="text" id="ss-principal" value="${sch.principalName === '校　　長' ? '' : sch.principalName}" placeholder="王小明"></div>
-            <div class="field"><label>大會主席</label><input type="text" id="ss-chair" value="${sch.meetChair}" placeholder="主任委員（選填）"></div>
-            <div class="field"><label>田徑組長</label><input type="text" id="ss-track" value="${sch.trackDirector}" placeholder="選填"></div>
-            <div class="field"><label>紀錄組長</label><input type="text" id="ss-rec" value="${sch.recorder}" placeholder="選填"></div>
           </div>
           <div style="padding: 12px 18px; text-align:right; border-top:1px solid var(--rule);">
             <button class="btn primary" id="ss-save">儲存</button>
@@ -3429,9 +3423,6 @@
         schoolName: schoolCard.querySelector("#ss-school").value.trim(),
         meetTitle: schoolCard.querySelector("#ss-title").value.trim(),
         principalName: schoolCard.querySelector("#ss-principal").value.trim(),
-        meetChair: schoolCard.querySelector("#ss-chair").value.trim(),
-        trackDirector: schoolCard.querySelector("#ss-track").value.trim(),
-        recorder: schoolCard.querySelector("#ss-rec").value.trim(),
       });
       toast("已儲存");
     };
@@ -3575,12 +3566,6 @@
         <div class="rule"></div>
         <div class="sub">FIELD DAY · PROGRAM</div>
         <div style="margin-top:60px; font-size:12px; color:#666; letter-spacing:.2em;">School Field Day · Grades 1-12</div>
-        ${(sch.meetChair || sch.trackDirector || sch.recorder) ? `
-          <div style="margin-top: 40px; font-family: var(--serif); font-size: 13px; color: #333;">
-            ${sch.meetChair ? `<div>大會主席　${sch.meetChair}</div>` : ""}
-            ${sch.trackDirector ? `<div>田徑組長　${sch.trackDirector}</div>` : ""}
-            ${sch.recorder ? `<div>紀錄組長　${sch.recorder}</div>` : ""}
-          </div>` : ""}
       </div>`));
 
     // ===== Schedule =====
